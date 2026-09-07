@@ -646,7 +646,7 @@ async function startServer() {
     });
   });
 
-  app.post('/api/auth/signup', (req, res) => {
+  app.post(['/api/auth/signup', '/api/auth/register'], (req, res) => {
     const { name, email, phone, neighborhoodId, postcode } = req.body;
     if (!name || !email) {
       return res.status(400).json({ success: false, message: 'Name and email are required.' });
@@ -678,7 +678,7 @@ async function startServer() {
   // ----------------------------------------
   // Tool Inventory & Listings (CRUD)
   // ----------------------------------------
-  app.get('/api/tools', (req, res) => {
+  app.get(['/api/tools', '/api/items'], (req, res) => {
     const { search, category, status, maxFee, neighborhoodId, sort } = req.query;
     let filtered = [...tools];
 
@@ -731,7 +731,7 @@ async function startServer() {
     });
   });
 
-  app.get('/api/tools/:id', (req, res) => {
+  app.get(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const tool = tools.find((t) => t.id === req.params.id);
     if (!tool) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -744,7 +744,7 @@ async function startServer() {
     });
   });
 
-  app.post('/api/tools', (req, res) => {
+  app.post(['/api/tools', '/api/items'], (req, res) => {
     const {
       title,
       brand,
@@ -807,7 +807,7 @@ async function startServer() {
     });
   });
 
-  app.put('/api/tools/:id', (req, res) => {
+  app.put(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const index = tools.findIndex((t) => t.id === req.params.id);
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -826,7 +826,7 @@ async function startServer() {
     });
   });
 
-  app.delete('/api/tools/:id', (req, res) => {
+  app.delete(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const index = tools.findIndex((t) => t.id === req.params.id);
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -1130,7 +1130,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`JiranAid server running on http://0.0.0.0:${PORT}`);
+    console.log(`JiranAid server running on http://localhost:${PORT}`);
   });
 }
 
