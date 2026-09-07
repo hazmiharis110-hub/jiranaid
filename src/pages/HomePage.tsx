@@ -36,11 +36,16 @@ const CATEGORY_ITEMS: { name: Exclude<ToolCategory, 'All'>; icon: string }[] = [
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { tools, stats, setSelectedCategory, setSearchQuery } = useItemStore();
+  const { allTools, tools, stats, fetchAllTools, setSelectedCategory, setSearchQuery } = useItemStore();
   const { currentUser, currentNeighborhood } = useAuthStore();
   const [quickSearch, setQuickSearch] = useState('');
 
-  const featuredTools = tools.slice(0, 4);
+  React.useEffect(() => {
+    fetchAllTools();
+  }, [fetchAllTools]);
+
+  const inventory = allTools.length > 0 ? allTools : tools;
+  const featuredTools = inventory.slice(0, 4);
 
   const handleHeroSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,7 +110,7 @@ export const HomePage: React.FC = () => {
                 to="/items"
                 className="px-5 py-2.5 rounded-xl bg-[#24211d] hover:bg-black text-[#faf8f5] text-xs sm:text-sm font-bold transition-all shadow-xs flex items-center gap-2"
               >
-                <span>Browse All {tools.length} Tools</span>
+                <span>Browse All {inventory.length} Tools</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -189,7 +194,7 @@ export const HomePage: React.FC = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {CATEGORY_ITEMS.map((cat) => {
-            const count = tools.filter((t) => t.category === cat.name).length;
+            const count = inventory.filter((t) => t.category === cat.name).length;
             return (
               <button
                 key={cat.name}
