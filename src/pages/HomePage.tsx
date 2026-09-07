@@ -23,15 +23,15 @@ import { useAuthStore } from '../store/useAuthStore';
 import { ItemCard } from '../components/items/ItemCard';
 import type { ToolCategory, ToolItem } from '../types';
 
-const CATEGORY_ITEMS: { name: Exclude<ToolCategory, 'All'>; icon: string; count: string }[] = [
-  { name: 'Power Tools', icon: '⚡', count: '18 items' },
-  { name: 'Gardening & Yard', icon: '🌿', count: '14 items' },
-  { name: 'Cleaning & Steam', icon: '✨', count: '9 items' },
-  { name: 'Home Improvement', icon: '🔨', count: '12 items' },
-  { name: 'Ladders & Access', icon: '🪜', count: '6 items' },
-  { name: 'Kitchen Appliances', icon: '🍲', count: '8 items' },
-  { name: 'Woodworking', icon: '🪵', count: '5 items' },
-  { name: 'Automotive', icon: '🚗', count: '4 items' },
+const CATEGORY_ITEMS: { name: Exclude<ToolCategory, 'All'>; icon: string }[] = [
+  { name: 'Power Tools', icon: '⚡' },
+  { name: 'Gardening & Yard', icon: '🌿' },
+  { name: 'Cleaning & Steam', icon: '✨' },
+  { name: 'Home Improvement', icon: '🔨' },
+  { name: 'Ladders & Access', icon: '🪜' },
+  { name: 'Kitchen Appliances', icon: '🍲' },
+  { name: 'Woodworking', icon: '🪵' },
+  { name: 'Automotive', icon: '🚗' },
 ];
 
 export const HomePage: React.FC = () => {
@@ -188,25 +188,28 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {CATEGORY_ITEMS.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => handleCategoryClick(cat.name)}
-              className="group p-4 sm:p-5 rounded-2xl border border-[#ded7c8] bg-[#fcfbf9] hover:bg-white hover:border-[#c86d51]/60 hover:shadow-md transition-all text-left flex flex-col justify-between"
-            >
-              <div className="w-10 h-10 rounded-xl bg-[#f4efe6] group-hover:bg-[#c86d51]/10 text-xl flex items-center justify-center transition-colors">
-                {cat.icon}
-              </div>
-              <div className="mt-4">
-                <h3 className="font-bold text-sm sm:text-base text-[#24211d] group-hover:text-[#c86d51] transition-colors">
-                  {cat.name}
-                </h3>
-                <p className="text-[11px] text-[#8a857b] font-medium mt-0.5">
-                  {cat.count}
-                </p>
-              </div>
-            </button>
-          ))}
+          {CATEGORY_ITEMS.map((cat) => {
+            const count = tools.filter((t) => t.category === cat.name).length;
+            return (
+              <button
+                key={cat.name}
+                onClick={() => handleCategoryClick(cat.name)}
+                className="group p-4 sm:p-5 rounded-2xl border border-[#ded7c8] bg-[#fcfbf9] hover:bg-white hover:border-[#c86d51]/60 hover:shadow-md transition-all text-left flex flex-col justify-between"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#f4efe6] group-hover:bg-[#c86d51]/10 text-xl flex items-center justify-center transition-colors">
+                  {cat.icon}
+                </div>
+                <div className="mt-4">
+                  <h3 className="font-bold text-sm sm:text-base text-[#24211d] group-hover:text-[#c86d51] transition-colors">
+                    {cat.name}
+                  </h3>
+                  <p className="text-[11px] text-[#8a857b] font-medium mt-0.5">
+                    {count === 1 ? '1 tool' : `${count} tools`}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
 

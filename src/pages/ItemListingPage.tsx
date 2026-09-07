@@ -27,20 +27,23 @@ export const ItemListingPage: React.FC = () => {
 
   const { currentNeighborhood } = useAuthStore();
 
-  // Read URL params on initial mount
+  // Synchronize filters whenever URL search parameters change
   useEffect(() => {
-    const urlCategory = searchParams.get('category');
-    const urlSearch = searchParams.get('search');
-    const urlStatus = searchParams.get('status');
-    const urlSort = searchParams.get('sort');
+    const urlCategory = (searchParams.get('category') as ToolCategory) || 'All';
+    const urlSearch = searchParams.get('search') || '';
+    const urlStatus = searchParams.get('status') || 'all';
+    const urlSort = searchParams.get('sort') || 'distance';
 
-    if (urlCategory) setSelectedCategory(urlCategory as ToolCategory);
-    if (urlSearch) setSearchQuery(urlSearch);
-    if (urlStatus) setStatusFilter(urlStatus);
-    if (urlSort) setSortBy(urlSort);
+    const mergedFilters = {
+      ...filters,
+      category: urlCategory,
+      search: urlSearch,
+      status: urlStatus,
+      sort: urlSort,
+    };
 
-    fetchTools();
-  }, []);
+    fetchTools(mergedFilters);
+  }, [searchParams]);
 
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
