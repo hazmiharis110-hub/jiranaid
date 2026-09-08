@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import type { User, Neighborhood } from '../types';
-import authService, { type RegisterPayload } from '../services/authService';
+// src/store/useAuthStore.ts
+import { create } from "zustand";
+import type { User, Neighborhood } from "../types";
+import authService, { type RegisterPayload } from "../services/authService";
 
 interface AuthState {
   currentUser: User | null;
@@ -16,7 +17,11 @@ interface AuthState {
   logout: () => Promise<void>;
   switchUser: (userId: string) => Promise<void>;
   setCurrentNeighborhood: (neighborhood: Neighborhood) => void;
-  verifyLocation: (neighborhoodId: string, postcode: string, method?: string) => Promise<void>;
+  verifyLocation: (
+    neighborhoodId: string,
+    postcode: string,
+    method?: string,
+  ) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -34,13 +39,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         authService.getCurrentUser(),
       ]);
 
-      const neighborhoods = neighRes.neighborhoods || [];
+      const neighborhoods = neighRes.neighborhoods || neighRes || [];
       const currentUser = meRes.user || null;
 
       let currentNeighborhood: Neighborhood | null = null;
       if (currentUser && currentUser.neighborhoodId) {
         currentNeighborhood =
-          neighborhoods.find((n) => n.id === currentUser.neighborhoodId) || null;
+          neighborhoods.find((n) => n.id === currentUser.neighborhoodId) ||
+          null;
       }
       if (!currentNeighborhood && neighborhoods.length > 0) {
         currentNeighborhood = neighborhoods[0];
@@ -64,7 +70,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const user = res.user;
       const { neighborhoods } = get();
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === user.neighborhoodId) || get().currentNeighborhood;
+        neighborhoods.find((n) => n.id === user.neighborhoodId) ||
+        get().currentNeighborhood;
 
       set({ currentUser: user, currentNeighborhood, isLoading: false });
       return user;
@@ -81,7 +88,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const user = res.user;
       const { neighborhoods } = get();
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === user.neighborhoodId) || get().currentNeighborhood;
+        neighborhoods.find((n) => n.id === user.neighborhoodId) ||
+        get().currentNeighborhood;
 
       set({ currentUser: user, currentNeighborhood, isLoading: false });
       return user;
@@ -105,7 +113,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const res = await authService.switchUser(userId);
       const { neighborhoods } = get();
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === res.user.neighborhoodId) || get().currentNeighborhood;
+        neighborhoods.find((n) => n.id === res.user.neighborhoodId) ||
+        get().currentNeighborhood;
       set({ currentUser: res.user, currentNeighborhood, isLoading: false });
     } catch (err: any) {
       set({ error: err.message, isLoading: false });
@@ -116,13 +125,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ currentNeighborhood: neighborhood });
   },
 
-  verifyLocation: async (neighborhoodId, postcode, method = 'postcode') => {
+  verifyLocation: async (neighborhoodId, postcode, method = "postcode") => {
     set({ isLoading: true });
     try {
-      const res = await authService.verifyLocation({ neighborhoodId, postcode, method });
+      const res = await authService.verifyLocation({
+        neighborhoodId,
+        postcode,
+        method,
+      });
       const { neighborhoods } = get();
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === neighborhoodId) || get().currentNeighborhood;
+        neighborhoods.find((n) => n.id === neighborhoodId) ||
+        get().currentNeighborhood;
       set({ currentUser: res.user, currentNeighborhood, isLoading: false });
     } catch (err: any) {
       set({ error: err.message, isLoading: false });
