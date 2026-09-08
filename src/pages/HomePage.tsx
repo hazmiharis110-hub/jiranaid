@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
-import { motion } from 'motion/react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 import {
   Wrench,
   Search,
@@ -17,75 +17,87 @@ import {
   Layers,
   Clock,
   HelpCircle,
-} from 'lucide-react';
-import { useItemStore } from '../store/useItemStore';
-import { useAuthStore } from '../store/useAuthStore';
-import { ItemCard } from '../components/items/ItemCard';
-import type { ToolCategory, ToolItem } from '../types';
+} from "lucide-react";
+import { useItemStore } from "../store/useItemStore";
+import { useAuthStore } from "../store/useAuthStore";
+import { ItemCard } from "../components/items/ItemCard";
+import type { ToolCategory, ToolItem } from "../types";
 
-const CATEGORY_ITEMS: { name: Exclude<ToolCategory, 'All'>; icon: string }[] = [
-  { name: 'Power Tools', icon: '⚡' },
-  { name: 'Gardening & Yard', icon: '🌿' },
-  { name: 'Cleaning & Steam', icon: '✨' },
-  { name: 'Home Improvement', icon: '🔨' },
-  { name: 'Ladders & Access', icon: '🪜' },
-  { name: 'Kitchen Appliances', icon: '🍲' },
-  { name: 'Woodworking', icon: '🪵' },
-  { name: 'Automotive', icon: '🚗' },
+const CATEGORY_ITEMS: { name: Exclude<ToolCategory, "All">; icon: string }[] = [
+  { name: "Power Tools", icon: "⚡" },
+  { name: "Gardening & Yard", icon: "🌿" },
+  { name: "Cleaning & Steam", icon: "✨" },
+  { name: "Home Improvement", icon: "🔨" },
+  { name: "Ladders & Access", icon: "🪜" },
+  { name: "Kitchen Appliances", icon: "🍲" },
+  { name: "Woodworking", icon: "🪵" },
+  { name: "Automotive", icon: "🚗" },
 ];
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { allTools, tools, stats, fetchAllTools, setSelectedCategory, setSearchQuery } = useItemStore();
+  const { tools, fetchTools } = useItemStore();
   const { currentUser, currentNeighborhood } = useAuthStore();
-  const [quickSearch, setQuickSearch] = useState('');
+  const [quickSearch, setQuickSearch] = useState("");
 
   React.useEffect(() => {
-    fetchAllTools();
-  }, [fetchAllTools]);
+    fetchTools();
+  }, [fetchTools]);
 
-  const inventory = allTools.length > 0 ? allTools : tools;
+  const inventory = tools;
   const featuredTools = inventory.slice(0, 4);
+  const communityStats = {
+    totalSavingsEstimate: 16400,
+    landfillWasteDivertedKg: 310,
+    totalNeighbors: 142,
+  };
 
   const handleHeroSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (quickSearch.trim()) {
-      setSearchQuery(quickSearch.trim());
       navigate(`/items?search=${encodeURIComponent(quickSearch.trim())}`);
     } else {
-      navigate('/items');
+      navigate("/items");
     }
   };
 
   const handleCategoryClick = (cat: ToolCategory) => {
-    setSelectedCategory(cat);
     navigate(`/items?category=${encodeURIComponent(cat)}`);
   };
 
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-16 sm:pb-20 border-b border-[#ede7db] bg-gradient-to-b from-[#f5ede1]/60 via-[#faf8f5] to-[#faf8f5]">
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-16 sm:pb-20 border-b border-[#ede7db] bg-linear-to-b from-[#f5ede1]/60 via-[#faf8f5] to-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Geofence verified badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#5f7d66]/15 border border-[#5f7d66]/30 text-[#496350] text-xs sm:text-sm font-bold shadow-2xs">
               <ShieldCheck className="w-4 h-4 text-[#5f7d66]" />
-              <span>Verified Residential Pool: {currentNeighborhood?.name || 'Taman Melawati & Riverview'}</span>
+              <span>
+                Verified Residential Pool:{" "}
+                {currentNeighborhood?.name || "Taman Melawati & Riverview"}
+              </span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#24211d] leading-[1.15]">
-              Borrow Tools From Your <span className="text-[#c86d51]">Neighbors</span> Next Door
+              Borrow Tools From Your{" "}
+              <span className="text-[#c86d51]">Neighbors</span> Next Door
             </h1>
 
             {/* Sub-headline */}
             <p className="text-base sm:text-lg text-[#67635c] leading-relaxed max-w-2xl mx-auto">
-              Why spend RM500+ buying a pressure washer, ladder, or cordless drill you only use once a year? JiranAid connects you with trusted neighbors for safe, low-cost equipment sharing.
+              Why spend RM500+ buying a pressure washer, ladder, or cordless
+              drill you only use once a year? JiranAid connects you with trusted
+              neighbors for safe, low-cost equipment sharing.
             </p>
 
             {/* Big Hero Search Bar */}
-            <form onSubmit={handleHeroSearch} className="max-w-2xl mx-auto pt-2">
+            <form
+              onSubmit={handleHeroSearch}
+              className="max-w-2xl mx-auto pt-2"
+            >
               <div className="relative flex items-center shadow-lg rounded-2xl bg-white border border-[#ded7c8] p-1.5">
                 <Search className="w-5 h-5 text-[#8a857b] ml-3.5" />
                 <input
@@ -135,7 +147,7 @@ export const HomePage: React.FC = () => {
           <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
             <div className="pt-4 md:pt-0">
               <p className="text-2xl sm:text-4xl font-black text-white">
-                RM{stats?.totalSavingsEstimate ? stats.totalSavingsEstimate.toLocaleString() : '16,400'}+
+                RM{communityStats.totalSavingsEstimate.toLocaleString()}+
               </p>
               <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
                 Saved by Neighbors
@@ -144,7 +156,7 @@ export const HomePage: React.FC = () => {
 
             <div className="pt-4 md:pt-0">
               <p className="text-2xl sm:text-4xl font-black text-[#9bc1a3]">
-                {stats?.landfillWasteDivertedKg || 310} kg
+                {communityStats.landfillWasteDivertedKg} kg
               </p>
               <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
                 E-Waste Diverted
@@ -180,7 +192,8 @@ export const HomePage: React.FC = () => {
               Explore by Category
             </h2>
             <p className="text-xs sm:text-sm text-[#67635c] mt-1">
-              Find exactly what you need for gardening, cleaning, repairs, and woodwork
+              Find exactly what you need for gardening, cleaning, repairs, and
+              woodwork
             </p>
           </div>
           <Link
@@ -194,7 +207,9 @@ export const HomePage: React.FC = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {CATEGORY_ITEMS.map((cat) => {
-            const count = inventory.filter((t) => t.category === cat.name).length;
+            const count = inventory.filter(
+              (t) => t.category === cat.name,
+            ).length;
             return (
               <button
                 key={cat.name}
@@ -209,7 +224,7 @@ export const HomePage: React.FC = () => {
                     {cat.name}
                   </h3>
                   <p className="text-[11px] text-[#8a857b] font-medium mt-0.5">
-                    {count === 1 ? '1 tool' : `${count} tools`}
+                    {count === 1 ? "1 tool" : `${count} tools`}
                   </p>
                 </div>
               </button>
@@ -259,7 +274,8 @@ export const HomePage: React.FC = () => {
               How Neighbor Sharing Works
             </h2>
             <p className="text-sm text-[#67635c]">
-              Built with trust, geofencing, and automated security deposits so both lenders and borrowers have peace of mind.
+              Built with trust, geofencing, and automated security deposits so
+              both lenders and borrowers have peace of mind.
             </p>
           </div>
 
@@ -273,7 +289,8 @@ export const HomePage: React.FC = () => {
                 Find Your Tool
               </h3>
               <p className="text-xs text-[#67635c] leading-relaxed">
-                Browse power tools, lawnmowers, and ladders listed by verified residents in your immediate postcode.
+                Browse power tools, lawnmowers, and ladders listed by verified
+                residents in your immediate postcode.
               </p>
             </div>
 
@@ -286,7 +303,8 @@ export const HomePage: React.FC = () => {
                 Request & Book Dates
               </h3>
               <p className="text-xs text-[#67635c] leading-relaxed">
-                Pick your required dates (1 to 5 days). Pay a small daily maintenance fee and a refundable security hold.
+                Pick your required dates (1 to 5 days). Pay a small daily
+                maintenance fee and a refundable security hold.
               </p>
             </div>
 
@@ -299,7 +317,8 @@ export const HomePage: React.FC = () => {
                 Local Porch Pickup
               </h3>
               <p className="text-xs text-[#67635c] leading-relaxed">
-                Coordinate safe, phone-number-free chat with the owner and collect the item just a few streets away.
+                Coordinate safe, phone-number-free chat with the owner and
+                collect the item just a few streets away.
               </p>
             </div>
 
@@ -312,7 +331,8 @@ export const HomePage: React.FC = () => {
                 Return & Deposit Released
               </h3>
               <p className="text-xs text-[#67635c] leading-relaxed">
-                Return the item clean. The owner confirms inspection, and your deposit hold is instantly released back to you.
+                Return the item clean. The owner confirms inspection, and your
+                deposit hold is instantly released back to you.
               </p>
             </div>
           </div>
@@ -331,7 +351,9 @@ export const HomePage: React.FC = () => {
                 Community Safety & Verified Residence
               </h2>
               <p className="text-sm text-[#67635c] leading-relaxed">
-                We believe trust is built through proximity and transparency. Unlike broad classified sites, JiranAid pools are bounded by local postcodes so everyone you meet is a real neighbor.
+                We believe trust is built through proximity and transparency.
+                Unlike broad classified sites, JiranAid pools are bounded by
+                local postcodes so everyone you meet is a real neighbor.
               </p>
 
               <div className="space-y-3.5">
@@ -340,8 +362,13 @@ export const HomePage: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">Geofenced Verification</h4>
-                    <p className="text-xs text-[#67635c]">Only residents who verify their address or GPS can view item locations and request borrows.</p>
+                    <h4 className="text-xs font-bold text-[#24211d]">
+                      Geofenced Verification
+                    </h4>
+                    <p className="text-xs text-[#67635c]">
+                      Only residents who verify their address or GPS can view
+                      item locations and request borrows.
+                    </p>
                   </div>
                 </div>
 
@@ -350,8 +377,13 @@ export const HomePage: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">Refundable Deposit Guarantee</h4>
-                    <p className="text-xs text-[#67635c]">Lenders are protected by security deposits held during active borrowing.</p>
+                    <h4 className="text-xs font-bold text-[#24211d]">
+                      Refundable Deposit Guarantee
+                    </h4>
+                    <p className="text-xs text-[#67635c]">
+                      Lenders are protected by security deposits held during
+                      active borrowing.
+                    </p>
                   </div>
                 </div>
 
@@ -360,8 +392,13 @@ export const HomePage: React.FC = () => {
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">Neighbor Trust Scores & Reviews</h4>
-                    <p className="text-xs text-[#67635c]">Track record of on-time returns, item care ratings, and community badges.</p>
+                    <h4 className="text-xs font-bold text-[#24211d]">
+                      Neighbor Trust Scores & Reviews
+                    </h4>
+                    <p className="text-xs text-[#67635c]">
+                      Track record of on-time returns, item care ratings, and
+                      community badges.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -372,7 +409,9 @@ export const HomePage: React.FC = () => {
               <div className="flex items-center justify-between border-b border-[#ded7c8] pb-3">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-[#5f7d66]" />
-                  <span className="text-sm font-bold text-[#24211d]">Neighborhood Trust Metric</span>
+                  <span className="text-sm font-bold text-[#24211d]">
+                    Neighborhood Trust Metric
+                  </span>
                 </div>
                 <span className="text-xs font-bold text-[#496350] bg-[#5f7d66]/20 px-2 py-0.5 rounded-full">
                   Level 1 Protected
@@ -382,11 +421,15 @@ export const HomePage: React.FC = () => {
               <div className="space-y-3 text-xs text-[#4e4a43]">
                 <div className="flex justify-between py-1 border-b border-[#ede7db]">
                   <span>Active Neighbors in Pool</span>
-                  <span className="font-bold">{stats?.totalNeighbors || 142} verified</span>
+                  <span className="font-bold">
+                    {communityStats.totalNeighbors} verified
+                  </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-[#ede7db]">
                   <span>Equipment Return Rate</span>
-                  <span className="font-bold text-[#5f7d66]">99.8% on-time</span>
+                  <span className="font-bold text-[#5f7d66]">
+                    99.8% on-time
+                  </span>
                 </div>
                 <div className="flex justify-between py-1 border-b border-[#ede7db]">
                   <span>Community Savings to Date</span>
@@ -394,7 +437,9 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="flex justify-between py-1">
                   <span>Current Residential Hub</span>
-                  <span className="font-bold">{currentNeighborhood?.name || 'Taman Melawati'}</span>
+                  <span className="font-bold">
+                    {currentNeighborhood?.name || "Taman Melawati"}
+                  </span>
                 </div>
               </div>
 
@@ -414,12 +459,13 @@ export const HomePage: React.FC = () => {
 
       {/* 7. Call To Action Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="bg-gradient-to-r from-[#24211d] to-[#453e35] text-white rounded-3xl p-8 sm:p-12 text-center space-y-6">
+        <div className="bg-linear-to-r from-[#24211d] to-[#453e35] text-white rounded-3xl p-8 sm:p-12 text-center space-y-6">
           <h2 className="text-2xl sm:text-4xl font-black max-w-xl mx-auto">
             Got tools gathering dust in your storeroom?
           </h2>
           <p className="text-stone-300 text-sm max-w-lg mx-auto">
-            Put them to work! Help a neighbor complete their home project, earn small maintenance fees, and earn trusted community badges.
+            Put them to work! Help a neighbor complete their home project, earn
+            small maintenance fees, and earn trusted community badges.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link

@@ -59,40 +59,36 @@ export const itemService = {
       params.append("sort", filters.sort);
     }
 
-    const { data } = await api.get(`/items?${params.toString()}`);
-    return data as ItemListResponse;
+    const queryStr = params.toString();
+    const url = queryStr ? `/items?${queryStr}` : "/items";
+    return await api.get(url);
   },
 
   async getItemById(id: string): Promise<ItemDetailResponse> {
-    const { data } = await api.get(`/items/${id}`);
-    return data as ItemDetailResponse;
+    return await api.get(`/items/${id}`);
   },
 
   async createItem(
     payload: CreateItemPayload,
   ): Promise<{ success: boolean; tool: ToolItem; message?: string }> {
-    const { data } = await api.post("/items", payload);
-    return data;
+    return await api.post("/items", payload);
   },
 
   async updateItem(
     id: string,
     payload: Partial<CreateItemPayload>,
   ): Promise<{ success: boolean; tool: ToolItem }> {
-    const { data } = await api.put(`/items/${id}`, payload);
-    return data;
+    return await api.put(`/items/${id}`, payload);
   },
 
   async deleteItem(
     id: string,
   ): Promise<{ success: boolean; message?: string }> {
-    const { data } = await api.delete(`/items/${id}`);
-    return data;
+    return await api.delete(`/items/${id}`);
   },
 
   async getStats() {
-    const { data } = await api.get("/stats");
-    return data;
+    return await api.get("/stats");
   },
 };
 

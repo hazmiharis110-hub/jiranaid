@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const apiBaseUrl =
+  (import.meta as any)?.env?.VITE_API_BASE_URL || "http://localhost:3000";
+
 export const api = axios.create({
-  baseURL: "/api",
+  baseURL: apiBaseUrl,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -19,9 +23,9 @@ api.interceptors.request.use(
   (error: any) => Promise.reject(error),
 );
 
-// Response interceptor for unified error formatting
+// Response interceptor for unified error formatting and direct data unpacking
 api.interceptors.response.use(
-  (response: any) => response,
+  (response: any) => response.data,
   (error: any) => {
     const message =
       error.response?.data?.message ||
