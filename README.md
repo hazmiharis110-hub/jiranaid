@@ -30,7 +30,7 @@ This document provides a comprehensive explanation of every file and folder in t
 
 - **`index.html`**
   - Primary HTML entry point loaded by the browser.
-  - Configures page title (`JiranAid - Neighborhood Tool & Appliance Library`), SEO meta tags, mobile viewport settings, and loads Google Fonts (*Plus Jakarta Sans*).
+  - Configures page title (`JiranAid - Neighborhood Tool & Appliance Library`), SEO meta tags, mobile viewport settings, and loads Google Fonts (_Plus Jakarta Sans_).
   - Mounts the root container `<div id="root"></div>` and imports `/src/main.tsx`.
 
 - **`metadata.json`**
@@ -54,12 +54,14 @@ This document provides a comprehensive explanation of every file and folder in t
 ---
 
 ## 📁 `/public`
+
 - Static public assets directory served directly by the web server.
 - Contains placeholder assets and platform configurations under `/public/assets/aistudio/`.
 
 ---
 
 ## 📁 `/src`
+
 Source code directory for the frontend application.
 
 ### Top-Level Files in `/src`
@@ -69,10 +71,58 @@ Source code directory for the frontend application.
   - Initializes `ReactDOM.createRoot` on the `#root` element, mounts `<App />` inside React's `<StrictMode>`, and imports `src/index.css`.
 
 - **`src/App.tsx`**
-  - Main application component orchestrating client-side state, API calls, and responsive navigation.
-  - Manages active views (Catalog, Requests & Loans, In-App Chat).
-  - Handles filters (search query, category pills, status filter, distance/fee sorting).
-  - Controls modals (Add Tool, Tool Details, Neighborhood Verification, User Profile, Chat, and Reviews).
+  - Application entry point rendering `BrowserRouter` and `AppRoutes`.
+
+- **`src/router/AppRoutes.tsx`**
+  - Central client-side routing tree configuring React Router v7 routes (`/`, `/items`, `/items/:id`, `/items/create`, `/items/:id/edit`, `/login`, `/register`, `/dashboard`, `/borrowings`, `/profile`, `*`).
+
+---
+
+## 📁 `/src/layouts`
+
+- **`MainLayout.tsx`**: Primary layout containing `Navbar`, active route `<Outlet />`, community `Footer`, mobile `BottomNav`, and root-level modals (Neighborhood verification, User profile, Safe chat, Review submission).
+- **`AuthLayout.tsx`**: Focused split-screen layout for authentication pages (`/login` and `/register`) with community highlights, trust metrics, and safety covenants.
+
+---
+
+## 📁 `/src/pages`
+
+- **`HomePage.tsx` (`/`)**: Neighborhood landing page with hero search, live community impact metrics (money saved, e-waste diverted, active tools), category exploration grid, "How Neighbor Sharing Works" 4-step walkthrough, and featured tools.
+- **`ItemListingPage.tsx` (`/items`)**: Dedicated tool library catalog with keyword search (`SearchBar`), category pill filters, status & price sorting (`FilterBar`), and responsive tool grid.
+- **`ItemDetailPage.tsx` (`/items/:id`)**: Comprehensive item view with high-res photo gallery, condition tag, manufacturer specs, safety rules, owner trust card, interactive date-range booking simulator, and neighbor reviews.
+- **`CreateItemPage.tsx` (`/items/create`)**: Equipment listing form with 1-click household presets (drills, pressure washers, trimmers, ladders), real-time card preview, pricing, and safety guidelines.
+- **`EditItemPage.tsx` (`/items/:id/edit`)**: Tool management page for owners to update specs, daily fees, deposit amounts, availability, or remove listings.
+- **`LoginPage.tsx` (`/login`)**: Resident sign-in with quick 1-click demo personas (Aiman Zikri, Sarah Lim).
+- **`RegisterPage.tsx` (`/register`)**: Neighborhood registration with residential pool selector and postcode validation.
+- **`DashboardPage.tsx` (`/dashboard`)**: Lender hub for managing equipment queue, active loans, and maintenance.
+- **`BorrowingPage.tsx` (`/borrowings`)**: Dual-tab view for tracking equipment borrowed and equipment lent to neighbors.
+- **`ProfilePage.tsx` (`/profile`)**: Resident trust score, community badges, on-time return statistics, and activity ledger.
+- **`NotFoundPage.tsx` (`*`)**: 404 error page with quick links back home or to the tool library.
+
+---
+
+## 📁 `/src/services` & `/src/store`
+
+- **`src/services/api.ts`**: Standardized Axios HTTP client instance with base URL `/api` and request/response interceptors.
+- **`src/services/itemService.ts`**: API service layer for tool items (listing, details, creation, updating, deletion, impact stats).
+- **`src/services/authService.ts`**: API service layer for resident authentication, location verification, and pool switching.
+- **`src/store/useAuthStore.ts`**: Zustand store managing current resident session, active neighborhood pool, and verification status.
+- **`src/store/useItemStore.ts`**: Zustand store managing catalog tools, search query, category filters, sorting, and community stats.
+
+---
+
+## 📁 `/src/components/layout`, `/src/components/items`, & `/src/components/common`
+
+- **`src/components/layout/Navbar.tsx`**: Sticky top navigation bar with active route highlighting, neighborhood selector pill, search shortcut, and user profile dropdown.
+- **`src/components/layout/Footer.tsx`**: Community sharing footer with category navigation, security deposits info, and eco impact.
+- **`src/components/items/ItemCard.tsx`**: Responsive item card featuring photo hover zoom, distance indicator, condition badge, owner rating, and direct borrow action.
+- **`src/components/items/SearchBar.tsx`**: Instant keyword search bar with clear button.
+- **`src/components/items/FilterBar.tsx`**: Category pills, status filters (Available/On Loan), price filter, and sorting options.
+- **`src/components/items/ItemForm.tsx`**: Reusable form for creating and editing tools with live preview card and household equipment presets.
+- **`src/components/common/Badge.tsx`**: Unified badge component for status (`available`, `borrowed`, `maintenance`), condition, and verification.
+- **`src/components/common/LoadingSpinner.tsx`**: Loading spinner indicator.
+- **`src/components/common/EmptyState.tsx`**: Empty state with illustration, message, and call-to-action buttons.
+
 
 - **`src/types.ts`**
   - TypeScript definitions and interfaces used across the entire application:
@@ -91,6 +141,7 @@ Source code directory for the frontend application.
 ---
 
 ## 📁 `/src/components`
+
 Reusable, modular React components for UI views and modals:
 
 - **`Header.tsx`**
@@ -124,7 +175,7 @@ Reusable, modular React components for UI views and modals:
   - Provides simulated GPS geofence verification and postcode binding to ensure users only access tools in their immediate residential community pool.
 
 - **`UserProfileModal.tsx`**
-  - Community trust profile showcasing user ratings, on-time return percentages, and community badges (*Super Lender*, *Careful Handler*).
+  - Community trust profile showcasing user ratings, on-time return percentages, and community badges (_Super Lender_, _Careful Handler_).
   - Allows switching active neighbor personas (for testing lending vs borrowing) or registering a new resident.
 
 - **`ReviewModal.tsx`**

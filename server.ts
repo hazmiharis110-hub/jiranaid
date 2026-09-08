@@ -333,6 +333,306 @@ let tools: ToolItem[] = [
     pickupNote: 'Keep in car emergency kit. Free community maintenance contribution.',
     createdAt: '2025-02-22',
   },
+  {
+    id: 'tool-9',
+    title: 'DeWalt 20V Max XR Brushless Impact Driver',
+    brand: 'DeWalt',
+    model: 'DCF887 3-Speed with 4.0Ah Battery',
+    category: 'Power Tools',
+    description: 'High torque compact impact driver for driving long deck screws, lag bolts, and assembling heavy timber furniture. Includes magnetic bit holder.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-siti',
+    ownerName: 'Kak Siti Hajar',
+    ownerAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 5.0,
+    ownerBorrowsCount: 18,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.3,
+    locationSnippet: 'Lorong Melawati 4 (300m away)',
+    status: 'available',
+    maintenanceFeePerDay: 5,
+    depositAmount: 40,
+    maxDays: 4,
+    instructions: 'Use correct size impact bits to prevent stripping screw heads. Fully charge before return.',
+    pickupNote: 'Pick up from porch anytime after 10 AM.',
+    createdAt: '2025-02-24',
+  },
+  {
+    id: 'tool-10',
+    title: 'Bosch Professional 125mm Cordless Angle Grinder',
+    brand: 'Bosch Pro',
+    model: 'GWS 18V-10 with Protective Guard & Discs',
+    category: 'Power Tools',
+    description: 'Cordless grinder for cutting rebar, trimming floor tiles, grinding weld beads, or sharpening lawnmower blades. Comes with wrench and safety guard.',
+    condition: 'Good Condition',
+    imageUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-dev',
+    ownerName: 'Devanathan R.',
+    ownerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.8,
+    ownerBorrowsCount: 14,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.5,
+    locationSnippet: 'Jalan Melawati 2B (500m away)',
+    status: 'available',
+    maintenanceFeePerDay: 6,
+    depositAmount: 45,
+    maxDays: 3,
+    instructions: 'MUST wear full safety goggles and heavy gloves. Do not remove safety wheel guard under any circumstances.',
+    pickupNote: 'Call ahead 15 mins before arrival.',
+    createdAt: '2025-02-26',
+  },
+  {
+    id: 'tool-11',
+    title: 'Makita 18V Cordless Jigsaw with Curve Cut Blades',
+    brand: 'Makita',
+    model: 'DJV180Z Variable Speed Orbital',
+    category: 'Power Tools',
+    description: 'Precision variable speed orbital jigsaw for intricate curve cuts in wood, sink cutouts in kitchen countertops, and aluminum trimming.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-mei',
+    ownerName: 'Mei Ling Tan',
+    ownerAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.95,
+    ownerBorrowsCount: 9,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.7,
+    locationSnippet: 'Jalan Melawati 7 (700m away)',
+    status: 'available',
+    maintenanceFeePerDay: 4,
+    depositAmount: 35,
+    maxDays: 4,
+    instructions: 'Keep base plate flat against the workpiece. Blade clamp is toolless tool-change.',
+    pickupNote: 'Ring bell at unit 12.',
+    createdAt: '2025-03-01',
+  },
+  {
+    id: 'tool-12',
+    title: 'Stanley FatMax 150-Piece Master Home Toolkit',
+    brand: 'Stanley',
+    model: 'Professional Mechanics & DIY Case',
+    category: 'Home Improvement',
+    description: 'Comprehensive chrome vanadium toolkit including ratchet sockets, combination spanners, magnetic screwdrivers, pliers, spirit level, and claw hammer.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-current',
+    ownerName: 'Aiman Zikri',
+    ownerAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.9,
+    ownerBorrowsCount: 7,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.1,
+    locationSnippet: 'Lorong Melawati 3 (Your listing)',
+    status: 'available',
+    maintenanceFeePerDay: 2,
+    depositAmount: 25,
+    maxDays: 7,
+    instructions: 'Please check all sockets and bits back into their molded slots before returning.',
+    pickupNote: 'Pick up from porch side box.',
+    createdAt: '2025-03-02',
+  },
+  {
+    id: 'tool-13',
+    title: 'Bosch Laser Level & 50m Digital Distance Measurer',
+    brand: 'Bosch',
+    model: 'GLM 50 C Bluetooth Smart Measure',
+    category: 'Home Improvement',
+    description: 'High precision green laser measure with angle sensor and 360-degree cross-line leveling. Ideal for tiling, hanging framed pictures perfectly straight, or measuring curtains.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-siti',
+    ownerName: 'Kak Siti Hajar',
+    ownerAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 5.0,
+    ownerBorrowsCount: 18,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.3,
+    locationSnippet: 'Lorong Melawati 4 (300m away)',
+    status: 'available',
+    maintenanceFeePerDay: 3,
+    depositAmount: 30,
+    maxDays: 3,
+    instructions: 'Do not stare into laser beam. Clean optics lens gently with microfiber cloth only.',
+    pickupNote: 'Ready anytime on weekends.',
+    createdAt: '2025-03-03',
+  },
+  {
+    id: 'tool-14',
+    title: 'Black+Decker Cordless Grass Line Trimmer & Lawn Edger',
+    brand: 'Black+Decker',
+    model: 'PowerCommand 18V String Trimmer',
+    category: 'Gardening & Yard',
+    description: 'Lightweight cordless grass strimmer with flip-to-edge wheel guide for clean lawn borders and curbs. Includes two spools of 1.6mm nylon line.',
+    condition: 'Good Condition',
+    imageUrl: 'https://images.unsplash.com/photo-1589923188900-85dae523342b?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-dev',
+    ownerName: 'Devanathan R.',
+    ownerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.8,
+    ownerBorrowsCount: 14,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.5,
+    locationSnippet: 'Jalan Melawati 2B (500m away)',
+    status: 'available',
+    maintenanceFeePerDay: 4,
+    depositAmount: 30,
+    maxDays: 3,
+    instructions: 'Wear closed-toe shoes and safety glasses while trimming near pebbles or fences.',
+    pickupNote: 'Pick up after 5:30 PM.',
+    createdAt: '2025-03-04',
+  },
+  {
+    id: 'tool-15',
+    title: 'Werner 6ft Fiberglass Heavy-Duty Step Ladder (Non-Conductive)',
+    brand: 'Werner',
+    model: 'Electro-Safe 150kg Industrial Step',
+    category: 'Ladders & Access',
+    description: 'Non-conductive fiberglass 6-step ladder for safe electrical work, ceiling fan installation, and indoor painting. Features multi-functional tool holster top.',
+    condition: 'Good Condition',
+    imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-mei',
+    ownerName: 'Mei Ling Tan',
+    ownerAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.95,
+    ownerBorrowsCount: 9,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.7,
+    locationSnippet: 'Jalan Melawati 7 (700m away)',
+    status: 'available',
+    maintenanceFeePerDay: 3,
+    depositAmount: 35,
+    maxDays: 4,
+    instructions: 'Ensure spreader braces lock completely open before stepping onto ladder. Never stand on the top plastic shelf.',
+    pickupNote: 'Transport requires SUV or open car boot.',
+    createdAt: '2025-03-05',
+  },
+  {
+    id: 'tool-16',
+    title: 'Kärcher SC3 EasyFix Multi-Surface Steam Mop',
+    brand: 'Kärcher',
+    model: 'SC3 EasyFix Continuous Steam 3.5 Bar',
+    category: 'Cleaning & Steam',
+    description: 'Chemical-free hygienic floor steam cleaner kills 99.99% of household bacteria using tap water. Heats up in 30 seconds. Includes tile brush and microfiber floor cloths.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-siti',
+    ownerName: 'Kak Siti Hajar',
+    ownerAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 5.0,
+    ownerBorrowsCount: 18,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.3,
+    locationSnippet: 'Lorong Melawati 4 (300m away)',
+    status: 'available',
+    maintenanceFeePerDay: 5,
+    depositAmount: 40,
+    maxDays: 3,
+    instructions: 'Use clean filtered tap water. Wash microfiber pads in washing machine (no fabric softener) before return.',
+    pickupNote: 'Ready on front porch.',
+    createdAt: '2025-03-05',
+  },
+  {
+    id: 'tool-17',
+    title: 'DeWalt 210mm Compact Jobsite Table Saw with Rolling Stand',
+    brand: 'DeWalt',
+    model: 'DWE7485 Rack & Pinion Fence 1850W',
+    category: 'Woodworking',
+    description: 'High precision table saw with rack-and-pinion telescoping fence system. Perfect for rip cuts, trimming cabinet plywood, and shelving boards.',
+    condition: 'Good Condition',
+    imageUrl: 'https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-dev',
+    ownerName: 'Devanathan R.',
+    ownerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.8,
+    ownerBorrowsCount: 14,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.5,
+    locationSnippet: 'Jalan Melawati 2B (500m away)',
+    status: 'available',
+    maintenanceFeePerDay: 8,
+    depositAmount: 80,
+    maxDays: 3,
+    instructions: 'Always use push stick provided. Never operate without blade riving knife and transparent dust shield.',
+    pickupNote: 'Heavy item (22kg); please bring two people to load into car trunk.',
+    createdAt: '2025-03-06',
+  },
+  {
+    id: 'tool-18',
+    title: 'Philips Digital Airfryer XL Rapid Air 4.1L',
+    brand: 'Philips',
+    model: 'HD9270/91 2000W Touchscreen',
+    category: 'Kitchen Appliances',
+    description: 'Extra large 4.1L capacity air fryer for roasting whole chickens, crispy homemade fries, and baking cakes. Dishwasher-safe removable basket.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-siti',
+    ownerName: 'Kak Siti Hajar',
+    ownerAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 5.0,
+    ownerBorrowsCount: 18,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.3,
+    locationSnippet: 'Lorong Melawati 4 (300m away)',
+    status: 'available',
+    maintenanceFeePerDay: 4,
+    depositAmount: 35,
+    maxDays: 4,
+    instructions: 'Do not use metal utensils inside the non-stick basket. Clean basket with soft sponge only.',
+    pickupNote: 'Pick up on weekends or weekday evenings.',
+    createdAt: '2025-03-07',
+  },
+  {
+    id: 'tool-19',
+    title: 'Michelin Digital Heavy-Duty Tire Inflator & 12V Air Compressor',
+    brand: 'Michelin',
+    model: 'Programmable Digital 12V Preset Pump',
+    category: 'Automotive',
+    description: 'Compact 12V digital compressor with auto-stop preset. Inflates a flat car tire from 0 to 35 PSI in 3 minutes. Includes bicycle and sports ball nozzle adaptors.',
+    condition: 'Like New',
+    imageUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-mei',
+    ownerName: 'Mei Ling Tan',
+    ownerAvatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.95,
+    ownerBorrowsCount: 9,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.7,
+    locationSnippet: 'Jalan Melawati 7 (700m away)',
+    status: 'available',
+    maintenanceFeePerDay: 2,
+    depositAmount: 25,
+    maxDays: 3,
+    instructions: 'Plug into 12V car cigarette lighter port. Set desired PSI and press start; pump stops automatically.',
+    pickupNote: 'Available today.',
+    createdAt: '2025-03-07',
+  },
+  {
+    id: 'tool-20',
+    title: 'Fiskars PowerGear Telescopic Tree Lopper & Pole Pruner',
+    brand: 'Fiskars',
+    model: 'UPX86 Telescopic Universal Cutter (4m Reach)',
+    category: 'Gardening & Yard',
+    description: 'Effortlessly cut tree branches up to 32mm in diameter high overhead without climbing a ladder. Features 230-degree adjustable cutting head.',
+    condition: 'Good Condition',
+    imageUrl: 'https://images.unsplash.com/photo-1592417817098-8f3d6eb228cc?w=800&auto=format&fit=crop&q=80',
+    ownerId: 'user-current',
+    ownerName: 'Aiman Zikri',
+    ownerAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    ownerRating: 4.9,
+    ownerBorrowsCount: 7,
+    neighborhoodId: 'taman-melawati',
+    distanceKm: 0.1,
+    locationSnippet: 'Lorong Melawati 3 (Your listing)',
+    status: 'available',
+    maintenanceFeePerDay: 3,
+    depositAmount: 25,
+    maxDays: 4,
+    instructions: 'Wipe blade sap after pruning and spray light lubricant before returning.',
+    pickupNote: 'Pick up from porch side box.',
+    createdAt: '2025-03-07',
+  },
 ];
 
 let borrowRequests: BorrowRequest[] = [
@@ -646,7 +946,7 @@ async function startServer() {
     });
   });
 
-  app.post('/api/auth/signup', (req, res) => {
+  app.post(['/api/auth/signup', '/api/auth/register'], (req, res) => {
     const { name, email, phone, neighborhoodId, postcode } = req.body;
     if (!name || !email) {
       return res.status(400).json({ success: false, message: 'Name and email are required.' });
@@ -678,7 +978,7 @@ async function startServer() {
   // ----------------------------------------
   // Tool Inventory & Listings (CRUD)
   // ----------------------------------------
-  app.get('/api/tools', (req, res) => {
+  app.get(['/api/tools', '/api/items'], (req, res) => {
     const { search, category, status, maxFee, neighborhoodId, sort } = req.query;
     let filtered = [...tools];
 
@@ -731,7 +1031,7 @@ async function startServer() {
     });
   });
 
-  app.get('/api/tools/:id', (req, res) => {
+  app.get(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const tool = tools.find((t) => t.id === req.params.id);
     if (!tool) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -744,7 +1044,7 @@ async function startServer() {
     });
   });
 
-  app.post('/api/tools', (req, res) => {
+  app.post(['/api/tools', '/api/items'], (req, res) => {
     const {
       title,
       brand,
@@ -807,7 +1107,7 @@ async function startServer() {
     });
   });
 
-  app.put('/api/tools/:id', (req, res) => {
+  app.put(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const index = tools.findIndex((t) => t.id === req.params.id);
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -826,7 +1126,7 @@ async function startServer() {
     });
   });
 
-  app.delete('/api/tools/:id', (req, res) => {
+  app.delete(['/api/tools/:id', '/api/items/:id'], (req, res) => {
     const index = tools.findIndex((t) => t.id === req.params.id);
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
@@ -1130,7 +1430,7 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`JiranAid server running on http://0.0.0.0:${PORT}`);
+    console.log(`JiranAid server running on http://localhost:${PORT}`);
   });
 }
 
