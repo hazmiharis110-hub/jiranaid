@@ -7,7 +7,6 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  Sparkles,
   Info,
   DollarSign,
   Tag,
@@ -26,7 +25,7 @@ interface ToolDetailModalProps {
     tool: ToolItem,
     startDate: string,
     endDate: string,
-    note: string,
+    note?: string,
   ) => void;
   onOpenAuthModal?: (intendedAction?: string) => void;
   reviews: Review[];
@@ -54,7 +53,6 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
 
   const [startDate, setStartDate] = useState<string>(formatDateInput(tomorrow));
   const [endDate, setEndDate] = useState<string>(formatDateInput(defaultEnd));
-  const [borrowNote, setBorrowNote] = useState<string>("");
   const [agreeTerms, setAgreeTerms] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -64,9 +62,10 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
   const end = new Date(endDate);
   const diffTime = end.getTime() - start.getTime();
   const daysCount = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
-
-  const totalMaintenanceFee = tool.maintenanceFeePerDay * daysCount;
-  const totalPayable = totalMaintenanceFee + tool.depositAmount;
+  const dailyFee = tool.price ?? tool.maintenanceFeePerDay ?? 0;
+  const deposit = tool.deposit ?? tool.depositAmount ?? 0;
+  const totalMaintenanceFee = dailyFee * daysCount;
+  const totalPayable = totalMaintenanceFee + deposit;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,7 +82,7 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
 
     setIsSubmitting(true);
     setTimeout(() => {
-      onSubmitBorrow(tool, startDate, endDate, borrowNote);
+      onSubmitBorrow(tool, startDate, endDate);
       setIsSubmitting(false);
       setSuccessMessage("Borrow request sent to owner!");
       setTimeout(() => {
@@ -145,20 +144,6 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
                   </span>
                 </div>
               </div>
-
-              {/* Condition & Safety Pill */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#faf8f5] border border-[#ded7c8] text-xs">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#c86d51]" />
-                  <span className="font-semibold text-[#24211d]">
-                    Condition:
-                  </span>
-                  <span className="text-[#67635c]">{tool.condition}</span>
-                </div>
-                <span className="text-[11px] font-mono text-[#5f7d66] bg-[#eef4f0] px-2 py-0.5 rounded">
-                  Max {tool.maxDays} days
-                </span>
-              </div>
             </div>
 
             {/* Title, Brand, Description */}
@@ -198,7 +183,7 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
                     </div>
                     <div className="text-right">
                       <div className="text-xs font-bold text-[#5f7d66]">
-                        ★ {tool.ownerRating.toFixed(1)} Trust
+                        ★ {(tool.ownerRating ?? 5.0).toFixed(1)} Trust
                       </div>
                       <span className="text-[10px] text-[#8c867b]">
                         100% on-time
@@ -307,19 +292,6 @@ export const ToolDetailModal: React.FC<ToolDetailModalProps> = ({
                     className="w-full px-3 py-2 text-xs rounded-lg border border-[#ded7c8] bg-[#faf8f5] focus:ring-1 focus:ring-[#c86d51] focus:outline-none"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                  Message / Purpose for Owner (Optional)
-                </label>
-                <input
-                  type="text"
-                  value={borrowNote}
-                  onChange={(e) => setBorrowNote(e.target.value)}
-                  placeholder="e.g., Washing porch tiles this Saturday morning..."
-                  className="w-full px-3 py-2 text-xs rounded-lg border border-[#ded7c8] bg-[#faf8f5] focus:ring-1 focus:ring-[#c86d51] focus:outline-none"
-                />
               </div>
 
               {/* Maintenance Fee & Deposit System: Micro-transaction handling */}

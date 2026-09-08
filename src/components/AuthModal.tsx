@@ -18,12 +18,12 @@ interface AuthModalProps {
   onClose: () => void;
   initialMode?: "login" | "signup";
   neighborhoods?: Neighborhood[];
-  onLogin: (credentials: { email?: string; userId?: string }) => Promise<void>;
+  onLogin: (credentials: { email?: string; userId?: string | number }) => Promise<void>;
   onSignUp: (userData: {
     name: string;
     email: string;
     phone: string;
-    neighborhoodId: string;
+    neighborhoodId: string | number;
     postcode: string;
   }) => Promise<void>;
   intendedActionText?: string | null;

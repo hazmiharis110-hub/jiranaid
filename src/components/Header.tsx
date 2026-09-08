@@ -197,7 +197,7 @@ export const Header: React.FC<HeaderProps> = ({
                     {currentUser.name}
                   </span>
                   <span className="text-[10px] text-[#5f7d66] font-semibold">
-                    ★ {currentUser.trustScore.toFixed(1)} Trust
+                    ★ {(currentUser.trustScore ?? 5.0).toFixed(1)} Trust
                   </span>
                 </div>
               </motion.button>

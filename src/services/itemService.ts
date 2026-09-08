@@ -1,40 +1,41 @@
 import api from './api';
-import type { ToolItem, ToolCategory, Review } from '../types';
+import type { Item, ToolCategory, Review, Booking } from '../types';
 
 export interface ItemFilters {
   category?: ToolCategory;
   search?: string;
   status?: string;
   maxFee?: string | number;
-  neighborhoodId?: string;
+  neighborhoodId?: number | string;
   sort?: string;
 }
 
 export interface ItemListResponse {
   success: boolean;
   total: number;
-  tools: ToolItem[];
+  tools: Item[];
 }
 
 export interface ItemDetailResponse {
   success: boolean;
-  tool: ToolItem;
+  tool: Item;
   reviews: Review[];
 }
 
 export interface CreateItemPayload {
   title: string;
-  brand: string;
-  model?: string;
-  category: Exclude<ToolCategory, 'All'>;
   description: string;
-  condition: ToolItem['condition'];
-  imageUrl: string;
-  maintenanceFeePerDay: number;
-  depositAmount: number;
-  maxDays: number;
-  instructions: string;
-  pickupNote: string;
+  price: number;
+  deposit: number;
+  category: string;
+  image_url: string;
+}
+
+export interface CreateBookingPayload {
+  item_id: number;
+  start_date: string;
+  end_date: string;
+  total_price: number;
 }
 
 export const itemService = {
@@ -53,7 +54,7 @@ export const itemService = {
       params.append('maxFee', String(filters.maxFee));
     }
     if (filters.neighborhoodId && filters.neighborhoodId !== 'all') {
-      params.append('neighborhoodId', filters.neighborhoodId);
+      params.append('neighborhoodId', String(filters.neighborhoodId));
     }
     if (filters.sort) {
       params.append('sort', filters.sort);
@@ -63,23 +64,28 @@ export const itemService = {
     return data;
   },
 
-  async getItemById(id: string): Promise<ItemDetailResponse> {
+  async getItemById(id: number | string): Promise<ItemDetailResponse> {
     const { data } = await api.get<ItemDetailResponse>(`/items/${id}`);
     return data;
   },
 
-  async createItem(payload: CreateItemPayload): Promise<{ success: boolean; tool: ToolItem; message?: string }> {
+  async createItem(payload: CreateItemPayload): Promise<{ success: boolean; tool: Item; message?: string }> {
     const { data } = await api.post('/items', payload);
     return data;
   },
 
-  async updateItem(id: string, payload: Partial<CreateItemPayload>): Promise<{ success: boolean; tool: ToolItem }> {
+  async updateItem(id: number | string, payload: Partial<CreateItemPayload>): Promise<{ success: boolean; tool: Item }> {
     const { data } = await api.put(`/items/${id}`, payload);
     return data;
   },
 
-  async deleteItem(id: string): Promise<{ success: boolean; message?: string }> {
+  async deleteItem(id: number | string): Promise<{ success: boolean; message?: string }> {
     const { data } = await api.delete(`/items/${id}`);
+    return data;
+  },
+
+  async createBooking(payload: CreateBookingPayload): Promise<{ success: boolean; booking: Booking; message?: string }> {
+    const { data } = await api.post('/bookings', payload);
     return data;
   },
 

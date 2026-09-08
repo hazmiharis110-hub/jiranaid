@@ -7,8 +7,8 @@ interface ReviewModalProps {
   onClose: () => void;
   request: BorrowRequest | null;
   onSubmitReview: (reviewData: {
-    toolId: string;
-    targetUserId: string;
+    toolId: string | number;
+    targetUserId: string | number;
     rating: number;
     careRating: number;
     punctualityRating: number;
@@ -35,8 +35,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
     setIsSubmitting(true);
     setTimeout(() => {
       onSubmitReview({
-        toolId: request.toolId,
-        targetUserId: request.ownerId,
+        toolId: request.toolId ?? request.item_id ?? 1,
+        targetUserId: request.ownerId ?? request.user_id ?? 1,
         rating,
         careRating,
         punctualityRating,

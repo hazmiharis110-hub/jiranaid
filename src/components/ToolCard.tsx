@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import {
   ShieldCheck,
-  MapPin,
   Calendar,
   Clock,
   AlertCircle,
@@ -116,15 +115,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
         </div>
 
         {/* Bottom Metadata Badges */}
-        <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-          {/* Distance Badge */}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-black/75 text-white backdrop-blur-xs shadow-xs">
-            <MapPin className="w-2.5 h-2.5 text-[#ded7c8]" />
-            {tool.distanceKm < 1
-              ? `${Math.round(tool.distanceKm * 1000)}m away`
-              : `${tool.distanceKm} km`}
-          </span>
-
+        <div className="absolute bottom-3 right-3 flex items-center pointer-events-none">
           {/* Category Chip */}
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#faf8f5]/95 text-[#4e4a43] border border-[#ded7c8] backdrop-blur-xs shadow-xs group-hover:border-[#c86d51]/40 transition-colors">
             <Tag className="w-2.5 h-2.5 text-[#5f7d66]" />
@@ -136,21 +127,10 @@ export const ToolCard: React.FC<ToolCardProps> = ({
       {/* Card Body */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
         <div>
-          {/* Brand & Condition */}
+          {/* Brand */}
           <div className="flex items-center justify-between gap-2 text-xs mb-1.5">
             <span className="font-bold text-[#8c867b] uppercase tracking-wider text-[10px]">
               {tool.brand}
-            </span>
-            <span
-              className={`text-[11px] font-medium px-2 py-0.5 rounded-md transition-colors ${
-                tool.condition === "Like New"
-                  ? "bg-[#eef4f0] text-[#496350] border border-[#5f7d66]/20"
-                  : tool.condition === "Good Condition"
-                    ? "bg-[#f4efe6] text-[#67635c] border border-[#ded7c8]"
-                    : "bg-[#faf8f5] text-[#8c867b] border border-[#ded7c8]"
-              }`}
-            >
-              {tool.condition}
             </span>
           </div>
 
@@ -185,7 +165,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
               </div>
             </div>
             <div className="text-[11px] font-bold text-[#5f7d66] bg-[#eef4f0] px-1.5 py-0.5 rounded-md border border-[#5f7d66]/20">
-              ★ {tool.ownerRating.toFixed(1)}
+              ★ {(tool.ownerRating ?? 5.0).toFixed(1)}
             </div>
           </div>
         </div>

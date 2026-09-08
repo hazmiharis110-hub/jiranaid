@@ -82,13 +82,13 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
   const avgCare =
     totalReviews > 0
       ? (
-          reviews.reduce((acc, r) => acc + r.careRating, 0) / totalReviews
+          reviews.reduce((acc, r) => acc + (r.careRating ?? r.rating ?? 5), 0) / totalReviews
         ).toFixed(1)
       : "5.0";
   const avgPunctuality =
     totalReviews > 0
       ? (
-          reviews.reduce((acc, r) => acc + r.punctualityRating, 0) /
+          reviews.reduce((acc, r) => acc + (r.punctualityRating ?? r.rating ?? 5), 0) /
           totalReviews
         ).toFixed(1)
       : "5.0";
@@ -154,7 +154,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
     if (preselectedToolId) {
       setSelectedToolId(preselectedToolId);
     } else if (tools.length > 0 && !selectedToolId) {
-      setSelectedToolId(tools[0].id);
+      setSelectedToolId(String(tools[0].id));
     }
     setIsSubmitModalOpen(true);
   };
@@ -164,15 +164,15 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
     if (!comment.trim()) return;
 
     setIsSubmitting(true);
-    const chosenTool = tools.find((t) => t.id === selectedToolId);
+    const chosenTool = tools.find((t) => String(t.id) === String(selectedToolId));
 
     try {
       await onSubmitFeedback({
-        toolId: chosenTool?.id,
+        toolId: chosenTool ? String(chosenTool.id) : undefined,
         toolTitle: chosenTool?.title || "Community Equipment",
         toolCategory: chosenTool?.category || "General Equipment",
         toolImage: chosenTool?.imageUrl,
-        targetUserId: chosenTool?.ownerId,
+        targetUserId: chosenTool?.ownerId ? String(chosenTool.ownerId) : undefined,
         targetUserName: chosenTool?.ownerName,
         rating,
         careRating,
@@ -333,7 +333,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() =>
-              handleOpenNewFeedbackModal(userReturnedRequests[0].toolId)
+              handleOpenNewFeedbackModal(String(userReturnedRequests[0].toolId ?? userReturnedRequests[0].item_id ?? ''))
             }
             className="px-4 py-2.5 rounded-xl bg-[#24211d] hover:bg-[#38342e] text-white font-bold text-xs shrink-0 self-start sm:self-auto flex items-center gap-1.5 transition-colors"
           >
@@ -545,7 +545,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
                     Was this feedback helpful?
                   </span>
                   <button
-                    onClick={() => handleHelpfulClick(rev.id)}
+                    onClick={() => handleHelpfulClick(String(rev.id))}
                     className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-colors ${
                       isVoted
                         ? "bg-[#e8efe9] text-[#5f7d66] font-bold"

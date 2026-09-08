@@ -32,14 +32,14 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
   if (!isOpen) return null;
 
   const [selectedId, setSelectedId] = useState<string>(
-    currentNeighborhood?.id || (neighborhoods?.[0]?.id ?? '')
+    String(currentNeighborhood?.id ?? (neighborhoods?.[0]?.id ?? ''))
   );
   const [postcodeInput, setPostcodeInput] = useState<string>(currentUser?.postcode || '53100');
   const [isVerifyingGps, setIsVerifyingGps] = useState<boolean>(false);
   const [gpsVerifiedSuccess, setGpsVerifiedSuccess] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const activePool = (neighborhoods || []).find((n) => n.id === selectedId) || neighborhoods?.[0];
+  const activePool = (neighborhoods || []).find((n) => String(n.id) === String(selectedId)) || neighborhoods?.[0];
 
   const handleSimulateGps = () => {
     setIsVerifyingGps(true);
@@ -48,7 +48,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
       setGpsVerifiedSuccess(true);
       // Auto-select nearest matching pool
       if (neighborhoods && neighborhoods.length > 0) {
-        setSelectedId(neighborhoods[0].id);
+        setSelectedId(String(neighborhoods[0].id));
         setPostcodeInput(neighborhoods[0].postcode);
       }
     }, 900);
@@ -174,12 +174,12 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
 
             <div className="max-h-48 overflow-y-auto space-y-2 pr-1">
               {filteredPools.map((pool) => {
-                const isSelected = selectedId === pool.id;
+                const isSelected = String(selectedId) === String(pool.id);
                 return (
                   <div
                     key={pool.id}
                     onClick={() => {
-                      setSelectedId(pool.id);
+                      setSelectedId(String(pool.id));
                       setPostcodeInput(pool.postcode);
                     }}
                     className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
@@ -229,7 +229,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                 <div className="flex items-center justify-center gap-1 text-[#5f7d66] mb-1">
                   <DollarSign className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-sm font-bold text-[#24211d]">RM {activePool.estimatedMoneySaved.toLocaleString()}</div>
+                <div className="text-sm font-bold text-[#24211d]">RM {(activePool.estimatedMoneySaved ?? 0).toLocaleString()}</div>
                 <div className="text-[10px] text-[#67635c]">Saved Locally</div>
               </div>
             </div>

@@ -107,7 +107,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           <div className="grid grid-cols-3 gap-2 p-3.5 rounded-xl bg-[#f4efe6] border border-[#ded7c8] text-center">
             <div>
               <div className="text-lg font-extrabold text-[#5f7d66]">
-                ★ {currentUser.trustScore.toFixed(1)}
+                ★ {(currentUser.trustScore ?? 5.0).toFixed(1)}
               </div>
               <div className="text-[10px] text-[#67635c] font-medium">
                 Trust Score
@@ -115,7 +115,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             </div>
             <div className="border-x border-[#ded7c8]">
               <div className="text-lg font-extrabold text-[#24211d]">
-                {currentUser.onTimeReturnRate}%
+                {currentUser.onTimeReturnRate ?? 100}%
               </div>
               <div className="text-[10px] text-[#67635c] font-medium">
                 On-Time Returns
@@ -123,7 +123,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             </div>
             <div>
               <div className="text-lg font-extrabold text-[#c86d51]">
-                {currentUser.totalBorrows + currentUser.totalLends}
+                {(currentUser.totalBorrows ?? 0) + (currentUser.totalLends ?? 0)}
               </div>
               <div className="text-[10px] text-[#67635c] font-medium">
                 Items Shared

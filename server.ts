@@ -5,6 +5,7 @@ import type {
   ToolItem,
   User,
   BorrowRequest,
+  Booking,
   ChatMessage,
   Neighborhood,
   Review,
@@ -873,7 +874,7 @@ async function startServer() {
       if (!found) {
         const emailName = email.split('@')[0];
         const formattedName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
-        found = {
+        const newUser: User = {
           id: `user-${Date.now()}`,
           name: formattedName || 'Verified Neighbor',
           email: email.trim(),
@@ -891,7 +892,8 @@ async function startServer() {
           badges: ['Verified Resident', 'Active Neighbor'],
           joinedDate: 'September 2025',
         };
-        users.push(found);
+        users.push(newUser);
+        found = newUser;
       }
     }
 
@@ -899,7 +901,7 @@ async function startServer() {
       return res.status(404).json({ success: false, message: 'User not found.' });
     }
 
-    currentUserId = found.id;
+    currentUserId = String(found.id);
     res.json({
       success: true,
       message: `Welcome back, ${found.name}!`,
@@ -951,9 +953,11 @@ async function startServer() {
     if (!name || !email) {
       return res.status(400).json({ success: false, message: 'Name and email are required.' });
     }
-    const neigh = neighborhoods.find((n) => n.id === neighborhoodId) || neighborhoods[0];
+    const neigh = neighborhoods.find((n) => String(n.id) === String(neighborhoodId)) || neighborhoods[0];
     const newUser: User = {
       id: `user-${Date.now()}`,
+      neighborhood_id: typeof neigh.id === 'number' ? neigh.id : 1,
+      role: 1,
       name,
       email,
       phone: phone || '+60 12-000 0000',
@@ -971,7 +975,7 @@ async function startServer() {
       joinedDate: 'September 2025',
     };
     users.push(newUser);
-    currentUserId = newUser.id;
+    currentUserId = String(newUser.id);
     res.status(201).json({ success: true, user: newUser });
   });
 
@@ -983,7 +987,7 @@ async function startServer() {
     let filtered = [...tools];
 
     if (neighborhoodId && neighborhoodId !== 'all') {
-      filtered = filtered.filter((t) => t.neighborhoodId === neighborhoodId);
+      filtered = filtered.filter((t) => String(t.neighborhoodId) === String(neighborhoodId));
     }
 
     if (category && category !== 'All') {
@@ -997,7 +1001,7 @@ async function startServer() {
     if (maxFee) {
       const max = Number(maxFee);
       if (!isNaN(max)) {
-        filtered = filtered.filter((t) => t.maintenanceFeePerDay <= max);
+        filtered = filtered.filter((t) => (t.price ?? t.maintenanceFeePerDay ?? 0) <= max);
       }
     }
 
@@ -1006,22 +1010,22 @@ async function startServer() {
       filtered = filtered.filter(
         (t) =>
           t.title.toLowerCase().includes(q) ||
-          t.brand.toLowerCase().includes(q) ||
-          t.description.toLowerCase().includes(q) ||
+          (t.brand && t.brand.toLowerCase().includes(q)) ||
+          (t.description && t.description.toLowerCase().includes(q)) ||
           t.category.toLowerCase().includes(q)
       );
     }
 
     // Sorting
     if (sort === 'distance') {
-      filtered.sort((a, b) => a.distanceKm - b.distanceKm);
+      filtered.sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
     } else if (sort === 'fee-low') {
-      filtered.sort((a, b) => a.maintenanceFeePerDay - b.maintenanceFeePerDay);
+      filtered.sort((a, b) => (a.price ?? a.maintenanceFeePerDay ?? 0) - (b.price ?? b.maintenanceFeePerDay ?? 0));
     } else if (sort === 'rating') {
-      filtered.sort((a, b) => b.ownerRating - a.ownerRating);
+      filtered.sort((a, b) => (b.ownerRating ?? 5) - (a.ownerRating ?? 5));
     } else {
       // newest
-      filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      filtered.sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
     }
 
     res.json({
@@ -1032,11 +1036,11 @@ async function startServer() {
   });
 
   app.get(['/api/tools/:id', '/api/items/:id'], (req, res) => {
-    const tool = tools.find((t) => t.id === req.params.id);
+    const tool = tools.find((t) => String(t.id) === String(req.params.id));
     if (!tool) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
     }
-    const toolReviews = reviews.filter((r) => r.toolId === tool.id);
+    const toolReviews = reviews.filter((r) => String(r.toolId ?? r.booking_id) === String(tool.id));
     res.json({
       success: true,
       tool,
@@ -1052,6 +1056,9 @@ async function startServer() {
       category,
       description,
       condition,
+      price,
+      deposit,
+      image_url,
       imageUrl,
       maintenanceFeePerDay,
       depositAmount,
@@ -1064,33 +1071,36 @@ async function startServer() {
       return res.status(400).json({ success: false, message: 'Please provide title, category, and description.' });
     }
 
-    const currentUser = users.find((u) => u.id === currentUserId);
-    if (!currentUser) {
-      return res.status(401).json({ success: false, message: 'Please log in to list a tool.' });
-    }
+    const currentUser = users.find((u) => String(u.id) === String(currentUserId)) || users[0];
+    const finalPrice = typeof price === 'number' ? price : (Number(maintenanceFeePerDay) || 0);
+    const finalDeposit = typeof deposit === 'number' ? deposit : (Number(depositAmount) || 20);
+    const finalImage = image_url || imageUrl || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+    const newId = tools.length > 0 ? Math.max(...tools.map((t) => Number(t.id) || 0)) + 1 : 1;
 
     const newTool: ToolItem = {
-      id: `tool-${Date.now()}`,
+      id: newId,
+      user_id: Number(currentUser.id) || 1,
       title,
+      description,
+      price: finalPrice,
+      deposit: finalDeposit,
+      category,
+      image_url: finalImage,
       brand: brand || 'Standard',
       model: model || '',
-      category,
-      description,
       condition: condition || 'Good Condition',
-      imageUrl:
-        imageUrl ||
-        'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
+      imageUrl: finalImage,
       ownerId: currentUser.id,
       ownerName: currentUser.name,
       ownerAvatar: currentUser.avatar,
-      ownerRating: currentUser.trustScore,
-      ownerBorrowsCount: currentUser.totalLends,
-      neighborhoodId: currentUser.neighborhoodId,
+      ownerRating: currentUser.trustScore ?? 5.0,
+      ownerBorrowsCount: currentUser.totalLends ?? 0,
+      neighborhoodId: currentUser.neighborhoodId ?? 1,
       distanceKm: 0.1,
-      locationSnippet: `${currentUser.neighborhoodName} (Your listing)`,
+      locationSnippet: `${currentUser.neighborhoodName || 'Community'} (Your listing)`,
       status: 'available',
-      maintenanceFeePerDay: Number(maintenanceFeePerDay) || 0,
-      depositAmount: Number(depositAmount) || 20,
+      maintenanceFeePerDay: finalPrice,
+      depositAmount: finalDeposit,
       maxDays: Number(maxDays) || 5,
       instructions: instructions || 'Please handle with care and return wiped clean.',
       pickupNote: pickupNote || 'Contact for pickup address after request confirmation.',
@@ -1098,7 +1108,9 @@ async function startServer() {
     };
 
     tools.unshift(newTool);
-    currentUser.totalLends += 1;
+    if (currentUser.totalLends !== undefined) {
+      currentUser.totalLends += 1;
+    }
 
     res.status(201).json({
       success: true,
@@ -1108,14 +1120,29 @@ async function startServer() {
   });
 
   app.put(['/api/tools/:id', '/api/items/:id'], (req, res) => {
-    const index = tools.findIndex((t) => t.id === req.params.id);
+    const index = tools.findIndex((t) => String(t.id) === String(req.params.id));
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
     }
 
+    const { title, description, category, price, deposit, image_url, maintenanceFeePerDay, depositAmount, imageUrl } = req.body;
+    const existing = tools[index];
+    const finalPrice = typeof price === 'number' ? price : (typeof maintenanceFeePerDay === 'number' ? maintenanceFeePerDay : (existing.price ?? existing.maintenanceFeePerDay ?? 0));
+    const finalDeposit = typeof deposit === 'number' ? deposit : (typeof depositAmount === 'number' ? depositAmount : (existing.deposit ?? existing.depositAmount ?? 0));
+    const finalImage = image_url || imageUrl || existing.image_url || existing.imageUrl;
+
     const updated = {
-      ...tools[index],
+      ...existing,
       ...req.body,
+      title: title ?? existing.title,
+      description: description ?? existing.description,
+      category: category ?? existing.category,
+      price: finalPrice,
+      deposit: finalDeposit,
+      image_url: finalImage,
+      maintenanceFeePerDay: finalPrice,
+      depositAmount: finalDeposit,
+      imageUrl: finalImage,
     };
     tools[index] = updated;
 
@@ -1127,7 +1154,7 @@ async function startServer() {
   });
 
   app.delete(['/api/tools/:id', '/api/items/:id'], (req, res) => {
-    const index = tools.findIndex((t) => t.id === req.params.id);
+    const index = tools.findIndex((t) => String(t.id) === String(req.params.id));
     if (index === -1) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
     }
@@ -1166,80 +1193,85 @@ async function startServer() {
     });
   });
 
-  app.post('/api/borrow-requests', (req, res) => {
-    const { toolId, startDate, endDate, purposeNote } = req.body;
-    const tool = tools.find((t) => t.id === toolId);
+  app.post(['/api/borrow-requests', '/api/bookings'], (req, res) => {
+    const { item_id, toolId, start_date, startDate, end_date, endDate, total_price, purposeNote } = req.body;
+    const targetId = item_id ?? toolId;
+    const tool = tools.find((t) => String(t.id) === String(targetId));
     if (!tool) {
       return res.status(404).json({ success: false, message: 'Tool not found.' });
     }
 
-    const currentUser = users.find((u) => u.id === currentUserId);
-    if (!currentUser) {
-      return res.status(401).json({ success: false, message: 'Please log in to submit a borrow request.' });
-    }
-
-    // Calculate duration in days
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    const currentUser = users.find((u) => String(u.id) === String(currentUserId)) || users[0];
+    const sDate = start_date || startDate || new Date().toISOString().split('T')[0];
+    const eDate = end_date || endDate || sDate;
+    const start = new Date(sDate);
+    const end = new Date(eDate);
     const diffTime = Math.abs(end.getTime() - start.getTime());
     const daysCount = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
 
-    const maintenanceFee = tool.maintenanceFeePerDay * daysCount;
-    const depositFee = tool.depositAmount;
+    const dailyRate = tool.price ?? tool.maintenanceFeePerDay ?? 0;
+    const maintenanceFee = typeof total_price === 'number' ? total_price : dailyRate * daysCount;
+    const depositFee = tool.deposit ?? tool.depositAmount ?? 0;
     const totalPaid = maintenanceFee + depositFee;
 
-    const newRequest: BorrowRequest = {
-      id: `req-${Date.now()}`,
+    const newBooking: Booking = {
+      id: Date.now(),
+      item_id: Number(tool.id) || 1,
+      user_id: Number(currentUser.id) || 1,
+      start_date: sDate,
+      end_date: eDate,
+      total_price: maintenanceFee,
+      status: 'pending',
       toolId: tool.id,
       toolTitle: tool.title,
-      toolImage: tool.imageUrl,
+      toolImage: tool.image_url || tool.imageUrl,
       toolCategory: tool.category,
-      ownerId: tool.ownerId,
+      ownerId: tool.ownerId ?? tool.user_id,
       ownerName: tool.ownerName,
       borrowerId: currentUser.id,
       borrowerName: currentUser.name,
       borrowerAvatar: currentUser.avatar,
-      borrowerTrust: currentUser.trustScore,
-      startDate,
-      endDate,
+      borrowerTrust: currentUser.trustScore ?? 5.0,
+      startDate: sDate,
+      endDate: eDate,
       daysCount,
       maintenanceFee,
       depositFee,
       totalPaid,
       depositRefunded: false,
-      status: 'pending',
-      purposeNote: purposeNote || 'Community household project use.',
+      purposeNote: purposeNote || 'Community household equipment loan.',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    borrowRequests.unshift(newRequest);
+    borrowRequests.unshift(newBooking);
 
     // Also send an automated coordination chat message
     chatMessages.push({
       id: `msg-${Date.now()}`,
-      requestId: newRequest.id,
+      requestId: String(newBooking.id),
       toolId: tool.id,
       toolTitle: tool.title,
       senderId: currentUser.id,
       senderName: currentUser.name,
-      senderAvatar: currentUser.avatar,
-      receiverId: tool.ownerId,
-      receiverName: tool.ownerName,
-      message: `Hi ${tool.ownerName}! I've submitted a borrow request for "${tool.title}" (${startDate} to ${endDate}). Note: ${purposeNote || 'Looking forward to borrowing!'}`,
+      senderAvatar: currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+      receiverId: tool.ownerId ?? tool.user_id ?? 1,
+      receiverName: tool.ownerName || 'Neighbor',
+      message: `Hi ${tool.ownerName || 'Neighbor'}! I've submitted a borrow request for "${tool.title}" (${sDate} to ${eDate}).`,
       timestamp: 'Just now',
     });
 
     res.status(201).json({
       success: true,
       message: 'Borrow request sent to owner!',
-      request: newRequest,
+      booking: newBooking,
+      request: newBooking,
     });
   });
 
   app.patch('/api/borrow-requests/:id/status', (req, res) => {
     const { status, action } = req.body;
-    const requestIndex = borrowRequests.findIndex((r) => r.id === req.params.id);
+    const requestIndex = borrowRequests.findIndex((r) => String(r.id) === String(req.params.id));
     if (requestIndex === -1) {
       return res.status(404).json({ success: false, message: 'Request not found.' });
     }
@@ -1252,17 +1284,17 @@ async function startServer() {
       // Mark tool as reserved or soon borrowed
     } else if (action === 'pickup') {
       newStatus = 'active';
-      const t = tools.find((x) => x.id === currentReq.toolId);
+      const t = tools.find((x) => String(x.id) === String(currentReq.toolId));
       if (t) t.status = 'borrowed';
     } else if (action === 'return') {
       newStatus = 'returned';
       currentReq.depositRefunded = true; // Auto release deposit upon verified safe return
-      const t = tools.find((x) => x.id === currentReq.toolId);
+      const t = tools.find((x) => String(x.id) === String(currentReq.toolId));
       if (t) t.status = 'available';
 
       // Update borrow count
-      const borrower = users.find((u) => u.id === currentReq.borrowerId);
-      if (borrower) borrower.totalBorrows += 1;
+      const borrower = users.find((u) => String(u.id) === String(currentReq.borrowerId));
+      if (borrower && borrower.totalBorrows !== undefined) borrower.totalBorrows += 1;
     } else if (action === 'reject') {
       newStatus = 'rejected';
       currentReq.depositRefunded = true;
@@ -1282,9 +1314,9 @@ async function startServer() {
   // Neighborhood Chat & Messages
   // ----------------------------------------
   app.get('/api/messages', (req, res) => {
-    const currentUser = users.find((u) => u.id === currentUserId) || users[0];
+    const currentUser = users.find((u) => String(u.id) === String(currentUserId)) || users[0];
     const userMessages = chatMessages.filter(
-      (m) => m.senderId === currentUser.id || m.receiverId === currentUser.id
+      (m) => String(m.senderId) === String(currentUser.id) || String(m.receiverId) === String(currentUser.id)
     );
     res.json({
       success: true,
@@ -1297,7 +1329,7 @@ async function startServer() {
     if (!receiverId || !message) {
       return res.status(400).json({ success: false, message: 'Receiver and message are required.' });
     }
-    const currentUser = users.find((u) => u.id === currentUserId) || users[0];
+    const currentUser = users.find((u) => String(u.id) === String(currentUserId)) || users[0];
 
     const newMsg: ChatMessage = {
       id: `msg-${Date.now()}`,
@@ -1306,7 +1338,7 @@ async function startServer() {
       toolTitle,
       senderId: currentUser.id,
       senderName: currentUser.name,
-      senderAvatar: currentUser.avatar,
+      senderAvatar: currentUser.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
       receiverId,
       receiverName: receiverName || 'Neighbor',
       message: message.trim(),
@@ -1345,12 +1377,13 @@ async function startServer() {
       comment,
       wouldRecommend,
     } = req.body;
-    const currentUser = users.find((u) => u.id === currentUserId) || users[0];
-    const tool = toolId ? tools.find((t) => t.id === toolId) : undefined;
-    const targetUser = targetUserId ? users.find((u) => u.id === targetUserId) : undefined;
+    const currentUser = users.find((u) => String(u.id) === String(currentUserId)) || users[0];
+    const tool = toolId ? tools.find((t) => String(t.id) === String(toolId)) : undefined;
+    const targetUser = targetUserId ? users.find((u) => String(u.id) === String(targetUserId)) : undefined;
 
     const newReview: Review = {
-      id: `rev-${Date.now()}`,
+      id: Date.now(),
+      booking_id: 1,
       toolId: tool?.id || toolId || '',
       toolTitle: toolTitle || tool?.title || 'Community Equipment',
       toolCategory: toolCategory || tool?.category || 'General Equipment',
@@ -1379,7 +1412,7 @@ async function startServer() {
   });
 
   app.post('/api/reviews/:id/helpful', (req, res) => {
-    const rev = reviews.find((r) => r.id === req.params.id);
+    const rev = reviews.find((r) => String(r.id) === String(req.params.id));
     if (!rev) {
       return res.status(404).json({ success: false, message: 'Review not found' });
     }
@@ -1397,7 +1430,7 @@ async function startServer() {
     const totalTools = tools.length;
     const availableTools = tools.filter((t) => t.status === 'available').length;
     const activeBorrows = borrowRequests.filter((r) => r.status === 'active' || r.status === 'pending').length;
-    const totalSavedRM = tools.reduce((acc, t) => acc + (t.depositAmount * 2), 16400);
+    const totalSavedRM = tools.reduce((acc, t) => acc + ((t.depositAmount ?? t.deposit ?? 20) * 2), 16400);
 
     res.json({
       success: true,

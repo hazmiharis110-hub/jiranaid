@@ -1,10 +1,10 @@
 import { create } from 'zustand';
-import type { ToolItem, ToolCategory } from '../types';
+import type { Item, ToolCategory } from '../types';
 import itemService, { type CreateItemPayload, type ItemFilters } from '../services/itemService';
 
 interface ItemState {
-  allTools: ToolItem[];
-  tools: ToolItem[];
+  allTools: Item[];
+  tools: Item[];
   isLoading: boolean;
   error: string | null;
   filters: ItemFilters;
@@ -26,9 +26,9 @@ interface ItemState {
   setSortBy: (sort: string) => void;
   setMaxFeeFilter: (maxFee: string) => void;
   resetFilters: () => void;
-  createTool: (payload: CreateItemPayload) => Promise<ToolItem>;
-  updateTool: (id: string, payload: Partial<CreateItemPayload>) => Promise<ToolItem>;
-  deleteTool: (id: string) => Promise<void>;
+  createTool: (payload: CreateItemPayload) => Promise<Item>;
+  updateTool: (id: number | string, payload: Partial<CreateItemPayload>) => Promise<Item>;
+  deleteTool: (id: number | string) => Promise<void>;
   fetchStats: () => Promise<void>;
 }
 
@@ -138,8 +138,8 @@ export const useItemStore = create<ItemState>((set, get) => ({
     try {
       const res = await itemService.updateItem(id, payload);
       set((state) => ({
-        allTools: state.allTools.map((t) => (t.id === id ? res.tool : t)),
-        tools: state.tools.map((t) => (t.id === id ? res.tool : t)),
+        allTools: state.allTools.map((t) => (String(t.id) === String(id) ? res.tool : t)),
+        tools: state.tools.map((t) => (String(t.id) === String(id) ? res.tool : t)),
         isLoading: false,
       }));
       return res.tool;
@@ -154,8 +154,8 @@ export const useItemStore = create<ItemState>((set, get) => ({
     try {
       await itemService.deleteItem(id);
       set((state) => ({
-        allTools: state.allTools.filter((t) => t.id !== id),
-        tools: state.tools.filter((t) => t.id !== id),
+        allTools: state.allTools.filter((t) => String(t.id) !== String(id)),
+        tools: state.tools.filter((t) => String(t.id) !== String(id)),
         isLoading: false,
       }));
     } catch (err: any) {

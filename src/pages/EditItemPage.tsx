@@ -100,17 +100,11 @@ export const EditItemPage: React.FC = () => {
       <ItemForm
         initialData={{
           title: tool.title,
-          brand: tool.brand,
-          model: tool.model || '',
-          category: tool.category,
-          description: tool.description,
-          condition: tool.condition,
-          imageUrl: tool.imageUrl,
-          maintenanceFeePerDay: tool.maintenanceFeePerDay,
-          depositAmount: tool.depositAmount,
-          maxDays: tool.maxDays,
-          instructions: tool.instructions || '',
-          pickupNote: tool.pickupNote || '',
+          category: tool.category as any,
+          description: tool.description || '',
+          price: tool.price ?? tool.maintenanceFeePerDay ?? 0,
+          deposit: tool.deposit ?? tool.depositAmount ?? 0,
+          image_url: tool.image_url || tool.imageUrl || '',
         }}
         onSubmit={handleSubmit}
         submitButtonText="Save Changes"

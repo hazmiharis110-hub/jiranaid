@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
 import {
-  Wrench,
-  Camera,
-  CheckCircle2,
   DollarSign,
-  Shield,
   Tag,
-  UploadCloud,
   Sparkles,
   Info,
-  MapPin,
-  Calendar,
   AlertCircle,
+  FileText,
+  Image as ImageIcon,
 } from 'lucide-react';
-import type { ToolCategory, ToolCondition, ToolItem } from '../../types';
+import type { ToolCategory } from '../../types';
 import { TOOL_IMAGE_PRESETS } from '../../data/presets';
 
 export const CATEGORIES: Exclude<ToolCategory, 'All'>[] = [
@@ -27,29 +22,21 @@ export const CATEGORIES: Exclude<ToolCategory, 'All'>[] = [
   'Woodworking',
 ];
 
-export const CONDITIONS: ToolCondition[] = [
-  'Like New',
-  'Good Condition',
-  'Fair / Workhorse',
-];
-
 export interface ItemFormData {
   title: string;
-  brand: string;
-  model: string;
   category: Exclude<ToolCategory, 'All'>;
   description: string;
-  condition: ToolCondition;
-  imageUrl: string;
-  maintenanceFeePerDay: number;
-  depositAmount: number;
-  maxDays: number;
-  instructions: string;
-  pickupNote: string;
+  price: number;
+  deposit: number;
+  image_url: string;
 }
 
 interface ItemFormProps {
-  initialData?: Partial<ItemFormData>;
+  initialData?: Partial<ItemFormData> & {
+    imageUrl?: string;
+    maintenanceFeePerDay?: number;
+    depositAmount?: number;
+  };
   onSubmit: (data: ItemFormData) => Promise<void>;
   submitButtonText?: string;
   isSubmitting?: boolean;
@@ -68,32 +55,26 @@ export const ItemForm: React.FC<ItemFormProps> = ({
   isEditMode = false,
 }) => {
   const [title, setTitle] = useState(initialData?.title || '');
-  const [brand, setBrand] = useState(initialData?.brand || '');
-  const [model, setModel] = useState(initialData?.model || '');
   const [category, setCategory] = useState<Exclude<ToolCategory, 'All'>>(
     initialData?.category || 'Power Tools'
   );
   const [description, setDescription] = useState(initialData?.description || '');
-  const [condition, setCondition] = useState<ToolCondition>(
-    initialData?.condition || 'Good Condition'
+  const [price, setPrice] = useState<number>(
+    typeof initialData?.price === 'number'
+      ? initialData.price
+      : typeof initialData?.maintenanceFeePerDay === 'number'
+      ? initialData.maintenanceFeePerDay
+      : 5
+  );
+  const [deposit, setDeposit] = useState<number>(
+    typeof initialData?.deposit === 'number'
+      ? initialData.deposit
+      : typeof initialData?.depositAmount === 'number'
+      ? initialData.depositAmount
+      : 30
   );
   const [imageUrl, setImageUrl] = useState(
-    initialData?.imageUrl || TOOL_IMAGE_PRESETS[0].url
-  );
-  const [maintenanceFeePerDay, setMaintenanceFeePerDay] = useState<number>(
-    typeof initialData?.maintenanceFeePerDay === 'number' ? initialData.maintenanceFeePerDay : 5
-  );
-  const [depositAmount, setDepositAmount] = useState<number>(
-    typeof initialData?.depositAmount === 'number' ? initialData.depositAmount : 50
-  );
-  const [maxDays, setMaxDays] = useState<number>(
-    typeof initialData?.maxDays === 'number' ? initialData.maxDays : 3
-  );
-  const [instructions, setInstructions] = useState(
-    initialData?.instructions || 'Please clean thoroughly and recharge battery before returning.'
-  );
-  const [pickupNote, setPickupNote] = useState(
-    initialData?.pickupNote || 'Flexible pickup on weekday evenings or weekend mornings.'
+    initialData?.image_url || initialData?.imageUrl || TOOL_IMAGE_PRESETS[0].url
   );
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -101,8 +82,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
   const handleApplyPreset = (preset: (typeof TOOL_IMAGE_PRESETS)[0]) => {
     setTitle(preset.title);
     setCategory(preset.category as Exclude<ToolCategory, 'All'>);
-    setBrand(preset.brand);
     setImageUrl(preset.url);
+    if (!description) {
+      setDescription(`Well-maintained ${preset.title.toLowerCase()} ready for neighborhood sharing.`);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -118,27 +101,21 @@ export const ItemForm: React.FC<ItemFormProps> = ({
       return;
     }
     if (!imageUrl.trim()) {
-      setErrorMsg('Please provide or select a photo.');
+      setErrorMsg('Please provide or select a photo URL.');
       return;
     }
 
     try {
       await onSubmit({
         title: title.trim(),
-        brand: brand.trim() || 'Standard',
-        model: model.trim(),
         category,
         description: description.trim(),
-        condition,
-        imageUrl: imageUrl.trim(),
-        maintenanceFeePerDay: Number(maintenanceFeePerDay) || 0,
-        depositAmount: Number(depositAmount) || 0,
-        maxDays: Number(maxDays) || 3,
-        instructions: instructions.trim(),
-        pickupNote: pickupNote.trim(),
+        price: Number(price) >= 0 ? Number(price) : 0,
+        deposit: Number(deposit) >= 0 ? Number(deposit) : 0,
+        image_url: imageUrl.trim(),
       });
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to save tool. Please try again.');
+      setErrorMsg(err.message || 'Failed to save tool listing. Please try again.');
     }
   };
 
@@ -196,91 +173,45 @@ export const ItemForm: React.FC<ItemFormProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-              Tool Name / Title *
+              Title / Equipment Name *
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., Kärcher K2 Compact High Pressure Washer"
+              placeholder="e.g., Kärcher K3 High Pressure Water Jet"
               required
               className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Category *
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value as Exclude<ToolCategory, 'All'>)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-              >
-                {CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Condition *
-              </label>
-              <select
-                value={condition}
-                onChange={(e) => setCondition(e.target.value as ToolCondition)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-              >
-                {CONDITIONS.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Brand / Manufacturer
-              </label>
-              <input
-                type="text"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-                placeholder="e.g., Bosch, Makita, Kärcher"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Model / Specs
-              </label>
-              <input
-                type="text"
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                placeholder="e.g., 18V Brushless, 110 Bar"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-              />
-            </div>
+          <div>
+            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+              Category *
+            </label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as Exclude<ToolCategory, 'All'>)}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-              Description & What's Included *
+            <label className="block text-xs font-semibold text-[#4e4a43] mb-1 flex items-center justify-between">
+              <span>Description *</span>
+              <span className="text-[11px] text-[#8a857b] font-normal">Details, accessories, condition</span>
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              placeholder="Describe accessories (battery, charger, extra nozzle), current working condition, and recommended use..."
+              rows={4}
+              placeholder="Describe what is included, its operating condition, and any useful tips for neighbors..."
               required
               className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
             />
@@ -288,30 +219,38 @@ export const ItemForm: React.FC<ItemFormProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-              Photo URL *
+              Photo URL (image_url) *
             </label>
-            <input
-              type="url"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="https://..."
-              required
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-            />
+            <div className="relative">
+              <span className="absolute left-3 top-2.5 text-[#8a857b]">
+                <ImageIcon className="w-4 h-4" />
+              </span>
+              <input
+                type="url"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://images.unsplash.com/..."
+                required
+                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              />
+            </div>
+            <p className="text-[11px] text-[#8a857b] mt-1">
+              Paste a photo URL or choose from one of the quick presets above.
+            </p>
           </div>
         </div>
 
-        {/* Pricing, Deposit & Loan Duration */}
+        {/* Pricing & Deposit */}
         <div className="space-y-4">
           <h4 className="text-sm font-bold text-[#24211d] border-b border-[#ede7db] pb-2 flex items-center gap-2">
             <DollarSign className="w-4 h-4 text-[#5f7d66]" />
-            <span>2. Sharing Terms & Security Deposit</span>
+            <span>2. Daily Fee & Security Deposit</span>
           </h4>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Daily Fee (RM)
+                Daily Price (RM) *
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-2.5 text-xs font-bold text-[#8a857b]">
@@ -320,18 +259,19 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                 <input
                   type="number"
                   min="0"
-                  max="150"
-                  value={maintenanceFeePerDay}
-                  onChange={(e) => setMaintenanceFeePerDay(Number(e.target.value))}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                  max="500"
+                  step="0.5"
+                  value={price}
+                  onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
                 />
               </div>
-              <p className="text-[10px] text-[#8a857b] mt-1">Set 0 for free community loan</p>
+              <p className="text-[10px] text-[#8a857b] mt-1">Daily maintenance fee (Set 0 for free loan)</p>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Refundable Deposit (RM)
+                Refundable Deposit (RM) *
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-2.5 text-xs font-bold text-[#8a857b]">
@@ -340,63 +280,15 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                 <input
                   type="number"
                   min="0"
-                  max="1000"
-                  value={depositAmount}
-                  onChange={(e) => setDepositAmount(Number(e.target.value))}
-                  className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                  max="2000"
+                  step="1"
+                  value={deposit}
+                  onChange={(e) => setDeposit(parseFloat(e.target.value) || 0)}
+                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
                 />
               </div>
-              <p className="text-[10px] text-[#8a857b] mt-1">Released upon safe return</p>
+              <p className="text-[10px] text-[#8a857b] mt-1">Refunded automatically upon safe return</p>
             </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-                Max Days Allowed
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="14"
-                value={maxDays}
-                onChange={(e) => setMaxDays(Number(e.target.value))}
-                className="w-full px-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-              />
-              <p className="text-[10px] text-[#8a857b] mt-1">Standard is 3-5 days</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Safety & Pickup Guidelines */}
-        <div className="space-y-4">
-          <h4 className="text-sm font-bold text-[#24211d] border-b border-[#ede7db] pb-2 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-[#496350]" />
-            <span>3. Safety & Pickup Guidelines</span>
-          </h4>
-
-          <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-              Safety / Care Instructions
-            </label>
-            <input
-              type="text"
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              placeholder="e.g. Wear eye protection; do not expose motor to heavy rain"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
-              Pickup & Return Note
-            </label>
-            <input
-              type="text"
-              value={pickupNote}
-              onChange={(e) => setPickupNote(e.target.value)}
-              placeholder="e.g. Porch pickup available anytime after 6 PM"
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
-            />
           </div>
         </div>
 
@@ -452,18 +344,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               alt={title || 'Preview'}
               className="w-full h-full object-cover"
               onError={(e) => {
-                // fallback if broken image
                 (e.target as HTMLImageElement).src = TOOL_IMAGE_PRESETS[0].url;
               }}
             />
-            <div className="absolute top-2.5 left-2.5 flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#24211d]/80 text-[#faf8f5] text-[11px] font-semibold backdrop-blur-xs">
-              <MapPin className="w-3 h-3 text-[#c86d51]" />
-              <span>300m away</span>
-            </div>
-            <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/95 text-[#24211d]">
-                {condition}
-              </span>
+            <div className="absolute bottom-2.5 right-2.5">
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#5f7d66] text-white">
                 Available
               </span>
@@ -475,13 +359,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               {category}
             </span>
             <h3 className="font-bold text-base text-[#24211d] mt-1 line-clamp-1">
-              {title || 'Your Tool Title Here'}
+              {title || 'Your Equipment Title'}
             </h3>
-            <p className="text-xs text-[#67635c] line-clamp-1 mt-0.5">
-              {brand || 'Brand'} {model ? `• ${model}` : ''}
-            </p>
-            <p className="text-xs text-[#8a857b] line-clamp-2 mt-2 leading-relaxed">
-              {description || 'Your description will show here for neighbors to understand its condition and included parts.'}
+            <p className="text-xs text-[#8a857b] line-clamp-3 mt-2 leading-relaxed">
+              {description || 'Provide a helpful description so neighbors know what is included and how to use it safely.'}
             </p>
           </div>
 
@@ -489,19 +370,19 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <div>
               <div className="flex items-baseline gap-1">
                 <span className="text-lg font-black text-[#24211d]">
-                  {maintenanceFeePerDay === 0 ? 'Free' : `RM${maintenanceFeePerDay}`}
+                  {price === 0 ? 'Free' : `RM${price}`}
                 </span>
-                {maintenanceFeePerDay > 0 && (
+                {price > 0 && (
                   <span className="text-[11px] font-medium text-[#67635c]">/day</span>
                 )}
               </div>
               <span className="text-[10px] text-[#8a857b] block">
-                RM{depositAmount} deposit (refunded)
+                RM{deposit} deposit (refunded)
               </span>
             </div>
 
-            <span className="text-[11px] font-bold text-[#5f7d66]">
-              Max {maxDays} days
+            <span className="text-xs font-bold text-[#5f7d66] bg-[#5f7d66]/10 px-2.5 py-1 rounded-lg">
+              Verified Escrow
             </span>
           </div>
         </div>
@@ -510,10 +391,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
         <div className="p-4 rounded-xl bg-[#f4efe6] border border-[#ded7c8] text-xs text-[#67635c] space-y-1.5">
           <div className="flex items-center gap-1.5 font-bold text-[#24211d]">
             <Info className="w-3.5 h-3.5 text-[#5f7d66]" />
-            <span>Community Lending Tip</span>
+            <span>PostgreSQL Schema Aligned</span>
           </div>
           <p>
-            Tools with clear photos and reasonable deposits receive 4x more borrowing requests. Your items are only shared with verified neighbors in your geofenced area.
+            This listing strictly stores <code>title</code>, <code>category</code>, <code>description</code>, <code>price</code>, <code>deposit</code>, and <code>image_url</code> directly linked to your user account.
           </p>
         </div>
       </div>

@@ -34,7 +34,7 @@ interface LenderDashboardProps {
   borrowRequests: BorrowRequest[];
   onOpenAddModal: () => void;
   onUpdateStatus: (
-    requestId: string,
+    requestId: string | number,
     status: string,
     action?: string,
   ) => Promise<void>;
@@ -158,8 +158,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   // Open Edit Tool Modal
   const handleOpenEditTool = (tool: ToolItem) => {
     setEditingTool(tool);
-    setEditDailyFee(tool.maintenanceFeePerDay);
-    setEditDeposit(tool.depositAmount);
+    setEditDailyFee(tool.price ?? tool.maintenanceFeePerDay ?? 0);
+    setEditDeposit(tool.deposit ?? tool.depositAmount ?? 0);
     setEditPickupNote(tool.pickupNote || "");
     setIsEditModalOpen(true);
   };
@@ -173,25 +173,24 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          maintenanceFeePerDay: Number(editDailyFee),
-          depositAmount: Number(editDeposit),
+          maintenanceFeePerDay: editDailyFee,
+          depositAmount: editDeposit,
           pickupNote: editPickupNote,
         }),
       });
       if (res.ok) {
-        setIsEditModalOpen(false);
-        setEditingTool(null);
         onToolUpdated();
+        setIsEditModalOpen(false);
       }
     } catch (err) {
-      console.error("Failed to save tool edits:", err);
+      console.error("Failed to update tool listing:", err);
     } finally {
       setIsUpdatingTool(false);
     }
   };
 
   // Delete Tool
-  const handleDeleteTool = async (toolId: string, title: string) => {
+  const handleDeleteTool = async (toolId: string | number, title: string) => {
     if (
       !window.confirm(
         `Are you sure you want to remove "${title}" from your lending catalog?`,
@@ -275,7 +274,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </span>
                 <span className="hidden sm:inline">•</span>
                 <span className="text-[#5f7d66] font-semibold">
-                  ★ {currentUser.trustScore.toFixed(1)} Lender Trust
+                  ★ {(currentUser.trustScore ?? 5.0).toFixed(1)} Lender Trust
                 </span>
                 <span className="hidden sm:inline">•</span>
                 <span>
@@ -541,7 +540,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                               <ShieldCheck className="w-3.5 h-3.5 text-[#5f7d66]" />
                             </div>
                             <span className="text-xs text-[#67635c]">
-                              Neighbor • ★ {req.borrowerTrust.toFixed(1)} Trust
+                              Neighbor • ★ {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
                             </span>
                           </div>
                         </div>
@@ -762,7 +761,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                               {req.borrowerName}
                             </span>
                             <span className="text-[11px] text-[#5f7d66] font-semibold">
-                              ★ {req.borrowerTrust.toFixed(1)} Trust
+                              ★ {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
                             </span>
                           </div>
                         </div>

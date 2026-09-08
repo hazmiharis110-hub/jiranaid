@@ -29,7 +29,7 @@ export const BorrowingPage: React.FC = () => {
   }, [currentUser]);
 
   const handleUpdateStatus = async (
-    requestId: string,
+    requestId: string | number,
     status: string,
     action: string
   ) => {

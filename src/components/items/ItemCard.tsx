@@ -3,16 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import {
   ShieldCheck,
-  MapPin,
-  Calendar,
-  Clock,
   Eye,
   Heart,
-  Sparkles,
   ArrowRight,
 } from 'lucide-react';
 import type { ToolItem } from '../../types';
-import { Badge } from '../common/Badge';
 
 interface ItemCardProps {
   tool: ToolItem;
@@ -28,7 +23,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
 
-  const isAvailable = tool.status === 'available';
+  const isAvailable = (tool.status ?? 'available') === 'available';
+  const displayImage = tool.image_url || tool.imageUrl || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+  const dailyPrice = tool.price ?? tool.maintenanceFeePerDay ?? 0;
+  const depositAmount = tool.deposit ?? tool.depositAmount ?? 0;
 
   const handleToggleSave = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -61,10 +59,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         {/* Image Container with Zoom */}
         <div className="relative aspect-4/3 w-full bg-[#f1ede4] overflow-hidden select-none">
           <img
-            src={tool.imageUrl}
+            src={displayImage}
             alt={tool.title}
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             loading="lazy"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src =
+                'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+            }}
           />
 
           {/* Hover Overlay */}
@@ -76,12 +78,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
               <Eye className="w-3.5 h-3.5 text-[#c86d51]" />
               <span>View Details</span>
             </div>
-          </div>
-
-          {/* Distance Indicator Pill */}
-          <div className="absolute top-2.5 left-2.5 flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#24211d]/80 text-[#faf8f5] text-[11px] font-semibold backdrop-blur-xs shadow-xs">
-            <MapPin className="w-3 h-3 text-[#c86d51]" />
-            <span>{tool.distanceKm < 1 ? `${Math.round(tool.distanceKm * 1000)}m` : `${tool.distanceKm.toFixed(1)}km`} away</span>
           </div>
 
           {/* Save / Favorite Button */}
@@ -98,11 +94,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             />
           </button>
 
-          {/* Bottom Status & Condition Tag */}
-          <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/95 text-[#24211d] shadow-2xs backdrop-blur-xs">
-              {tool.condition}
-            </span>
+          {/* Bottom Status Tag */}
+          <div className="absolute bottom-2.5 right-2.5 pointer-events-none">
             <span
               className={`text-[10px] font-bold px-2 py-0.5 rounded-md shadow-2xs backdrop-blur-xs ${
                 isAvailable
@@ -119,39 +112,45 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         <div className="p-4 flex-1 flex flex-col justify-between">
           <div>
             {/* Category Tag */}
-            <div className="flex items-center justify-between text-xs text-[#67635c] mb-1.5">
+            <div className="text-xs text-[#67635c] mb-1.5">
               <span className="font-semibold uppercase tracking-wider text-[10px] text-[#c86d51]">
                 {tool.category}
               </span>
-              <span className="text-[11px] font-medium text-[#8a857b]">
-                Max {tool.maxDays} days
-              </span>
             </div>
 
-            {/* Title & Brand */}
+            {/* Title */}
             <h3 className="font-bold text-sm sm:text-base text-[#24211d] group-hover:text-[#c86d51] transition-colors line-clamp-1">
               {tool.title}
             </h3>
-            <p className="text-xs text-[#67635c] line-clamp-1 mt-0.5">
-              {tool.brand} {tool.model ? `• ${tool.model}` : ''}
-            </p>
+            {tool.brand ? (
+              <p className="text-xs text-[#67635c] line-clamp-1 mt-0.5">
+                {tool.brand} {tool.model ? `• ${tool.model}` : ''}
+              </p>
+            ) : (
+              <p className="text-xs text-[#8a857b] line-clamp-1 mt-0.5">
+                {tool.description}
+              </p>
+            )}
           </div>
 
           {/* Owner Info & Rating */}
           <div className="pt-3 mt-3 border-t border-[#ede7db] flex items-center justify-between text-xs text-[#67635c]">
             <div className="flex items-center gap-2 min-w-0">
               <img
-                src={tool.ownerAvatar}
-                alt={tool.ownerName}
+                src={
+                  tool.ownerAvatar ||
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+                }
+                alt={tool.ownerName || 'Neighbor'}
                 className="w-5 h-5 rounded-full object-cover border border-[#ded7c8]"
               />
               <span className="truncate max-w-[90px] font-medium text-[#4e4a43]">
-                {tool.ownerName}
+                {tool.ownerName || 'Neighbor'}
               </span>
             </div>
             <div className="flex items-center gap-1 font-semibold text-[#5f7d66] shrink-0">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>★ {tool.ownerRating.toFixed(1)}</span>
+              <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
             </div>
           </div>
         </div>
@@ -162,14 +161,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         <div>
           <div className="flex items-baseline gap-1">
             <span className="text-base sm:text-lg font-black text-[#24211d]">
-              {tool.maintenanceFeePerDay === 0 ? 'Free' : `RM${tool.maintenanceFeePerDay}`}
+              {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
             </span>
-            {tool.maintenanceFeePerDay > 0 && (
+            {dailyPrice > 0 && (
               <span className="text-[11px] font-medium text-[#67635c]">/day</span>
             )}
           </div>
           <span className="text-[10px] text-[#8a857b] block">
-            RM{tool.depositAmount} deposit (refunded)
+            RM{depositAmount} deposit (refunded)
           </span>
         </div>
 

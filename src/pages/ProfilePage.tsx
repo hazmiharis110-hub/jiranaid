@@ -88,7 +88,7 @@ export const ProfilePage: React.FC = () => {
           <div className="text-center sm:text-right">
             <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900">
               <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-              <span className="text-lg font-black">{currentUser.trustScore.toFixed(1)}</span>
+              <span className="text-lg font-black">{(currentUser.trustScore ?? 5.0).toFixed(1)}</span>
               <span className="text-xs font-semibold text-amber-700">Trust Score</span>
             </div>
           </div>
@@ -98,7 +98,7 @@ export const ProfilePage: React.FC = () => {
         <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#ede7db] text-center">
           <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
             <p className="text-xl sm:text-2xl font-black text-[#24211d]">
-              {currentUser.totalLends}
+              {currentUser.totalLends ?? 0}
             </p>
             <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
               Tools Shared
@@ -107,7 +107,7 @@ export const ProfilePage: React.FC = () => {
 
           <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
             <p className="text-xl sm:text-2xl font-black text-[#24211d]">
-              {currentUser.totalBorrows}
+              {currentUser.totalBorrows ?? 0}
             </p>
             <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
               Items Borrowed
@@ -116,7 +116,7 @@ export const ProfilePage: React.FC = () => {
 
           <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
             <p className="text-xl sm:text-2xl font-black text-[#5f7d66]">
-              {currentUser.onTimeReturnRate}%
+              {currentUser.onTimeReturnRate ?? 100}%
             </p>
             <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
               On-Time Rate

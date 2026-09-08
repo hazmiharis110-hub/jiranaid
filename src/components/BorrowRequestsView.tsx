@@ -20,7 +20,7 @@ import type { BorrowRequest, User } from "../types.ts";
 interface BorrowRequestsViewProps {
   requests: BorrowRequest[];
   currentUser: User | null;
-  onUpdateStatus: (requestId: string, status: string, action: string) => void;
+  onUpdateStatus: (requestId: string | number, status: string, action: string) => void;
   onOpenReviewModal: (request: BorrowRequest) => void;
   onSwitchToCatalog: () => void;
   onSwitchToLenderDashboard?: () => void;

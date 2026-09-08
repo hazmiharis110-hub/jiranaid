@@ -22,7 +22,7 @@ export const RegisterPage: React.FC = () => {
 
   const handleNeighborhoodChange = (neighId: string) => {
     setSelectedNeighborhoodId(neighId);
-    const found = neighborhoods.find((n) => n.id === neighId);
+    const found = neighborhoods.find((n) => String(n.id) === String(neighId));
     if (found) {
       setPostcode(found.postcode);
     }
@@ -46,6 +46,7 @@ export const RegisterPage: React.FC = () => {
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim() || '+60 12-345 6789',
+        neighborhood_id: Number(selectedNeighborhoodId) || 1,
         neighborhoodId: selectedNeighborhoodId,
         postcode: postcode.trim() || '53100',
       });

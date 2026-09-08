@@ -4,16 +4,18 @@ import type { User, Neighborhood } from '../types';
 export interface RegisterPayload {
   name: string;
   email: string;
+  password?: string;
   phone?: string;
-  neighborhoodId: string;
-  postcode: string;
+  neighborhood_id?: number | string;
+  neighborhoodId?: number | string;
+  postcode?: string;
 }
 
 export const authService = {
-  async login(credentials: { email?: string; userId?: string }): Promise<{ success: boolean; user: User }> {
+  async login(credentials: { email?: string; userId?: number | string }): Promise<{ success: boolean; user: User }> {
     const { data } = await api.post('/auth/login', credentials);
     if (data.user) {
-      localStorage.setItem('jiranaid_userId', data.user.id);
+      localStorage.setItem('jiranaid_userId', String(data.user.id));
     }
     return data;
   },
@@ -21,7 +23,7 @@ export const authService = {
   async register(payload: RegisterPayload): Promise<{ success: boolean; user: User }> {
     const { data } = await api.post('/auth/register', payload);
     if (data.user) {
-      localStorage.setItem('jiranaid_userId', data.user.id);
+      localStorage.setItem('jiranaid_userId', String(data.user.id));
     }
     return data;
   },
@@ -31,12 +33,12 @@ export const authService = {
     return data;
   },
 
-  async switchUser(userId: string): Promise<{ success: boolean; user: User }> {
+  async switchUser(userId: number | string): Promise<{ success: boolean; user: User }> {
     const { data } = await api.post('/auth/switch-user', { userId });
     return data;
   },
 
-  async verifyLocation(payload: { neighborhoodId: string; postcode: string; method?: string }): Promise<{ success: boolean; user: User }> {
+  async verifyLocation(payload: { neighborhoodId: number | string; postcode: string; method?: string }): Promise<{ success: boolean; user: User }> {
     const { data } = await api.post('/auth/verify-location', payload);
     return data;
   },

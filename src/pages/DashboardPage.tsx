@@ -29,7 +29,7 @@ export const DashboardPage: React.FC = () => {
   }, []);
 
   const handleUpdateStatus = async (
-    requestId: string,
+    requestId: string | number,
     status: string,
     action?: string
   ) => {
