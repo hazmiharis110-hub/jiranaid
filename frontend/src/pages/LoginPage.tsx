@@ -1,48 +1,55 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { LogIn, Mail, Lock, Sparkles, AlertCircle, ArrowRight, UserCheck } from 'lucide-react';
-import { useAuthStore } from '../store/useAuthStore';
+import React, { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  LogIn,
+  Mail,
+  Lock,
+  Sparkles,
+  AlertCircle,
+  ArrowRight,
+  UserCheck,
+} from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
+import { authService } from "../services/authService";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { login, switchUser, isLoading } = useAuthStore();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
-  const redirectUrl = searchParams.get('redirect') || '/items';
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
-
-    if (!email.trim()) {
-      setError('Please enter your email address');
-      return;
-    }
+    setError("");
+    setLoading(true);
 
     try {
-      await login({ email: email.trim() });
-      navigate(redirectUrl);
-    } catch (err: any) {
-      setError(err.message || 'Login failed. Please verify credentials.');
-    }
-  };
+      // 1. Send login credentials
+      const res = await authService.login({
+        email: formData.email,
+        password: formData.password,
+      });
 
-  const handleDemoUserLogin = async (userId: string, demoEmail: string) => {
-    setError('');
-    try {
-      await switchUser(userId);
-      navigate(redirectUrl);
-    } catch {
-      try {
-        await login({ email: demoEmail });
-        navigate(redirectUrl);
-      } catch (err: any) {
-        setError(err.message || 'Demo login failed');
+      console.log("LOGIN RESPONSE OBJECT:", res);
+
+      // 2. Check for success flag or user payload
+      if (
+        res &&
+        res.success !== false &&
+        (res.success || res.token || res.user)
+      ) {
+        // 3. Redirect to your main app screen
+        navigate("/dashboard"); // Adjust path to match your route (e.g., "/", "/dashboard")
+      } else {
+        setError(
+          res?.message || "Login failed. Please check your credentials.",
+        );
       }
+    } catch (err: any) {
+      console.error("Component error during login:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,33 +71,6 @@ export const LoginPage: React.FC = () => {
         </div>
       )}
 
-      {/* Quick Demo Sign In Persona Shortcuts */}
-      <div className="p-4 rounded-2xl bg-[#f4efe6] border border-[#ded7c8] space-y-2.5">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-[#4e4a43]">
-          <Sparkles className="w-3.5 h-3.5 text-[#c86d51]" />
-          <span>Quick 1-Click Demo Profiles</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() => handleDemoUserLogin('user-current', 'aiman.zikri@neighborhood.my')}
-            className="px-3 py-2 rounded-xl bg-white border border-[#ded7c8] hover:border-[#c86d51] text-left transition-all"
-          >
-            <p className="text-xs font-bold text-[#24211d]">Aiman Zikri</p>
-            <p className="text-[10px] text-[#5f7d66]">Super Lender • 53100</p>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleDemoUserLogin('user-sarah', 'sarah.lim@neighborhood.my')}
-            className="px-3 py-2 rounded-xl bg-white border border-[#ded7c8] hover:border-[#c86d51] text-left transition-all"
-          >
-            <p className="text-xs font-bold text-[#24211d]">Sarah Lim</p>
-            <p className="text-[10px] text-[#5f7d66]">Active Borrower • 53100</p>
-          </button>
-        </div>
-      </div>
-
       {/* Login Form */}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
@@ -101,8 +81,10 @@ export const LoginPage: React.FC = () => {
             <Mail className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
               placeholder="aiman.zikri@neighborhood.my"
               required
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
@@ -115,14 +97,18 @@ export const LoginPage: React.FC = () => {
             <label className="block text-xs font-bold text-[#4e4a43]">
               Password
             </label>
-            <span className="text-[11px] text-[#8a857b]">Any password for demo</span>
+            <span className="text-[11px] text-[#8a857b]">
+              Any password for demo
+            </span>
           </div>
           <div className="relative">
             <Lock className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
               placeholder="••••••••"
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
             />
@@ -131,18 +117,21 @@ export const LoginPage: React.FC = () => {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={loading}
           className="w-full py-3 rounded-xl bg-[#24211d] hover:bg-black text-[#faf8f5] text-sm font-bold shadow-sm transition-all flex items-center justify-center gap-2"
         >
           <LogIn className="w-4 h-4" />
-          <span>{isLoading ? 'Signing In...' : 'Sign In'}</span>
+          <span>{loading ? "Signing In..." : "Sign In"}</span>
         </button>
       </form>
 
       <div className="text-center pt-2">
         <p className="text-xs text-[#67635c]">
-          New to JiranAid?{' '}
-          <Link to="/register" className="font-bold text-[#c86d51] hover:underline">
+          New to JiranAid?{" "}
+          <Link
+            to="/register"
+            className="font-bold text-[#c86d51] hover:underline"
+          >
             Join your neighborhood circle
           </Link>
         </p>
