@@ -17,21 +17,20 @@ export const authService = {
     email?: string;
     userId?: number | string;
   }): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post("/auth/login", credentials);
+    const { data } = await api.post("/users/login", credentials);
     if (data.user) {
       localStorage.setItem("jiranaid_userId", String(data.user.id));
     }
     return data;
   },
 
-  async register(
-    payload: RegisterPayload,
-  ): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post("/auth/register", payload);
-    if (data.user) {
-      localStorage.setItem("jiranaid_userId", String(data.user.id));
-    }
-    return data;
+  async register(userData: any) {
+    const response = await api.post("/users/register", userData);
+
+    const user = response.data?.user || response.data?.data?.user;
+    const token = response.data?.token || response.data?.data?.token;
+
+    return { user, token };
   },
 
   async getCurrentUser(): Promise<{ success: boolean; user: User | null }> {
