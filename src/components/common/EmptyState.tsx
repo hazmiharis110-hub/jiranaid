@@ -21,17 +21,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   onSecondaryAction,
 }) => {
   return (
-    <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-8 sm:p-12 text-center max-w-lg mx-auto my-8 shadow-xs">
-      <div className="w-16 h-16 rounded-2xl bg-[#f4efe6] text-[#c86d51] flex items-center justify-center mx-auto mb-4 border border-[#ded7c8]">
-        {icon || <PackageOpen className="w-8 h-8 stroke-[1.8]" />}
+    <div className="bg-white rounded-2xl border-2 border-black p-8 sm:p-12 text-center max-w-lg mx-auto my-8 shadow-[5px_5px_0px_#000]">
+      <div className="w-16 h-16 rounded-2xl bg-[#ff90e8] text-black flex items-center justify-center mx-auto mb-4 border-2 border-black shadow-[3px_3px_0px_#000]">
+        {icon || <PackageOpen className="w-8 h-8 stroke-[2.2]" />}
       </div>
-      <h3 className="text-lg sm:text-xl font-bold text-[#24211d] mb-2">{title}</h3>
-      <p className="text-sm text-[#67635c] leading-relaxed mb-6">{description}</p>
+      <h3 className="text-xl sm:text-2xl font-black text-black mb-2">{title}</h3>
+      <p className="text-sm text-[#444] font-medium leading-relaxed mb-6">{description}</p>
       <div className="flex flex-wrap items-center justify-center gap-3">
         {actionText && onAction && (
           <button
             onClick={onAction}
-            className="px-5 py-2.5 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200"
+            className="px-5 py-2.5 rounded-xl bg-[#ffc900] text-black border-2 border-black text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             {actionText}
           </button>
@@ -39,7 +39,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         {secondaryActionText && onSecondaryAction && (
           <button
             onClick={onSecondaryAction}
-            className="px-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white hover:bg-[#f4efe6] text-[#24211d] text-sm font-semibold transition-all duration-200"
+            className="px-4 py-2.5 rounded-xl border-2 border-black bg-white hover:bg-[#faf9f6] text-black text-sm font-black shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             {secondaryActionText}
           </button>

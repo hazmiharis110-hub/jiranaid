@@ -47,46 +47,46 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="bg-white rounded-3xl border-3 border-black p-7 sm:p-9 shadow-[6px_6px_0px_#000] space-y-6">
       <div className="text-center space-y-1.5">
-        <h2 className="text-2xl sm:text-3xl font-black text-[#24211d]">
+        <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight">
           Welcome Back, Neighbor
         </h2>
-        <p className="text-xs sm:text-sm text-[#67635c]">
+        <p className="text-xs sm:text-sm font-bold text-neutral-600">
           Sign in to borrow tools, manage your equipment listings, or chat.
         </p>
       </div>
 
       {error && (
-        <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-700 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
+        <div className="p-3.5 rounded-2xl bg-red-100 border-2 border-black text-xs font-black text-black flex items-center gap-2 shadow-[2px_2px_0px_#000]">
+          <AlertCircle className="w-4 h-4 shrink-0 stroke-[2.5]" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Quick Demo Sign In Persona Shortcuts */}
-      <div className="p-4 rounded-2xl bg-[#f4efe6] border border-[#ded7c8] space-y-2.5">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-[#4e4a43]">
-          <Sparkles className="w-3.5 h-3.5 text-[#c86d51]" />
+      <div className="p-4 rounded-2xl bg-[#fffdf0] border-2 border-black space-y-2.5 shadow-[3px_3px_0px_#000]">
+        <div className="flex items-center gap-1.5 text-xs font-mono font-black uppercase text-black">
+          <Sparkles className="w-4 h-4 text-[#ff90e8] stroke-[2.5]" />
           <span>Quick 1-Click Demo Profiles</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <button
             type="button"
             onClick={() => handleDemoUserLogin('user-current', 'aiman.zikri@neighborhood.my')}
-            className="px-3 py-2 rounded-xl bg-white border border-[#ded7c8] hover:border-[#c86d51] text-left transition-all"
+            className="jn-btn p-3 rounded-xl bg-white border-2 border-black hover:bg-[#ffc900] text-left transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
           >
-            <p className="text-xs font-bold text-[#24211d]">Aiman Zikri</p>
-            <p className="text-[10px] text-[#5f7d66]">Super Lender • 53100</p>
+            <p className="text-xs font-black text-black">Aiman Zikri</p>
+            <p className="text-[10px] font-bold text-emerald-800">Super Lender • 53100</p>
           </button>
 
           <button
             type="button"
             onClick={() => handleDemoUserLogin('user-sarah', 'sarah.lim@neighborhood.my')}
-            className="px-3 py-2 rounded-xl bg-white border border-[#ded7c8] hover:border-[#c86d51] text-left transition-all"
+            className="jn-btn p-3 rounded-xl bg-white border-2 border-black hover:bg-[#ffc900] text-left transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
           >
-            <p className="text-xs font-bold text-[#24211d]">Sarah Lim</p>
-            <p className="text-[10px] text-[#5f7d66]">Active Borrower • 53100</p>
+            <p className="text-xs font-black text-black">Sarah Lim</p>
+            <p className="text-[10px] font-bold text-emerald-800">Active Borrower • 53100</p>
           </button>
         </div>
       </div>
@@ -94,37 +94,37 @@ export const LoginPage: React.FC = () => {
       {/* Login Form */}
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label className="block text-xs font-bold text-[#4e4a43] mb-1">
+          <label className="block text-xs font-mono font-black text-black uppercase mb-1">
             Email Address
           </label>
           <div className="relative">
-            <Mail className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
+            <Mail className="w-4 h-4 text-black absolute left-3.5 top-3 stroke-[2.5]" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="aiman.zikri@neighborhood.my"
               required
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             />
           </div>
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1">
-            <label className="block text-xs font-bold text-[#4e4a43]">
+            <label className="block text-xs font-mono font-black text-black uppercase">
               Password
             </label>
-            <span className="text-[11px] text-[#8a857b]">Any password for demo</span>
+            <span className="text-[11px] font-bold text-neutral-500">Any password for demo</span>
           </div>
           <div className="relative">
-            <Lock className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
+            <Lock className="w-4 h-4 text-black absolute left-3.5 top-3 stroke-[2.5]" />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             />
           </div>
         </div>
@@ -132,17 +132,17 @@ export const LoginPage: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 rounded-xl bg-[#24211d] hover:bg-black text-[#faf8f5] text-sm font-bold shadow-sm transition-all flex items-center justify-center gap-2"
+          className="jn-btn w-full py-3.5 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
-          <LogIn className="w-4 h-4" />
+          <LogIn className="w-4 h-4 stroke-[2.5]" />
           <span>{isLoading ? 'Signing In...' : 'Sign In'}</span>
         </button>
       </form>
 
       <div className="text-center pt-2">
-        <p className="text-xs text-[#67635c]">
+        <p className="text-xs font-bold text-neutral-700">
           New to JiranAid?{' '}
-          <Link to="/register" className="font-bold text-[#c86d51] hover:underline">
+          <Link to="/register" className="font-black text-black underline underline-offset-2 hover:text-[#ff90e8]">
             Join your neighborhood circle
           </Link>
         </p>

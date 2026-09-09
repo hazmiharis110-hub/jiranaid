@@ -155,18 +155,18 @@ export const ItemDetailPage: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/items"
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#67635c] hover:text-[#24211d] transition-colors"
+          className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
           <span>Back to Catalog</span>
         </Link>
 
         {isOwner && (
           <Link
             to={`/items/${tool.id}/edit`}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[#ded7c8] bg-white hover:bg-[#f4efe6] text-xs font-bold text-[#24211d] transition-colors shadow-2xs"
+            className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
           >
-            <Edit3 className="w-3.5 h-3.5 text-[#c86d51]" />
+            <Edit3 className="w-4 h-4 stroke-[2.5]" />
             <span>Edit This Listing</span>
           </Link>
         )}
@@ -177,7 +177,7 @@ export const ItemDetailPage: React.FC = () => {
         {/* Left Column: Visuals, Specs, Owner, Guidelines */}
         <div className="lg:col-span-7 space-y-6">
           {/* Photo Presentation */}
-          <div className="relative aspect-16/10 w-full rounded-2xl overflow-hidden bg-[#f1ede4] border border-[#ded7c8] shadow-sm">
+          <div className="relative aspect-16/10 w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-100 border-2 sm:border-3 border-black shadow-[5px_5px_0px_#000]">
             <img
               src={displayImage}
               alt={tool.title}
@@ -187,144 +187,150 @@ export const ItemDetailPage: React.FC = () => {
                   'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
               }}
             />
-            <div className="absolute top-3 right-3">
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
               <Badge status={tool.status ?? 'available'} />
             </div>
           </div>
 
           {/* Title & Category */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#c86d51]">
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="jn-badge bg-[#ff90e8] text-black border-2 border-black text-xs font-mono font-black uppercase tracking-wider px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
                 {tool.category}
               </span>
-              <span className="text-xs text-[#8a857b]">•</span>
-              <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-[#eef4f0] text-[#496350]">
-                Verified Item #{tool.id}
+              <span className="jn-badge bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
+                Item #{tool.id}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black text-[#24211d] leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-black leading-tight tracking-tight">
               {tool.title}
             </h1>
 
             {tool.brand && (
-              <p className="text-sm text-[#67635c] font-medium">
-                Manufactured by <strong className="text-[#24211d]">{tool.brand}</strong>
+              <p className="text-sm sm:text-base text-neutral-700 font-bold">
+                Manufactured by <strong className="text-black underline underline-offset-2">{tool.brand}</strong>
                 {tool.model ? ` (Model: ${tool.model})` : ''}
               </p>
             )}
           </div>
 
           {/* Description */}
-          <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-5 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#4e4a43]">
-              Equipment Description
+          <div className="bg-white rounded-2xl border-2 border-black p-6 shadow-[4px_4px_0px_#000] space-y-3">
+            <h3 className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-2">
+              <span className="w-2.5 h-2.5 bg-[#ff90e8] border border-black inline-block rounded-xs"></span>
+              <span>Equipment Description</span>
             </h3>
-            <p className="text-sm text-[#4e4a43] leading-relaxed whitespace-pre-line">
+            <p className="text-sm sm:text-base text-neutral-800 leading-relaxed font-medium whitespace-pre-line">
               {tool.description}
             </p>
           </div>
 
           {/* Community Trust Guidelines */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-5 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#496350]">
-                <ShieldCheck className="w-4 h-4 text-[#5f7d66]" />
-                <span>Security & Care</span>
+            <div className="bg-white rounded-2xl border-2 border-black p-5 shadow-[3.5px_3.5px_0px_#000] space-y-2.5">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#bbf7d0] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
+                  <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
+                </div>
+                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Security & Care</span>
               </div>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs text-neutral-700 font-medium leading-relaxed">
                 Security deposit is protected in escrow. Please treat equipment with care and return wiped clean.
               </p>
             </div>
 
-            <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-5 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-[#24211d]">
-                <Clock className="w-4 h-4 text-[#c86d51]" />
-                <span>Pickup Coordination</span>
+            <div className="bg-white rounded-2xl border-2 border-black p-5 shadow-[3.5px_3.5px_0px_#000] space-y-2.5">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#ffc900] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
+                  <Clock className="w-4 h-4 stroke-[2.5]" />
+                </div>
+                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Pickup Coordination</span>
               </div>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs text-neutral-700 font-medium leading-relaxed">
                 Once the owner approves your booking, coordinate a convenient contactless porch pickup in neighborhood chat.
               </p>
             </div>
           </div>
 
           {/* Owner Profile Card */}
-          <div className="bg-white rounded-2xl border border-[#ded7c8] p-5 flex items-center justify-between shadow-2xs">
-            <div className="flex items-center gap-3.5">
+          <div className="bg-white rounded-2xl border-2 border-black p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[4px_4px_0px_#000]">
+            <div className="flex items-center gap-4">
               <img
                 src={
                   tool.ownerAvatar ||
                   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
                 }
                 alt={tool.ownerName || 'Resident Owner'}
-                className="w-12 h-12 rounded-full object-cover border-2 border-[#e8e2d7]"
+                className="w-14 h-14 rounded-2xl object-cover border-2 border-black shadow-[2.5px_2.5px_0px_#000]"
               />
               <div>
-                <div className="flex items-center gap-1.5">
-                  <h4 className="font-bold text-sm text-[#24211d]">
+                <div className="flex items-center gap-2">
+                  <h4 className="font-black text-base text-black">
                     {tool.ownerName || 'Resident Owner'}
                   </h4>
-                  <ShieldCheck className="w-4 h-4 text-[#5f7d66]" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
                 </div>
-                <div className="flex items-center gap-3 text-xs text-[#67635c] mt-0.5">
-                  <span className="text-[#5f7d66] font-bold">
-                    ★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'} Trust Rating
+                <div className="flex items-center gap-2 text-xs font-bold mt-1">
+                  <span className="bg-[#ffc900] border border-black rounded-md px-2 py-0.5 text-black font-mono font-black text-[11px]">
+                    ★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'} Rating
                   </span>
-                  <span>•</span>
-                  <span>Verified Resident</span>
+                  <span className="text-neutral-400">•</span>
+                  <span className="text-neutral-700">Verified Resident</span>
                 </div>
               </div>
             </div>
 
             <button
               onClick={handleOpenChat}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#ded7c8] bg-[#fcfbf9] hover:bg-[#ede7db] text-xs font-bold text-[#24211d] transition-all"
+              className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#faf9f6] hover:bg-[#ff90e8] text-xs font-black text-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-[#c86d51]" />
+              <MessageCircle className="w-4 h-4 stroke-[2.5]" />
               <span>Ask Question</span>
             </button>
           </div>
 
           {/* Community Reviews Section */}
-          <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#ede7db] pb-3">
-              <h3 className="font-bold text-sm text-[#24211d] flex items-center gap-2">
+          <div className="bg-white rounded-2xl border-2 border-black p-6 shadow-[4px_4px_0px_#000] space-y-4">
+            <div className="flex items-center justify-between border-b-2 border-black pb-3">
+              <h3 className="font-black text-sm text-black flex items-center gap-2">
                 <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
                 <span>Neighbor Ratings & Feedback ({reviews.length})</span>
               </h3>
-              <span className="text-xs font-semibold text-[#5f7d66]">
+              <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border border-black px-2 py-0.5 rounded-md">
                 100% On-Time Returns
               </span>
             </div>
 
             {reviews.length === 0 ? (
-              <p className="text-xs text-[#8a857b] py-3 text-center">
+              <p className="text-xs font-bold text-neutral-500 py-3 text-center">
                 No reviews yet for this equipment. Be the first neighbor to borrow and rate!
               </p>
             ) : (
               <div className="space-y-4">
                 {reviews.map((rev) => (
-                  <div key={rev.id} className="text-xs space-y-1 pb-3 border-b border-[#ede7db] last:border-0 last:pb-0">
+                  <div key={rev.id} className="text-xs space-y-1.5 pb-3 border-b-2 border-neutral-100 last:border-0 last:pb-0">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         <img
                           src={
                             rev.reviewerAvatar ||
                             'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
                           }
                           alt={rev.reviewerName || 'Neighbor'}
-                          className="w-5 h-5 rounded-full object-cover"
+                          className="w-6 h-6 rounded-lg object-cover border border-black"
                         />
-                        <span className="font-bold text-[#24211d]">{rev.reviewerName || 'Neighbor'}</span>
+                        <span className="font-black text-black">{rev.reviewerName || 'Neighbor'}</span>
                       </div>
                       <div className="flex items-center text-amber-500">
                         {Array.from({ length: Math.round(rev.rating) }).map((_, i) => (
-                          <Star key={i} className="w-3 h-3 fill-amber-400" />
+                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
                         ))}
                       </div>
                     </div>
-                    {rev.comment && <p className="text-[#4e4a43] italic">"{rev.comment}"</p>}
+                    {rev.comment && (
+                      <p className="text-neutral-700 font-medium pl-8 italic">"{rev.comment}"</p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -332,45 +338,45 @@ export const ItemDetailPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Booking Card (5 cols) */}
+        {/* Right Column: Sticky Booking Card (5 cols) */}
         <div className="lg:col-span-5 sticky top-24">
-          <div className="bg-white rounded-3xl border-2 border-[#ded7c8] p-6 sm:p-7 shadow-lg space-y-6">
+          <div className="bg-white rounded-3xl border-3 border-black p-6 sm:p-7 shadow-[6px_6px_0px_#000] space-y-6">
             {/* Pricing Header */}
-            <div className="flex items-baseline justify-between pb-4 border-b border-[#ede7db]">
+            <div className="flex items-baseline justify-between pb-4 border-b-2 border-black">
               <div>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-[#24211d]">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-3xl sm:text-4xl font-black font-mono text-black">
                     {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
                   </span>
                   {dailyPrice > 0 && (
-                    <span className="text-sm font-medium text-[#67635c]">/day</span>
+                    <span className="text-sm font-bold text-neutral-600 font-mono">/day</span>
                   )}
                 </div>
-                <span className="text-xs text-[#8a857b]">
+                <span className="text-xs font-bold text-neutral-600">
                   RM{depositAmount} refundable security hold
                 </span>
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-bold text-[#5f7d66] bg-[#5f7d66]/15 px-2.5 py-1 rounded-full">
+                <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
                   Verified Escrow
                 </span>
               </div>
             </div>
 
             {requestSuccess ? (
-              <div className="text-center py-6 space-y-4">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-6 h-6" />
+              <div className="bg-[#bbf7d0] rounded-2xl border-2 border-black p-6 text-center space-y-4 shadow-[4px_4px_0px_#000]">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-black text-black flex items-center justify-center mx-auto shadow-[2px_2px_0px_#000]">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-600" />
                 </div>
-                <h3 className="text-lg font-bold text-[#24211d]">Borrow Request Submitted!</h3>
-                <p className="text-xs text-[#67635c] leading-relaxed">
+                <h3 className="text-lg font-black text-black">Borrow Request Submitted!</h3>
+                <p className="text-xs text-neutral-800 font-medium leading-relaxed">
                   The tool owner has been notified. Once approved, you will be able to message them and arrange safe collection.
                 </p>
                 <div className="pt-2">
                   <Link
                     to="/borrowings"
-                    className="w-full py-2.5 rounded-xl bg-[#24211d] text-white text-xs font-bold inline-block"
+                    className="jn-btn w-full py-3 rounded-xl bg-black text-white text-xs font-black inline-block border-2 border-black shadow-[3px_3px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                   >
                     View Active Requests & Loans
                   </Link>
@@ -381,7 +387,7 @@ export const ItemDetailPage: React.FC = () => {
                 {/* Date Range Selector */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-[#4e4a43] mb-1">
+                    <label className="block text-xs font-mono font-black text-black uppercase mb-1">
                       Start Date *
                     </label>
                     <input
@@ -390,12 +396,12 @@ export const ItemDetailPage: React.FC = () => {
                       min={formatDateInput(today)}
                       onChange={(e) => setStartDate(e.target.value)}
                       required
-                      className="w-full px-3 py-2 rounded-xl border border-[#ded7c8] bg-[#fcfbf9] text-xs font-semibold text-[#24211d]"
+                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-[#4e4a43] mb-1">
+                    <label className="block text-xs font-mono font-black text-black uppercase mb-1">
                       Return Date *
                     </label>
                     <input
@@ -404,42 +410,42 @@ export const ItemDetailPage: React.FC = () => {
                       min={startDate}
                       onChange={(e) => setEndDate(e.target.value)}
                       required
-                      className="w-full px-3 py-2 rounded-xl border border-[#ded7c8] bg-[#fcfbf9] text-xs font-semibold text-[#24211d]"
+                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
                     />
                   </div>
                 </div>
 
                 {/* Price Breakdown Calculation */}
-                <div className="bg-[#f4efe6] rounded-2xl p-4 space-y-2 text-xs">
-                  <div className="flex justify-between text-[#4e4a43]">
+                <div className="bg-[#fffdf5] rounded-2xl border-2 border-black p-4 space-y-2.5 text-xs font-bold shadow-[2.5px_2.5px_0px_#000]">
+                  <div className="flex justify-between text-neutral-800">
                     <span>
                       RM{dailyPrice} × {diffDays} {diffDays === 1 ? 'day' : 'days'}
                     </span>
-                    <span className="font-bold">RM{totalRentalFee}</span>
+                    <span className="font-black font-mono">RM{totalRentalFee}</span>
                   </div>
 
-                  <div className="flex justify-between text-[#4e4a43]">
-                    <span className="flex items-center gap-1">
+                  <div className="flex justify-between text-neutral-800">
+                    <span className="flex items-center gap-1.5">
                       <span>Refundable Deposit</span>
-                      <span className="text-[10px] text-[#5f7d66] font-semibold">(Refunded on Return)</span>
+                      <span className="text-[10px] font-mono text-emerald-700 bg-[#bbf7d0] px-1.5 py-0.2 rounded border border-black">Refunded</span>
                     </span>
-                    <span className="font-bold">RM{depositAmount}</span>
+                    <span className="font-black font-mono">RM{depositAmount}</span>
                   </div>
 
-                  <div className="border-t border-[#ded7c8] pt-2 flex justify-between text-sm font-black text-[#24211d]">
-                    <span>Initial Deposit Hold</span>
-                    <span>RM{totalHold}</span>
+                  <div className="border-t-2 border-black pt-2.5 flex justify-between text-base font-black text-black">
+                    <span>Initial Hold</span>
+                    <span className="font-mono">RM{totalHold}</span>
                   </div>
                 </div>
 
                 {/* Terms Agreement */}
-                <label className="flex items-start gap-2 text-xs text-[#67635c] cursor-pointer">
+                <label className="flex items-start gap-2.5 text-xs text-neutral-800 font-medium cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={agreeTerms}
                     onChange={(e) => setAgreeTerms(e.target.checked)}
                     required
-                    className="mt-0.5 rounded border-[#ded7c8] text-[#c86d51] focus:ring-[#c86d51]"
+                    className="mt-0.5 rounded-md border-2 border-black text-black w-4 h-4 accent-black focus:ring-0 cursor-pointer"
                   />
                   <span>
                     I agree to return this tool wiped clean by the chosen return date and respect neighbor community guidelines.
@@ -450,13 +456,13 @@ export const ItemDetailPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!isAvailable || !agreeTerms || isSubmitting}
-                  className={`w-full py-3.5 rounded-xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 ${
+                  className={`jn-btn w-full py-3.5 rounded-xl font-black text-sm border-2 border-black flex items-center justify-center gap-2 transition-all ${
                     isAvailable && agreeTerms
-                      ? 'bg-[#c86d51] hover:bg-[#b0553b] text-white'
-                      : 'bg-[#ded7c8] text-[#8a857b] cursor-not-allowed'
+                      ? 'bg-[#ffc900] hover:bg-[#ffbe00] text-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer'
+                      : 'bg-neutral-200 text-neutral-500 border-neutral-400 cursor-not-allowed shadow-none'
                   }`}
                 >
-                  <Wrench className="w-4 h-4" />
+                  <Wrench className="w-4 h-4 stroke-[2.5]" />
                   <span>
                     {isSubmitting
                       ? 'Sending Request...'
@@ -466,7 +472,7 @@ export const ItemDetailPage: React.FC = () => {
                   </span>
                 </button>
 
-                <p className="text-[11px] text-[#8a857b] text-center">
+                <p className="text-[11px] font-bold text-neutral-600 text-center">
                   🔒 No payment is processed until the owner confirms your request.
                 </p>
               </form>

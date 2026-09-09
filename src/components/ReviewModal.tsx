@@ -72,56 +72,65 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/45 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
       <div
         id="review-modal-content"
-        className="w-full max-w-md bg-[#fcfbf9] border border-[#ded7c8] rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150 my-6 flex flex-col text-left"
+        className="w-full max-w-md bg-white border-3 border-black rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in zoom-in-95 duration-150 my-6 flex flex-col text-left"
       >
-        <div className="px-6 py-4 border-b border-[#e8e2d7] flex items-center justify-between bg-[#f4efe6]">
-          <div className="flex items-center gap-2">
-            <HeartHandshake className="w-5 h-5 text-[#5f7d66]" />
-            <h3 className="font-bold text-[#24211d] text-base">Community Trust Review</h3>
+        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#faf9f6]">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#ff90e8] border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
+              <HeartHandshake className="w-5 h-5 text-black stroke-[2.5]" />
+            </div>
+            <div>
+              <h3 className="font-black text-black text-base sm:text-lg leading-tight tracking-tight">
+                Community Trust Review
+              </h3>
+              <p className="text-xs text-neutral-600 font-bold">
+                Rate condition & neighbor punctuality
+              </p>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#67635c] hover:text-[#24211d] hover:bg-[#eae3d5] transition-colors"
+            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 stroke-[2.5]" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="p-3 rounded-xl bg-[#faf8f5] border border-[#ded7c8] text-xs">
-            <span className="text-[#67635c] block">Reviewing borrowing experience for:</span>
-            <strong className="text-sm text-[#24211d] block mt-0.5">{request.toolTitle}</strong>
-            <span className="text-[11px] text-[#5f7d66] font-semibold mt-1 block">
+          <div className="p-4 rounded-2xl bg-[#faf9f6] border-2 border-black text-xs shadow-[2.5px_2.5px_0px_#000]">
+            <span className="text-neutral-600 font-bold block">Reviewing borrowing experience for:</span>
+            <strong className="text-base font-black text-black block mt-0.5">{request.toolTitle}</strong>
+            <span className="text-xs text-emerald-800 font-bold mt-1 block">
               Owner: {request.ownerName}
             </span>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Overall Neighbor Experience
             </label>
             {renderStarPicker(rating, setRating)}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Item Condition & Care
             </label>
             {renderStarPicker(careRating, setCareRating)}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Punctuality & Communication
             </label>
             {renderStarPicker(punctualityRating, setPunctualityRating)}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Written Community Feedback
             </label>
             <textarea
@@ -129,22 +138,22 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="How did the tool perform? Was the handover easy? Help future neighbors borrow with confidence."
-              className="w-full px-3 py-2 text-xs rounded-lg border border-[#ded7c8] bg-[#faf8f5] focus:outline-none focus:ring-1 focus:ring-[#c86d51]"
+              className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             />
           </div>
 
-          <div className="pt-3 border-t border-[#e8e2d7] flex items-center justify-end gap-2">
+          <div className="pt-3 border-t-2 border-black flex items-center justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg text-xs font-semibold text-[#67635c] hover:bg-[#eae3d5]"
+              className="jn-btn px-4 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-black text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-neutral-100 transition-all cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-lg bg-[#5f7d66] hover:bg-[#496350] text-white text-xs font-bold shadow-xs transition-colors"
+              className="jn-btn px-5 py-2.5 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               {isSubmitting ? 'Posting...' : 'Submit Trust Review'}
             </button>

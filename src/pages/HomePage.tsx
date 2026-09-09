@@ -68,12 +68,12 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-16 sm:pb-20 border-b border-[#ede7db] bg-linear-to-b from-[#f5ede1]/60 via-[#faf8f5] to-[#faf8f5]">
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-16 sm:pb-20 border-b-3 border-black bg-[#faf9f6]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Geofence verified badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#5f7d66]/15 border border-[#5f7d66]/30 text-[#496350] text-xs sm:text-sm font-bold shadow-2xs">
-              <ShieldCheck className="w-4 h-4 text-[#5f7d66]" />
+            <div className="jn-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#bbf7d0] border-2 border-black text-black text-xs sm:text-sm font-mono font-black shadow-[2.5px_2.5px_0px_#000]">
+              <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
               <span>
                 Verified Residential Pool:{" "}
                 {currentNeighborhood?.name || "Taman Melawati & Riverview"}
@@ -81,13 +81,16 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#24211d] leading-[1.15]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-black leading-[1.08]">
               Borrow Tools From Your{" "}
-              <span className="text-[#c86d51]">Neighbors</span> Next Door
+              <span className="bg-[#ffc900] px-3 py-0.5 border-2 border-black inline-block -rotate-1 shadow-[3px_3px_0px_#000]">
+                Neighbors
+              </span>{" "}
+              Next Door
             </h1>
 
             {/* Sub-headline */}
-            <p className="text-base sm:text-lg text-[#67635c] leading-relaxed max-w-2xl mx-auto">
+            <p className="text-base sm:text-xl text-neutral-800 font-medium leading-relaxed max-w-2xl mx-auto">
               Why spend RM500+ buying a pressure washer, ladder, or cordless
               drill you only use once a year? JiranAid connects you with trusted
               neighbors for safe, low-cost equipment sharing.
@@ -98,18 +101,18 @@ export const HomePage: React.FC = () => {
               onSubmit={handleHeroSearch}
               className="max-w-2xl mx-auto pt-2"
             >
-              <div className="relative flex items-center shadow-lg rounded-2xl bg-white border border-[#ded7c8] p-1.5">
-                <Search className="w-5 h-5 text-[#8a857b] ml-3.5" />
+              <div className="relative flex items-center rounded-2xl bg-white border-3 border-black p-2 shadow-[5px_5px_0px_#000]">
+                <Search className="w-5 h-5 text-black ml-3 stroke-[2.5]" />
                 <input
                   type="text"
                   value={quickSearch}
                   onChange={(e) => setQuickSearch(e.target.value)}
-                  placeholder="What household project are you tackling today? (e.g. pressure washer, hedge trimmer)..."
-                  className="w-full px-3.5 py-3 text-sm sm:text-base text-[#24211d] placeholder-[#8a857b] bg-transparent focus:outline-none"
+                  placeholder="What household project are you tackling today?..."
+                  className="w-full px-3.5 py-2.5 text-sm sm:text-base font-bold text-black placeholder:text-neutral-500 bg-transparent focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="px-5 sm:px-7 py-3 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-sm font-bold transition-all shrink-0 shadow-xs"
+                  className="jn-btn px-5 sm:px-7 py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0 cursor-pointer"
                 >
                   Search Tools
                 </button>
@@ -117,19 +120,19 @@ export const HomePage: React.FC = () => {
             </form>
 
             {/* Quick Action Links */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
               <Link
                 to="/items"
-                className="px-5 py-2.5 rounded-xl bg-[#24211d] hover:bg-black text-[#faf8f5] text-xs sm:text-sm font-bold transition-all shadow-xs flex items-center gap-2"
+                className="jn-btn px-6 py-3 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
               >
                 <span>Browse All {inventory.length} Tools</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </Link>
               <Link
                 to="/items/create"
-                className="px-5 py-2.5 rounded-xl border border-[#ded7c8] bg-white hover:bg-[#f4efe6] text-[#24211d] text-xs sm:text-sm font-bold transition-all flex items-center gap-2"
+                className="jn-btn px-6 py-3 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
               >
-                <Wrench className="w-4 h-4 text-[#c86d51]" />
+                <Wrench className="w-4 h-4 stroke-[2.5]" />
                 <span>List Your Equipment</span>
               </Link>
             </div>
@@ -139,44 +142,40 @@ export const HomePage: React.FC = () => {
 
       {/* 2. Community Impact Live Counter Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#24211d] text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-[#c86d51]/25 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-[#5f7d66]/25 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
+        <div className="bg-[#ff90e8] text-black rounded-3xl border-3 border-black p-6 sm:p-10 shadow-[6px_6px_0px_#000] relative overflow-hidden">
+          <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y-2 md:divide-y-0 md:divide-x-2 divide-black">
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-4xl font-black text-white">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
                 RM{communityStats.totalSavingsEstimate.toLocaleString()}+
               </p>
-              <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
                 Saved by Neighbors
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-4xl font-black text-[#9bc1a3]">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
                 {communityStats.landfillWasteDivertedKg} kg
               </p>
-              <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
                 E-Waste Diverted
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-4xl font-black text-[#e9a593]">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
                 {tools.length || 68}
               </p>
-              <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
                 Tools in Local Library
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-4xl font-black text-amber-400">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
                 100%
               </p>
-              <p className="text-xs sm:text-sm text-stone-300 font-medium mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
                 Deposit Return Rate
               </p>
             </div>
@@ -186,26 +185,26 @@ export const HomePage: React.FC = () => {
 
       {/* 3. Browse By Category */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#24211d]">
+            <h2 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
               Explore by Category
             </h2>
-            <p className="text-xs sm:text-sm text-[#67635c] mt-1">
+            <p className="text-xs sm:text-sm font-bold text-neutral-600 mt-1">
               Find exactly what you need for gardening, cleaning, repairs, and
               woodwork
             </p>
           </div>
           <Link
             to="/items"
-            className="text-xs sm:text-sm font-bold text-[#c86d51] hover:underline flex items-center gap-1"
+            className="jn-btn self-start sm:self-auto text-xs sm:text-sm font-black text-black bg-white hover:bg-[#ffc900] border-2 border-black rounded-xl px-4 py-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
           >
             <span>View All</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
           {CATEGORY_ITEMS.map((cat) => {
             const count = inventory.filter(
               (t) => t.category === cat.name,
@@ -214,18 +213,20 @@ export const HomePage: React.FC = () => {
               <button
                 key={cat.name}
                 onClick={() => handleCategoryClick(cat.name)}
-                className="group p-4 sm:p-5 rounded-2xl border border-[#ded7c8] bg-[#fcfbf9] hover:bg-white hover:border-[#c86d51]/60 hover:shadow-md transition-all text-left flex flex-col justify-between"
+                className="group p-4 sm:p-5 rounded-2xl border-2 border-black bg-white hover:bg-[#ffc900] shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all text-left flex flex-col justify-between cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#f4efe6] group-hover:bg-[#c86d51]/10 text-xl flex items-center justify-center transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-[#faf9f6] group-hover:bg-white border-2 border-black text-2xl flex items-center justify-center shadow-[2px_2px_0px_#000] transition-colors">
                   {cat.icon}
                 </div>
                 <div className="mt-4">
-                  <h3 className="font-bold text-sm sm:text-base text-[#24211d] group-hover:text-[#c86d51] transition-colors">
+                  <h3 className="font-black text-sm sm:text-base text-black group-hover:text-black transition-colors">
                     {cat.name}
                   </h3>
-                  <p className="text-[11px] text-[#8a857b] font-medium mt-0.5">
-                    {count === 1 ? "1 tool" : `${count} tools`}
-                  </p>
+                  <div className="mt-1.5">
+                    <span className="jn-badge bg-[#bbf7d0] text-black border border-black rounded-md px-1.5 py-0.5 font-mono font-black text-[10px] shadow-[1px_1px_0px_#000]">
+                      {count === 1 ? "1 tool" : `${count} tools`}
+                    </span>
+                  </div>
                 </div>
               </button>
             );
@@ -235,24 +236,24 @@ export const HomePage: React.FC = () => {
 
       {/* 4. Featured Tools in Your Circle */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#5f7d66] animate-ping" />
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#24211d]">
+            <div className="flex items-center gap-2.5">
+              <span className="w-3 h-3 rounded-full bg-[#ffc900] border-2 border-black animate-pulse" />
+              <h2 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
                 Featured in Your Neighborhood
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-[#67635c] mt-1">
+            <p className="text-xs sm:text-sm font-bold text-neutral-600 mt-1">
               Top rated household appliances ready to borrow today within 2km
             </p>
           </div>
           <Link
             to="/items"
-            className="text-xs sm:text-sm font-bold text-[#24211d] hover:text-[#c86d51] flex items-center gap-1"
+            className="jn-btn self-start sm:self-auto text-xs sm:text-sm font-black text-black bg-white hover:bg-[#ffc900] border-2 border-black rounded-xl px-4 py-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
           >
             <span>Browse Full Catalog</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
           </Link>
         </div>
 
@@ -264,73 +265,73 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5. How JiranAid Works (4-Step Flow) */}
-      <section className="bg-[#f4efe6]/70 border-y border-[#ded7c8] py-16 sm:py-20">
+      <section className="bg-[#faf9f6] border-y-3 border-black py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center space-y-3 mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#c86d51]">
+            <span className="jn-badge inline-block bg-[#ffc900] text-black border-2 border-black rounded-lg px-3 py-1 text-xs font-mono font-black uppercase tracking-wider shadow-[2px_2px_0px_#000]">
               Simple & Transparent
             </span>
-            <h2 className="text-2xl sm:text-4xl font-black text-[#24211d]">
+            <h2 className="text-3xl sm:text-5xl font-black text-black tracking-tight">
               How Neighbor Sharing Works
             </h2>
-            <p className="text-sm text-[#67635c]">
+            <p className="text-sm sm:text-base font-bold text-neutral-700">
               Built with trust, geofencing, and automated security deposits so
               both lenders and borrowers have peace of mind.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {/* Step 1 */}
-            <div className="bg-white rounded-2xl border border-[#ded7c8] p-6 text-left relative shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#24211d] text-white flex items-center justify-center font-bold text-sm mb-4">
+            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
+              <div className="w-11 h-11 rounded-xl bg-[#ff90e8] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
                 1
               </div>
-              <h3 className="font-bold text-base text-[#24211d] mb-2">
+              <h3 className="font-black text-base text-black mb-2">
                 Find Your Tool
               </h3>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
                 Browse power tools, lawnmowers, and ladders listed by verified
                 residents in your immediate postcode.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white rounded-2xl border border-[#ded7c8] p-6 text-left relative shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#c86d51] text-white flex items-center justify-center font-bold text-sm mb-4">
+            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
+              <div className="w-11 h-11 rounded-xl bg-[#ffc900] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
                 2
               </div>
-              <h3 className="font-bold text-base text-[#24211d] mb-2">
+              <h3 className="font-black text-base text-black mb-2">
                 Request & Book Dates
               </h3>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
                 Pick your required dates (1 to 5 days). Pay a small daily
                 maintenance fee and a refundable security hold.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white rounded-2xl border border-[#ded7c8] p-6 text-left relative shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-[#5f7d66] text-white flex items-center justify-center font-bold text-sm mb-4">
+            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
+              <div className="w-11 h-11 rounded-xl bg-[#bbf7d0] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
                 3
               </div>
-              <h3 className="font-bold text-base text-[#24211d] mb-2">
+              <h3 className="font-black text-base text-black mb-2">
                 Local Porch Pickup
               </h3>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
                 Coordinate safe, phone-number-free chat with the owner and
                 collect the item just a few streets away.
               </p>
             </div>
 
             {/* Step 4 */}
-            <div className="bg-white rounded-2xl border border-[#ded7c8] p-6 text-left relative shadow-xs">
-              <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-sm mb-4">
+            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
+              <div className="w-11 h-11 rounded-xl bg-black text-white border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#ff90e8]">
                 4
               </div>
-              <h3 className="font-bold text-base text-[#24211d] mb-2">
+              <h3 className="font-black text-base text-black mb-2">
                 Return & Deposit Released
               </h3>
-              <p className="text-xs text-[#67635c] leading-relaxed">
+              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
                 Return the item clean. The owner confirms inspection, and your
                 deposit hold is instantly released back to you.
               </p>
@@ -341,31 +342,31 @@ export const HomePage: React.FC = () => {
 
       {/* 6. Trust & Security Pillar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#fcfbf9] rounded-3xl border border-[#ded7c8] p-8 sm:p-12">
+        <div className="bg-white rounded-3xl border-3 border-black p-8 sm:p-12 shadow-[6px_6px_0px_#000]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div className="space-y-6">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#5f7d66]">
+              <span className="jn-badge inline-block bg-[#bbf7d0] text-black border-2 border-black rounded-lg px-3 py-1 text-xs font-mono font-black uppercase tracking-wider shadow-[2px_2px_0px_#000]">
                 Safety Guarantee
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#24211d]">
+              <h2 className="text-3xl sm:text-4xl font-black text-black tracking-tight">
                 Community Safety & Verified Residence
               </h2>
-              <p className="text-sm text-[#67635c] leading-relaxed">
+              <p className="text-sm sm:text-base text-neutral-700 font-medium leading-relaxed">
                 We believe trust is built through proximity and transparency.
                 Unlike broad classified sites, JiranAid pools are bounded by
                 local postcodes so everyone you meet is a real neighbor.
               </p>
 
-              <div className="space-y-3.5">
+              <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#5f7d66]/15 text-[#496350] flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-[#ffc900] border-2 border-black text-black flex items-center justify-center shrink-0 mt-0.5 shadow-[1.5px_1.5px_0px_#000]">
+                    <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">
+                    <h4 className="text-sm font-black text-black">
                       Geofenced Verification
                     </h4>
-                    <p className="text-xs text-[#67635c]">
+                    <p className="text-xs sm:text-sm text-neutral-600 font-medium">
                       Only residents who verify their address or GPS can view
                       item locations and request borrows.
                     </p>
@@ -373,14 +374,14 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#5f7d66]/15 text-[#496350] flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-[#ff90e8] border-2 border-black text-black flex items-center justify-center shrink-0 mt-0.5 shadow-[1.5px_1.5px_0px_#000]">
+                    <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">
+                    <h4 className="text-sm font-black text-black">
                       Refundable Deposit Guarantee
                     </h4>
-                    <p className="text-xs text-[#67635c]">
+                    <p className="text-xs sm:text-sm text-neutral-600 font-medium">
                       Lenders are protected by security deposits held during
                       active borrowing.
                     </p>
@@ -388,14 +389,14 @@ export const HomePage: React.FC = () => {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded-lg bg-[#5f7d66]/15 text-[#496350] flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-4 h-4" />
+                  <div className="w-7 h-7 rounded-lg bg-[#bbf7d0] border-2 border-black text-black flex items-center justify-center shrink-0 mt-0.5 shadow-[1.5px_1.5px_0px_#000]">
+                    <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#24211d]">
+                    <h4 className="text-sm font-black text-black">
                       Neighbor Trust Scores & Reviews
                     </h4>
-                    <p className="text-xs text-[#67635c]">
+                    <p className="text-xs sm:text-sm text-neutral-600 font-medium">
                       Track record of on-time returns, item care ratings, and
                       community badges.
                     </p>
@@ -405,39 +406,39 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Visual Box */}
-            <div className="bg-[#f4efe6] rounded-2xl border border-[#ded7c8] p-6 space-y-4">
-              <div className="flex items-center justify-between border-b border-[#ded7c8] pb-3">
+            <div className="bg-[#fffdf0] rounded-2xl border-2 border-black p-6 space-y-4 shadow-[4px_4px_0px_#000]">
+              <div className="flex items-center justify-between border-b-2 border-black pb-3">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-[#5f7d66]" />
-                  <span className="text-sm font-bold text-[#24211d]">
+                  <ShieldCheck className="w-5 h-5 text-black stroke-[2.5]" />
+                  <span className="text-sm font-black text-black">
                     Neighborhood Trust Metric
                   </span>
                 </div>
-                <span className="text-xs font-bold text-[#496350] bg-[#5f7d66]/20 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border border-black px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
                   Level 1 Protected
                 </span>
               </div>
 
-              <div className="space-y-3 text-xs text-[#4e4a43]">
-                <div className="flex justify-between py-1 border-b border-[#ede7db]">
+              <div className="space-y-3 text-xs sm:text-sm text-neutral-800 font-bold">
+                <div className="flex justify-between py-1.5 border-b border-neutral-200">
                   <span>Active Neighbors in Pool</span>
-                  <span className="font-bold">
+                  <span className="font-mono font-black">
                     {communityStats.totalNeighbors} verified
                   </span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[#ede7db]">
+                <div className="flex justify-between py-1.5 border-b border-neutral-200">
                   <span>Equipment Return Rate</span>
-                  <span className="font-bold text-[#5f7d66]">
+                  <span className="font-mono font-black text-emerald-700 bg-[#bbf7d0] px-1 rounded">
                     99.8% on-time
                   </span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-[#ede7db]">
+                <div className="flex justify-between py-1.5 border-b border-neutral-200">
                   <span>Community Savings to Date</span>
-                  <span className="font-bold">RM16,400+</span>
+                  <span className="font-mono font-black">RM16,400+</span>
                 </div>
-                <div className="flex justify-between py-1">
+                <div className="flex justify-between py-1.5">
                   <span>Current Residential Hub</span>
-                  <span className="font-bold">
+                  <span className="font-black">
                     {currentNeighborhood?.name || "Taman Melawati"}
                   </span>
                 </div>
@@ -446,10 +447,10 @@ export const HomePage: React.FC = () => {
               <div className="pt-2">
                 <Link
                   to="/register"
-                  className="w-full py-2.5 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
+                  className="jn-btn w-full py-3.5 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-black flex items-center justify-center gap-2 shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                 >
                   <span>Join Your Local Neighborhood Pool</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </Link>
               </div>
             </div>
@@ -459,20 +460,20 @@ export const HomePage: React.FC = () => {
 
       {/* 7. Call To Action Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="bg-linear-to-r from-[#24211d] to-[#453e35] text-white rounded-3xl p-8 sm:p-12 text-center space-y-6">
-          <h2 className="text-2xl sm:text-4xl font-black max-w-xl mx-auto">
+        <div className="bg-[#ffc900] text-black rounded-3xl border-3 border-black p-8 sm:p-14 text-center space-y-6 shadow-[6px_6px_0px_#000]">
+          <h2 className="text-3xl sm:text-5xl font-black max-w-xl mx-auto leading-tight tracking-tight">
             Got tools gathering dust in your storeroom?
           </h2>
-          <p className="text-stone-300 text-sm max-w-lg mx-auto">
+          <p className="text-neutral-800 font-bold text-sm sm:text-base max-w-lg mx-auto">
             Put them to work! Help a neighbor complete their home project, earn
             small maintenance fees, and earn trusted community badges.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
               to="/items/create"
-              className="px-6 py-3 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-sm font-bold shadow-md transition-all flex items-center gap-2"
+              className="jn-btn px-8 py-4 rounded-xl bg-black hover:bg-neutral-800 text-white text-sm sm:text-base font-black border-2 border-black shadow-[4px_4px_0px_#ff90e8] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all inline-flex items-center gap-2.5"
             >
-              <Wrench className="w-4 h-4" />
+              <Wrench className="w-4 h-4 stroke-[2.5]" />
               <span>List Your First Tool (Takes 1 Minute)</span>
             </Link>
           </div>

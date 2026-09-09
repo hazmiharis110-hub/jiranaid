@@ -51,17 +51,17 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.28, delay: Math.min(index * 0.04, 0.3) }}
-      whileHover={{ y: -6 }}
-      className="group bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] hover:border-[#c86d51]/70 hover:shadow-xl hover:shadow-[#24211d]/6 transition-all duration-300 flex flex-col overflow-hidden text-left relative"
+      whileHover={{ y: -4 }}
+      className="group bg-white rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] hover:shadow-[7px_7px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden text-left relative"
     >
       {/* Clickable Card Link */}
       <Link to={`/items/${tool.id}`} className="flex-1 flex flex-col">
         {/* Image Container with Zoom */}
-        <div className="relative aspect-4/3 w-full bg-[#f1ede4] overflow-hidden select-none">
+        <div className="relative aspect-4/3 w-full bg-[#faf9f6] border-b-2 border-black overflow-hidden select-none">
           <img
             src={displayImage}
             alt={tool.title}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
@@ -70,12 +70,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           />
 
           {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
 
           {/* Floating Hover Badge */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <div className="translate-y-3 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#24211d]/90 text-[#faf8f5] text-xs font-bold shadow-lg backdrop-blur-xs">
-              <Eye className="w-3.5 h-3.5 text-[#c86d51]" />
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200">
+            <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-200 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#ff90e8]">
+              <Eye className="w-3.5 h-3.5 text-[#ff90e8]" />
               <span>View Details</span>
             </div>
           </div>
@@ -83,13 +83,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           {/* Save / Favorite Button */}
           <button
             onClick={handleToggleSave}
-            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-[#4e4a43] flex items-center justify-center shadow-xs transition-transform active:scale-90"
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-xl bg-white border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000] hover:bg-[#ff90e8] hover:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             title={isSaved ? 'Remove from saved' : 'Save equipment'}
             aria-label="Save equipment"
           >
             <Heart
-              className={`w-4 h-4 transition-colors ${
-                isSaved ? 'fill-[#c86d51] text-[#c86d51]' : 'text-[#4e4a43]'
+              className={`w-4 h-4 transition-colors stroke-[2.5] ${
+                isSaved ? 'fill-[#ff90e8] text-black' : 'text-black'
               }`}
             />
           </button>
@@ -97,10 +97,10 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           {/* Bottom Status Tag */}
           <div className="absolute bottom-2.5 right-2.5 pointer-events-none">
             <span
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-md shadow-2xs backdrop-blur-xs ${
+              className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000] ${
                 isAvailable
-                  ? 'bg-[#5f7d66] text-white'
-                  : 'bg-amber-600 text-white'
+                  ? 'bg-[#bbf7d0] text-black'
+                  : 'bg-[#ffd33d] text-black'
               }`}
             >
               {isAvailable ? 'Available' : 'On Loan'}
@@ -112,29 +112,29 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         <div className="p-4 flex-1 flex flex-col justify-between">
           <div>
             {/* Category Tag */}
-            <div className="text-xs text-[#67635c] mb-1.5">
-              <span className="font-semibold uppercase tracking-wider text-[10px] text-[#c86d51]">
+            <div className="mb-2">
+              <span className="inline-block font-mono font-black uppercase tracking-wider text-[10px] text-black bg-[#ff90e8] px-2 py-0.5 rounded-md border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                 {tool.category}
               </span>
             </div>
 
             {/* Title */}
-            <h3 className="font-bold text-sm sm:text-base text-[#24211d] group-hover:text-[#c86d51] transition-colors line-clamp-1">
+            <h3 className="font-black text-base sm:text-lg text-black group-hover:text-[#ff6b4a] transition-colors line-clamp-1">
               {tool.title}
             </h3>
             {tool.brand ? (
-              <p className="text-xs text-[#67635c] line-clamp-1 mt-0.5">
+              <p className="text-xs text-[#555] font-bold line-clamp-1 mt-1">
                 {tool.brand} {tool.model ? `• ${tool.model}` : ''}
               </p>
             ) : (
-              <p className="text-xs text-[#8a857b] line-clamp-1 mt-0.5">
+              <p className="text-xs text-[#666] font-medium line-clamp-1 mt-1">
                 {tool.description}
               </p>
             )}
           </div>
 
           {/* Owner Info & Rating */}
-          <div className="pt-3 mt-3 border-t border-[#ede7db] flex items-center justify-between text-xs text-[#67635c]">
+          <div className="pt-3 mt-3 border-t-2 border-black flex items-center justify-between text-xs">
             <div className="flex items-center gap-2 min-w-0">
               <img
                 src={
@@ -142,14 +142,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
                 }
                 alt={tool.ownerName || 'Neighbor'}
-                className="w-5 h-5 rounded-full object-cover border border-[#ded7c8]"
+                className="w-6 h-6 rounded-lg object-cover border-2 border-black"
               />
-              <span className="truncate max-w-[90px] font-medium text-[#4e4a43]">
+              <span className="truncate max-w-[100px] font-bold text-black">
                 {tool.ownerName || 'Neighbor'}
               </span>
             </div>
-            <div className="flex items-center gap-1 font-semibold text-[#5f7d66] shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-1 font-black text-xs text-black bg-[#faf9f6] px-2 py-0.5 rounded-md border border-black shadow-[1px_1px_0px_#000] shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
             </div>
           </div>
@@ -157,17 +157,17 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       </Link>
 
       {/* Pricing & Borrow Action Footer */}
-      <div className="px-4 py-3 bg-[#f7f4ee] border-t border-[#ede7db] flex items-center justify-between">
+      <div className="px-4 py-3 bg-[#faf9f6] border-t-2 border-black flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1">
-            <span className="text-base sm:text-lg font-black text-[#24211d]">
+            <span className="text-base sm:text-lg font-black font-mono text-black">
               {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
             </span>
             {dailyPrice > 0 && (
-              <span className="text-[11px] font-medium text-[#67635c]">/day</span>
+              <span className="text-[11px] font-bold text-[#555]">/day</span>
             )}
           </div>
-          <span className="text-[10px] text-[#8a857b] block">
+          <span className="text-[10px] font-mono text-[#555] font-bold block">
             RM{depositAmount} deposit (refunded)
           </span>
         </div>
@@ -175,14 +175,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         <button
           onClick={handleBorrowClick}
           disabled={!isAvailable}
-          className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1 shadow-2xs ${
+          className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
             isAvailable
-              ? 'bg-[#24211d] hover:bg-[#c86d51] text-[#faf8f5] hover:shadow-xs'
-              : 'bg-[#ded7c8] text-[#8a857b] cursor-not-allowed'
+              ? 'bg-[#ffc900] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer'
+              : 'bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed'
           }`}
         >
           <span>Borrow</span>
-          <ArrowRight className="w-3 h-3" />
+          <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
         </button>
       </div>
     </motion.div>

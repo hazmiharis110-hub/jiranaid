@@ -124,20 +124,20 @@ export const ItemForm: React.FC<ItemFormProps> = ({
       {/* Form Container (7 cols) */}
       <form
         onSubmit={handleSubmit}
-        className="lg:col-span-7 bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] p-6 sm:p-8 space-y-6 shadow-xs"
+        className="lg:col-span-7 bg-white rounded-3xl border-3 border-black p-6 sm:p-8 space-y-6 shadow-[6px_6px_0px_#000]"
       >
         {errorMsg && (
-          <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-700 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3.5 rounded-2xl bg-red-100 border-2 border-black text-xs font-black text-black flex items-center gap-2 shadow-[2px_2px_0px_#000]">
+            <AlertCircle className="w-4 h-4 shrink-0 stroke-[2.5]" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {/* Preset Selector */}
         {!isEditMode && (
-          <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#4e4a43] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#c86d51]" />
+          <div className="space-y-2.5">
+            <label className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-[#ff90e8] stroke-[2.5]" />
               <span>Quick Start from Household Presets</span>
             </label>
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -146,16 +146,16 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   type="button"
                   key={p.title}
                   onClick={() => handleApplyPreset(p)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-medium shrink-0 transition-all ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border-2 border-black text-xs font-bold shrink-0 transition-all cursor-pointer ${
                     title === p.title
-                      ? 'bg-[#24211d] text-white border-[#24211d]'
-                      : 'bg-white text-[#4e4a43] border-[#ded7c8] hover:border-[#c86d51]'
+                      ? 'bg-[#ffc900] text-black shadow-[3px_3px_0px_#000]'
+                      : 'bg-white text-black hover:bg-[#faf9f6] shadow-[2px_2px_0px_#000]'
                   }`}
                 >
                   <img
                     src={p.url}
                     alt={p.title}
-                    className="w-5 h-5 rounded-md object-cover"
+                    className="w-5 h-5 rounded-md object-cover border border-black"
                   />
                   <span>{p.title}</span>
                 </button>
@@ -166,13 +166,13 @@ export const ItemForm: React.FC<ItemFormProps> = ({
 
         {/* Basic Information */}
         <div className="space-y-4">
-          <h4 className="text-sm font-bold text-[#24211d] border-b border-[#ede7db] pb-2 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-[#c86d51]" />
+          <h4 className="text-sm font-black text-black border-b-2 border-black pb-2 flex items-center gap-2">
+            <Tag className="w-4 h-4 text-black stroke-[2.5]" />
             <span>1. Tool Details</span>
           </h4>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Title / Equipment Name *
             </label>
             <input
@@ -181,18 +181,18 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., Kärcher K3 High Pressure Water Jet"
               required
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Category *
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as Exclude<ToolCategory, 'All'>)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
@@ -203,9 +203,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1 flex items-center justify-between">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1 flex items-center justify-between">
               <span>Description *</span>
-              <span className="text-[11px] text-[#8a857b] font-normal">Details, accessories, condition</span>
+              <span className="text-[11px] text-neutral-600 font-bold lowercase">Details, accessories, condition</span>
             </label>
             <textarea
               value={description}
@@ -213,17 +213,17 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               rows={4}
               placeholder="Describe what is included, its operating condition, and any useful tips for neighbors..."
               required
-              className="w-full px-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Photo URL (image_url) *
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-[#8a857b]">
-                <ImageIcon className="w-4 h-4" />
+              <span className="absolute left-3.5 top-3 text-black">
+                <ImageIcon className="w-4 h-4 stroke-[2.5]" />
               </span>
               <input
                 type="url"
@@ -231,10 +231,10 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://images.unsplash.com/..."
                 required
-                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
               />
             </div>
-            <p className="text-[11px] text-[#8a857b] mt-1">
+            <p className="text-[11px] font-bold text-neutral-600 mt-1">
               Paste a photo URL or choose from one of the quick presets above.
             </p>
           </div>
@@ -242,18 +242,18 @@ export const ItemForm: React.FC<ItemFormProps> = ({
 
         {/* Pricing & Deposit */}
         <div className="space-y-4">
-          <h4 className="text-sm font-bold text-[#24211d] border-b border-[#ede7db] pb-2 flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-[#5f7d66]" />
+          <h4 className="text-sm font-black text-black border-b-2 border-black pb-2 flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-black stroke-[2.5]" />
             <span>2. Daily Fee & Security Deposit</span>
           </h4>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+              <label className="block text-xs font-mono font-black text-black uppercase mb-1">
                 Daily Price (RM) *
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-2.5 text-xs font-bold text-[#8a857b]">
+                <span className="absolute left-3.5 top-3 text-xs font-black text-black font-mono">
                   RM
                 </span>
                 <input
@@ -263,18 +263,18 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   step="0.5"
                   value={price}
                   onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
                 />
               </div>
-              <p className="text-[10px] text-[#8a857b] mt-1">Daily maintenance fee (Set 0 for free loan)</p>
+              <p className="text-[10px] font-bold text-neutral-600 mt-1">Daily maintenance fee (Set 0 for free loan)</p>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#4e4a43] mb-1">
+              <label className="block text-xs font-mono font-black text-black uppercase mb-1">
                 Refundable Deposit (RM) *
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-2.5 text-xs font-bold text-[#8a857b]">
+                <span className="absolute left-3.5 top-3 text-xs font-black text-black font-mono">
                   RM
                 </span>
                 <input
@@ -284,21 +284,21 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   step="1"
                   value={deposit}
                   onChange={(e) => setDeposit(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-10 pr-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
                 />
               </div>
-              <p className="text-[10px] text-[#8a857b] mt-1">Refunded automatically upon safe return</p>
+              <p className="text-[10px] font-bold text-neutral-600 mt-1">Refunded automatically upon safe return</p>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-4 border-t border-[#ede7db] flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+        <div className="pt-4 border-t-2 border-black flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white font-bold text-sm shadow-xs hover:shadow-md transition-all duration-200 disabled:opacity-50"
+              className="jn-btn px-7 py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black font-black text-sm border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? 'Saving...' : submitButtonText}
             </button>
@@ -307,7 +307,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               <button
                 type="button"
                 onClick={onCancel}
-                className="px-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm font-semibold text-[#4e4a43] hover:bg-[#f1ede4] transition-all"
+                className="jn-btn px-5 py-3 rounded-xl border-2 border-black bg-white text-sm font-black text-black hover:bg-[#faf9f6] shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -318,7 +318,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <button
               type="button"
               onClick={onDelete}
-              className="px-4 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs transition-colors"
+              className="jn-btn px-5 py-3 rounded-xl border-2 border-black bg-red-100 hover:bg-red-200 text-red-800 font-black text-xs shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               Delete Listing
             </button>
@@ -329,16 +329,16 @@ export const ItemForm: React.FC<ItemFormProps> = ({
       {/* Live Preview Card (5 cols) */}
       <div className="lg:col-span-5 sticky top-24 space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[#67635c] flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#c86d51]" />
+          <h3 className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-[#ff90e8] stroke-[2.5]" />
             <span>Live Card Preview</span>
           </h3>
-          <span className="text-[11px] text-[#8a857b]">Updates as you type</span>
+          <span className="text-[11px] font-bold text-neutral-600">Updates as you type</span>
         </div>
 
         {/* Rendered Preview Card */}
-        <div className="bg-[#fcfbf9] rounded-2xl border border-[#ded7c8] shadow-md overflow-hidden text-left">
-          <div className="relative aspect-4/3 w-full bg-[#f1ede4] overflow-hidden">
+        <div className="bg-white rounded-3xl border-3 border-black shadow-[6px_6px_0px_#000] overflow-hidden text-left">
+          <div className="relative aspect-4/3 w-full bg-neutral-100 overflow-hidden border-b-2 border-black">
             <img
               src={imageUrl}
               alt={title || 'Preview'}
@@ -347,54 +347,54 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                 (e.target as HTMLImageElement).src = TOOL_IMAGE_PRESETS[0].url;
               }}
             />
-            <div className="absolute bottom-2.5 right-2.5">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#5f7d66] text-white">
+            <div className="absolute top-3 right-3">
+              <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                 Available
               </span>
             </div>
           </div>
 
-          <div className="p-4">
-            <span className="font-semibold uppercase tracking-wider text-[10px] text-[#c86d51]">
+          <div className="p-5 space-y-2">
+            <span className="inline-block bg-[#ff90e8] text-black border border-black font-mono font-black uppercase text-[10px] px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
               {category}
             </span>
-            <h3 className="font-bold text-base text-[#24211d] mt-1 line-clamp-1">
+            <h3 className="font-black text-lg text-black line-clamp-1">
               {title || 'Your Equipment Title'}
             </h3>
-            <p className="text-xs text-[#8a857b] line-clamp-3 mt-2 leading-relaxed">
+            <p className="text-xs text-neutral-700 font-medium line-clamp-3 leading-relaxed">
               {description || 'Provide a helpful description so neighbors know what is included and how to use it safely.'}
             </p>
           </div>
 
-          <div className="px-4 py-3 bg-[#f7f4ee] border-t border-[#ede7db] flex items-center justify-between">
+          <div className="px-5 py-4 bg-[#faf9f6] border-t-2 border-black flex items-center justify-between">
             <div>
               <div className="flex items-baseline gap-1">
-                <span className="text-lg font-black text-[#24211d]">
+                <span className="text-2xl font-black font-mono text-black">
                   {price === 0 ? 'Free' : `RM${price}`}
                 </span>
                 {price > 0 && (
-                  <span className="text-[11px] font-medium text-[#67635c]">/day</span>
+                  <span className="text-xs font-bold text-neutral-600 font-mono">/day</span>
                 )}
               </div>
-              <span className="text-[10px] text-[#8a857b] block">
+              <span className="text-[11px] font-bold text-neutral-600 block">
                 RM{deposit} deposit (refunded)
               </span>
             </div>
 
-            <span className="text-xs font-bold text-[#5f7d66] bg-[#5f7d66]/10 px-2.5 py-1 rounded-lg">
+            <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
               Verified Escrow
             </span>
           </div>
         </div>
 
         {/* Listing Advice Card */}
-        <div className="p-4 rounded-xl bg-[#f4efe6] border border-[#ded7c8] text-xs text-[#67635c] space-y-1.5">
-          <div className="flex items-center gap-1.5 font-bold text-[#24211d]">
-            <Info className="w-3.5 h-3.5 text-[#5f7d66]" />
-            <span>PostgreSQL Schema Aligned</span>
+        <div className="p-4 rounded-2xl bg-[#fffdf0] border-2 border-black text-xs font-medium text-black space-y-1.5 shadow-[3px_3px_0px_#000]">
+          <div className="flex items-center gap-1.5 font-black text-black">
+            <Info className="w-4 h-4 stroke-[2.5]" />
+            <span className="uppercase font-mono">Neighborhood Sharing Safe</span>
           </div>
-          <p>
-            This listing strictly stores <code>title</code>, <code>category</code>, <code>description</code>, <code>price</code>, <code>deposit</code>, and <code>image_url</code> directly linked to your user account.
+          <p className="text-neutral-700">
+            This listing is shared securely within your neighborhood geofence with automatic security deposit holds.
           </p>
         </div>
       </div>
