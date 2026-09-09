@@ -237,11 +237,22 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                   {/* Status Badges */}
                   <div>
                     {req.status === "pending" && (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#ffc900] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
-                        <Clock className="w-3.5 h-3.5 stroke-[2.5]" />
-                        Pending
-                      </span>
+                      <>
+                        <span className="text-xs font-bold text-neutral-600 italic">
+                          Awaiting neighbor confirmation
+                        </span>
+
+                        <button
+                          onClick={() =>
+                            onUpdateStatus(req.id, "cancelled", "cancel")
+                          }
+                          className="jn-btn py-2 px-3.5 rounded-xl border-2 border-black bg-white hover:bg-red-100 text-xs font-black text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                        >
+                          Cancel Request
+                        </button>
+                      </>
                     )}
+      
                     {req.status === "approved" && (
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />

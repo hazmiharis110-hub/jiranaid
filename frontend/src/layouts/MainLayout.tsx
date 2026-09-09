@@ -10,6 +10,7 @@ import { ChatModal } from '../components/ChatModal';
 import { ReviewModal } from '../components/ReviewModal';
 import { useAuthStore } from '../store/useAuthStore';
 import { useItemStore } from '../store/useItemStore';
+import { reviewService } from '../services/reviewService';
 import type { BorrowRequest, ChatMessage, User } from '../types';
 
 export const MainLayout: React.FC = () => {
@@ -184,8 +185,22 @@ export const MainLayout: React.FC = () => {
         isOpen={isReviewModalOpen}
         onClose={() => setIsReviewModalOpen(false)}
         request={selectedRequestForReview}
-        onSubmitReview={() => {
-          setIsReviewModalOpen(false);
+        onSubmitReview={async (reviewData) => {
+          try {
+            if (!selectedRequestForReview) return;
+
+            await reviewService.createReview({
+              booking_id: Number(selectedRequestForReview.id),
+              rating: reviewData.rating,
+              comment: reviewData.comment,
+            });
+
+            alert("Review submitted successfully!");
+            setIsReviewModalOpen(false);
+          } catch (error: any) {
+            console.error("Failed to submit review:", error);
+            alert(error?.message || "Failed to submit review");
+          }
         }}
       />
     </div>

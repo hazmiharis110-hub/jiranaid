@@ -18,10 +18,13 @@ import {
   MessageCircle,
 } from 'lucide-react';
 import { itemService } from '../services/itemService';
+import {reviewService} from '../services/reviewService';
+import {borrowService} from '../services/borrowService';
 import { useAuthStore } from '../store/useAuthStore';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';
 import { Badge } from '../components/common/Badge';
 import type { ToolItem, Review } from '../types';
+
 
 export const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -50,20 +53,48 @@ export const ItemDetailPage: React.FC = () => {
   const [requestSuccess, setRequestSuccess] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
+  if (!id) return;
+
+  const loadItemAndReviews = async () => {
     setIsLoading(true);
-    itemService
-      .getItemById(id)
-      .then((res) => {
-        setTool(res.tool);
-        setReviews(res.reviews || []);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setErrorMsg(err.message || 'Tool not found');
-        setIsLoading(false);
-      });
-  }, [id]);
+
+    try {
+      const toolData = await itemService.getItemById(id);
+
+      setTool(toolData);
+
+      // Get all bookings and reviews
+      const [bookings, allReviews] = await Promise.all([
+        borrowService.getBookings(),
+        reviewService.getReviews(),
+      ]);
+
+      // Find bookings belonging to this equipment
+      const itemBookings = (bookings || []).filter(
+        (booking: any) => Number(booking.item_id) === Number(id)
+      );
+
+      // Get booking IDs for this equipment
+      const bookingIds = itemBookings.map(
+        (booking: any) => Number(booking.id)
+      );
+
+      // Only show reviews belonging to this equipment
+      const itemReviews = (allReviews || []).filter(
+        (review: any) => bookingIds.includes(Number(review.booking_id))
+      );
+
+      setReviews(itemReviews);
+      setIsLoading(false);
+    } catch (err: any) {
+      console.error("Failed to load item/reviews:", err);
+      setErrorMsg(err.message || 'Tool not found');
+      setIsLoading(false);
+    }
+  };
+
+  loadItemAndReviews();
+}, [id]);
 
   if (isLoading) {
     return <LoadingSpinner message="Loading tool details..." fullPage />;
@@ -89,8 +120,8 @@ export const ItemDetailPage: React.FC = () => {
   }
 
   // Schema-aligned values
-  const dailyPrice = tool.price ?? tool.maintenanceFeePerDay ?? 0;
-  const depositAmount = tool.deposit ?? tool.depositAmount ?? 0;
+  const dailyPrice = Number(tool.price ?? tool.maintenanceFeePerDay ?? 0);
+  const depositAmount = Number(tool.deposit ?? tool.depositAmount ?? 0);
   const displayImage =
     tool.image_url ||
     tool.imageUrl ||
@@ -125,6 +156,7 @@ export const ItemDetailPage: React.FC = () => {
       // item_id, user_id (handled by auth session), start_date, end_date, total_price
       await itemService.createBooking({
         item_id: Number(tool.id),
+        user_id: Number(currentUser.id),
         start_date: startDate,
         end_date: endDate,
         total_price: totalRentalFee,
