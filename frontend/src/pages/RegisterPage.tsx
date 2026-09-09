@@ -247,7 +247,6 @@ export const RegisterPage: React.FC = () => {
             <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Neighborhood *
             </label>
-<<<<<<< HEAD
             <div className="relative">
               <select
                 name="neighborhoodId"
@@ -282,19 +281,6 @@ export const RegisterPage: React.FC = () => {
                 <Loader2 className="w-4 h-4 text-[#8a857b] animate-spin absolute right-3 top-3 pointer-events-none" />
               )}
             </div>
-=======
-            <select
-              value={selectedNeighborhoodId}
-              onChange={(e) => handleNeighborhoodChange(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
-            >
-              {neighborhoods.map((n) => (
-                <option key={n.id} value={n.id}>
-                  {n.name}
-                </option>
-              ))}
-            </select>
->>>>>>> feat-soft-brutalism
           </div>
 
           <div>
@@ -316,14 +302,13 @@ export const RegisterPage: React.FC = () => {
           </div>
         </div>
 
-<<<<<<< HEAD
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Password *
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
+              <Lock className="w-4 h-4 text-black absolute left-3.5 top-3 stroke-[2.5]" />
               <input
                 type="password"
                 name="password"
@@ -331,17 +316,17 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleChange}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#4e4a43] mb-1">
+            <label className="block text-xs font-mono font-black text-black uppercase mb-1">
               Confirm Password *
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-[#8a857b] absolute left-3.5 top-3" />
+              <Lock className="w-4 h-4 text-black absolute left-3.5 top-3 stroke-[2.5]" />
               <input
                 type="password"
                 name="confirmPassword"
@@ -349,24 +334,9 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleChange}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-sm text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
               />
             </div>
-=======
-        <div>
-          <label className="block text-xs font-mono font-black text-black uppercase mb-1">
-            Password
-          </label>
-          <div className="relative">
-            <Lock className="w-4 h-4 text-black absolute left-3.5 top-3 stroke-[2.5]" />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
-            />
->>>>>>> feat-soft-brutalism
           </div>
         </div>
 
@@ -387,21 +357,14 @@ export const RegisterPage: React.FC = () => {
 
         <button
           type="submit"
-<<<<<<< HEAD
           disabled={isSubmitting || !agreeTrust}
-          className="w-full py-3 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+          className="jn-btn w-full py-3.5 rounded-xl bg-[#ff90e8] hover:bg-[#ff7ae2] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-            <UserPlus className="w-4 h-4" />
+            <UserPlus className="w-4 h-4 stroke-[2.5]" />
           )}
-=======
-          disabled={isLoading || !agreeTrust}
-          className="jn-btn w-full py-3.5 rounded-xl bg-[#ff90e8] hover:bg-[#ff7ae2] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
-        >
-          <UserPlus className="w-4 h-4 stroke-[2.5]" />
->>>>>>> feat-soft-brutalism
           <span>
             {isSubmitting
               ? "Creating Resident Profile..."

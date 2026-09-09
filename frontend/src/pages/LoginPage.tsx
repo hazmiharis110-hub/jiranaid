@@ -18,6 +18,34 @@ export const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleDemoUserLogin = async (userType: string, email: string) => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const demoPassword = "demo123";
+      const res = await authService.login({
+        email,
+        password: demoPassword,
+      });
+
+      if (
+        res &&
+        res.success !== false &&
+        (res.success || res.token || res.user)
+      ) {
+        navigate("/dashboard");
+      } else {
+        setError(res?.message || "Demo login failed. Please try again.");
+      }
+    } catch (err: any) {
+      console.error("Demo login error:", err);
+      setError("An unexpected error occurred during demo login.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -152,11 +180,11 @@ export const LoginPage: React.FC = () => {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={loading}
           className="jn-btn w-full py-3.5 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <LogIn className="w-4 h-4 stroke-[2.5]" />
-          <span>{isLoading ? "Signing In..." : "Sign In"}</span>
+          <span>{loading ? "Signing In..." : "Sign In"}</span>
         </button>
       </form>
 
