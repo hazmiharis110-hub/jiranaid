@@ -110,23 +110,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Search Bar in Desktop Header */}
-          {location.pathname !== '/items' && (
-            <form
-              onSubmit={handleSearchSubmit}
-              className="hidden lg:flex items-center relative max-w-xs w-full"
-            >
-              <Search className="w-4 h-4 text-black absolute left-3 pointer-events-none stroke-[2.5]" />
-              <input
-                type="text"
-                value={navSearch}
-                onChange={(e) => setNavSearch(e.target.value)}
-                placeholder="Find drill, mower, ladder..."
-                className="w-full pl-9 pr-4 py-1.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black placeholder-[#777] shadow-[2px_2px_0px_#000] focus:shadow-[4px_4px_0px_#000] focus:outline-none transition-all"
-              />
-            </form>
-          )}
-
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-2">
             <NavLink to="/items" className={navLinkClass}>
