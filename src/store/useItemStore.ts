@@ -8,67 +8,107 @@ import itemService, {
 interface ItemState {
   allTools: Item[];
   tools: Item[];
+  selectedTool: Item | null;
+  reviews: unknown[];
+  stats: unknown | null;
+  searchQuery: string;
+  selectedCategory: ToolCategory | "all";
+  statusFilter: string;
+  sortBy: string;
+  maxFeeFilter: string;
   isLoading: boolean;
   error: string | null;
 
   // Actions
   fetchAllTools: () => Promise<void>;
   fetchTools: (overrideFilters?: ItemFilters) => Promise<void>;
+  fetchToolById: (id: string) => Promise<void>;
   setSearchQuery: (search: string) => void;
-  setSelectedCategory: (category: ToolCategory) => void;
+  setSelectedCategory: (category: ToolCategory | "all") => void;
   setStatusFilter: (status: string) => void;
   setSortBy: (sort: string) => void;
   setMaxFeeFilter: (maxFee: string) => void;
   resetFilters: () => void;
-  createTool: (payload: CreateItemPayload) => Promise<Item>;
+  createTool: (payload: CreateItemPayload) => Promise<boolean>;
   updateTool: (
     id: number | string,
     payload: Partial<CreateItemPayload>,
   ) => Promise<Item>;
-  deleteTool: (id: number | string) => Promise<void>;
+  deleteTool: (id: number | string) => Promise<boolean>;
   fetchStats: () => Promise<void>;
-  createTool: (payload: CreateItemPayload) => Promise<boolean>;
-  updateTool: (
-    id: string,
-    payload: Partial<CreateItemPayload>,
-  ) => Promise<boolean>;
-  deleteTool: (id: string) => Promise<boolean>;
 }
 
 export const useItemStore = create<ItemState>((set) => ({
+  allTools: [],
   tools: [],
   selectedTool: null,
   reviews: [],
   stats: null,
-  loading: false,
+  searchQuery: "",
+  selectedCategory: "all",
+  statusFilter: "all",
+  sortBy: "newest",
+  maxFeeFilter: "",
+  isLoading: false,
   error: null,
 
+  fetchAllTools: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await itemService.getItems();
+      set({ allTools: response.tools || [], isLoading: false });
+    } catch (error: any) {
+      set({
+        error: error.message || "Failed to fetch tools",
+        isLoading: false,
+      });
+    }
+  },
+
   fetchTools: async (filters?: ItemFilters) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
     try {
       const response = await itemService.getItems(filters);
-      set({ tools: response.tools || [], loading: false });
+      set({ tools: response.tools || [], isLoading: false });
     } catch (error: any) {
-      set({ error: error.message || "Failed to fetch tools", loading: false });
+      set({
+        error: error.message || "Failed to fetch tools",
+        isLoading: false,
+      });
     }
   },
 
   fetchToolById: async (id: string) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
     try {
       const response = await itemService.getItemById(id);
       set({
         selectedTool: response.tool,
         reviews: response.reviews || [],
-        loading: false,
+        isLoading: false,
       });
     } catch (error: any) {
       set({
         error: error.message || "Failed to fetch tool details",
-        loading: false,
+        isLoading: false,
       });
     }
   },
+
+  setSearchQuery: (search: string) => set({ searchQuery: search }),
+  setSelectedCategory: (category: ToolCategory | "all") =>
+    set({ selectedCategory: category }),
+  setStatusFilter: (status: string) => set({ statusFilter: status }),
+  setSortBy: (sort: string) => set({ sortBy: sort }),
+  setMaxFeeFilter: (maxFee: string) => set({ maxFeeFilter: maxFee }),
+  resetFilters: () =>
+    set({
+      searchQuery: "",
+      selectedCategory: "all",
+      statusFilter: "all",
+      sortBy: "newest",
+      maxFeeFilter: "",
+    }),
 
   fetchStats: async () => {
     try {
@@ -80,49 +120,60 @@ export const useItemStore = create<ItemState>((set) => ({
   },
 
   createTool: async (payload: CreateItemPayload) => {
-    set({ loading: true, error: null });
+    set({ isLoading: true, error: null });
     try {
       await itemService.createItem(payload);
-      set({ loading: false });
+      set({ isLoading: false });
       return true;
     } catch (error: any) {
-      set({ error: error.message || "Failed to create tool", loading: false });
+      set({
+        error: error.message || "Failed to create tool",
+        isLoading: false,
+      });
       return false;
     }
   },
 
-  updateTool: async (id: string, payload: Partial<CreateItemPayload>) => {
-    set({ loading: true, error: null });
+  updateTool: async (id, payload) => {
+    set({ isLoading: true, error: null });
     try {
-      const res = await itemService.updateItem(id, payload);
+      const res = await itemService.updateItem(String(id), payload);
       set((state) => ({
-        allTools: state.allTools.map((t) =>
-          String(t.id) === String(id) ? res.tool : t,
+        allTools: state.allTools.map((tool) =>
+          String(tool.id) === String(id) ? res.tool : tool,
         ),
-        tools: state.tools.map((t) =>
-          String(t.id) === String(id) ? res.tool : t,
+        tools: state.tools.map((tool) =>
+          String(tool.id) === String(id) ? res.tool : tool,
         ),
         isLoading: false,
       }));
       return res.tool;
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false });
-      throw err;
+    } catch (error: any) {
+      set({
+        error: error.message || "Failed to update tool",
+        isLoading: false,
+      });
+      throw error;
     }
   },
 
-  deleteTool: async (id: string) => {
-    set({ loading: true, error: null });
+  deleteTool: async (id) => {
+    set({ isLoading: true, error: null });
     try {
-      await itemService.deleteItem(id);
+      await itemService.deleteItem(String(id));
       set((state) => ({
-        allTools: state.allTools.filter((t) => String(t.id) !== String(id)),
-        tools: state.tools.filter((t) => String(t.id) !== String(id)),
+        allTools: state.allTools.filter(
+          (tool) => String(tool.id) !== String(id),
+        ),
+        tools: state.tools.filter((tool) => String(tool.id) !== String(id)),
         isLoading: false,
       }));
       return true;
     } catch (error: any) {
-      set({ error: error.message || "Failed to delete tool", loading: false });
+      set({
+        error: error.message || "Failed to delete tool",
+        isLoading: false,
+      });
       return false;
     }
   },

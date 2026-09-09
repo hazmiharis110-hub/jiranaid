@@ -21,7 +21,7 @@ export const authService = {
     if (data.user) {
       localStorage.setItem("jiranaid_userId", String(data.user.id));
     }
-    return response;
+    return data;
   },
 
   async register(
@@ -31,7 +31,7 @@ export const authService = {
     if (data.user) {
       localStorage.setItem("jiranaid_userId", String(data.user.id));
     }
-    return response;
+    return data;
   },
 
   async getCurrentUser(): Promise<{ success: boolean; user: User | null }> {
