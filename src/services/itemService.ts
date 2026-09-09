@@ -1,5 +1,5 @@
-import api from './api';
-import type { Item, ToolCategory, Review, Booking } from '../types';
+import api from "./api";
+import type { Item, ToolCategory, Review, Booking } from "../types";
 
 export interface ItemFilters {
   category?: ToolCategory;
@@ -41,27 +41,28 @@ export interface CreateBookingPayload {
 export const itemService = {
   async getItems(filters: ItemFilters = {}): Promise<ItemListResponse> {
     const params = new URLSearchParams();
-    if (filters.category && filters.category !== 'All') {
-      params.append('category', filters.category);
+    if (filters.category && filters.category !== "All") {
+      params.append("category", filters.category);
     }
     if (filters.search) {
-      params.append('search', filters.search);
+      params.append("search", filters.search);
     }
-    if (filters.status && filters.status !== 'all') {
-      params.append('status', filters.status);
+    if (filters.status && filters.status !== "all") {
+      params.append("status", filters.status);
     }
-    if (filters.maxFee && filters.maxFee !== 'all') {
-      params.append('maxFee', String(filters.maxFee));
+    if (filters.maxFee && filters.maxFee !== "all") {
+      params.append("maxFee", String(filters.maxFee));
     }
-    if (filters.neighborhoodId && filters.neighborhoodId !== 'all') {
-      params.append('neighborhoodId', String(filters.neighborhoodId));
+    if (filters.neighborhoodId && filters.neighborhoodId !== "all") {
+      params.append("neighborhoodId", String(filters.neighborhoodId));
     }
     if (filters.sort) {
-      params.append('sort', filters.sort);
+      params.append("sort", filters.sort);
     }
 
-    const { data } = await api.get<ItemListResponse>(`/items?${params.toString()}`);
-    return data;
+    const queryStr = params.toString();
+    const url = queryStr ? `/items?${queryStr}` : "/items";
+    return await api.get(url);
   },
 
   async getItemById(id: number | string): Promise<ItemDetailResponse> {
@@ -69,29 +70,42 @@ export const itemService = {
     return data;
   },
 
-  async createItem(payload: CreateItemPayload): Promise<{ success: boolean; tool: Item; message?: string }> {
-    const { data } = await api.post('/items', payload);
+  async createItem(
+    payload: CreateItemPayload,
+  ): Promise<{ success: boolean; tool: Item; message?: string }> {
+    const { data } = await api.post("/items", payload);
     return data;
   },
 
-  async updateItem(id: number | string, payload: Partial<CreateItemPayload>): Promise<{ success: boolean; tool: Item }> {
+  async updateItem(
+    id: number | string,
+    payload: Partial<CreateItemPayload>,
+  ): Promise<{ success: boolean; tool: Item }> {
     const { data } = await api.put(`/items/${id}`, payload);
     return data;
   },
 
-  async deleteItem(id: number | string): Promise<{ success: boolean; message?: string }> {
+  async deleteItem(
+    id: number | string,
+  ): Promise<{ success: boolean; message?: string }> {
     const { data } = await api.delete(`/items/${id}`);
     return data;
   },
 
-  async createBooking(payload: CreateBookingPayload): Promise<{ success: boolean; booking: Booking; message?: string }> {
-    const { data } = await api.post('/bookings', payload);
+  async createBooking(
+    payload: CreateBookingPayload,
+  ): Promise<{ success: boolean; booking: Booking; message?: string }> {
+    const { data } = await api.post("/bookings", payload);
     return data;
   },
 
   async getStats() {
-    const { data } = await api.get('/stats');
+    const { data } = await api.get("/stats");
     return data;
+  },
+
+  async getStats() {
+    return await api.get("/stats");
   },
 };
 

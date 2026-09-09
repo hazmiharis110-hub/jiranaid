@@ -1,5 +1,6 @@
-import api from './api';
-import type { User, Neighborhood } from '../types';
+// src/services/authService.ts
+import api from "./api";
+import type { User, Neighborhood } from "../types";
 
 export interface RegisterPayload {
   name: string;
@@ -12,46 +13,61 @@ export interface RegisterPayload {
 }
 
 export const authService = {
-  async login(credentials: { email?: string; userId?: number | string }): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post('/auth/login', credentials);
+  async login(credentials: {
+    email?: string;
+    userId?: number | string;
+  }): Promise<{ success: boolean; user: User }> {
+    const { data } = await api.post("/auth/login", credentials);
     if (data.user) {
-      localStorage.setItem('jiranaid_userId', String(data.user.id));
+      localStorage.setItem("jiranaid_userId", String(data.user.id));
     }
-    return data;
+    return response;
   },
 
-  async register(payload: RegisterPayload): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post('/auth/register', payload);
+  async register(
+    payload: RegisterPayload,
+  ): Promise<{ success: boolean; user: User }> {
+    const { data } = await api.post("/auth/register", payload);
     if (data.user) {
-      localStorage.setItem('jiranaid_userId', String(data.user.id));
+      localStorage.setItem("jiranaid_userId", String(data.user.id));
     }
-    return data;
+    return response;
   },
 
   async getCurrentUser(): Promise<{ success: boolean; user: User | null }> {
-    const { data } = await api.get('/auth/me');
+    return await api.get("/users/me");
+  },
+
+  async switchUser(
+    userId: number | string,
+  ): Promise<{ success: boolean; user: User }> {
+    const { data } = await api.post("/auth/switch-user", { userId });
     return data;
   },
 
-  async switchUser(userId: number | string): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post('/auth/switch-user', { userId });
-    return data;
-  },
-
-  async verifyLocation(payload: { neighborhoodId: number | string; postcode: string; method?: string }): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post('/auth/verify-location', payload);
+  async verifyLocation(payload: {
+    neighborhoodId: number | string;
+    postcode: string;
+    method?: string;
+  }): Promise<{ success: boolean; user: User }> {
+    const { data } = await api.post("/auth/verify-location", payload);
     return data;
   },
 
   async logout(): Promise<void> {
-    await api.post('/auth/logout');
-    localStorage.removeItem('jiranaid_token');
-    localStorage.removeItem('jiranaid_userId');
+    try {
+      await api.post("/users/logout");
+    } finally {
+      localStorage.removeItem("jiranaid_token");
+      localStorage.removeItem("jiranaid_userId");
+    }
   },
 
-  async getNeighborhoods(): Promise<{ success: boolean; neighborhoods: Neighborhood[] }> {
-    const { data } = await api.get('/neighborhoods');
-    return data;
+  async getNeighborhoods(): Promise<{
+    success: boolean;
+    neighborhoods: Neighborhood[];
+  }> {
+    return await api.get("/neighborhoods");
   },
 };
 

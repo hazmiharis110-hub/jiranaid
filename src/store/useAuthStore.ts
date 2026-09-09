@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import type { User, Neighborhood } from '../types';
-import authService, { type RegisterPayload } from '../services/authService';
+// src/store/useAuthStore.ts
+import { create } from "zustand";
+import type { User, Neighborhood } from "../types";
+import authService, { type RegisterPayload } from "../services/authService";
 
 interface AuthState {
   currentUser: User | null;
@@ -11,12 +12,19 @@ interface AuthState {
 
   // Actions
   fetchInitialData: () => Promise<void>;
-  login: (credentials: { email?: string; userId?: number | string }) => Promise<User>;
+  login: (credentials: {
+    email?: string;
+    userId?: number | string;
+  }) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<User>;
   logout: () => Promise<void>;
   switchUser: (userId: number | string) => Promise<void>;
   setCurrentNeighborhood: (neighborhood: Neighborhood) => void;
-  verifyLocation: (neighborhoodId: number | string, postcode: string, method?: string) => Promise<void>;
+  verifyLocation: (
+    neighborhoodId: number | string,
+    postcode: string,
+    method?: string,
+  ) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -34,15 +42,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         authService.getCurrentUser(),
       ]);
 
-      const neighborhoods = neighRes.neighborhoods || [];
+      const neighborhoods = neighRes.neighborhoods || neighRes || [];
       const currentUser = meRes.user || null;
 
       let currentNeighborhood: Neighborhood | null = null;
       if (currentUser) {
-        const targetNeighId = currentUser.neighborhood_id ?? (currentUser as any).neighborhoodId;
+        const targetNeighId =
+          currentUser.neighborhood_id ?? (currentUser as any).neighborhoodId;
         if (targetNeighId) {
           currentNeighborhood =
-            neighborhoods.find((n) => n.id === targetNeighId || String(n.id) === String(targetNeighId)) || null;
+            neighborhoods.find(
+              (n) =>
+                n.id === targetNeighId ||
+                String(n.id) === String(targetNeighId),
+            ) || null;
         }
       }
       if (!currentNeighborhood && neighborhoods.length > 0) {
@@ -66,9 +79,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const res = await authService.login(credentials);
       const user = res.user;
       const { neighborhoods } = get();
-      const targetNeighId = user.neighborhood_id ?? (user as any).neighborhoodId;
+      const targetNeighId =
+        user.neighborhood_id ?? (user as any).neighborhoodId;
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === targetNeighId || String(n.id) === String(targetNeighId)) || get().currentNeighborhood;
+        neighborhoods.find(
+          (n) =>
+            n.id === targetNeighId || String(n.id) === String(targetNeighId),
+        ) || get().currentNeighborhood;
 
       set({ currentUser: user, currentNeighborhood, isLoading: false });
       return user;
@@ -84,9 +101,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const res = await authService.register(payload);
       const user = res.user;
       const { neighborhoods } = get();
-      const targetNeighId = user.neighborhood_id ?? (user as any).neighborhoodId;
+      const targetNeighId =
+        user.neighborhood_id ?? (user as any).neighborhoodId;
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === targetNeighId || String(n.id) === String(targetNeighId)) || get().currentNeighborhood;
+        neighborhoods.find(
+          (n) =>
+            n.id === targetNeighId || String(n.id) === String(targetNeighId),
+        ) || get().currentNeighborhood;
 
       set({ currentUser: user, currentNeighborhood, isLoading: false });
       return user;
@@ -109,9 +130,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const res = await authService.switchUser(userId);
       const { neighborhoods } = get();
-      const targetNeighId = res.user.neighborhood_id ?? (res.user as any).neighborhoodId;
+      const targetNeighId =
+        res.user.neighborhood_id ?? (res.user as any).neighborhoodId;
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === targetNeighId || String(n.id) === String(targetNeighId)) || get().currentNeighborhood;
+        neighborhoods.find(
+          (n) =>
+            n.id === targetNeighId || String(n.id) === String(targetNeighId),
+        ) || get().currentNeighborhood;
       set({ currentUser: res.user, currentNeighborhood, isLoading: false });
     } catch (err: any) {
       set({ error: err.message, isLoading: false });
@@ -122,13 +147,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ currentNeighborhood: neighborhood });
   },
 
-  verifyLocation: async (neighborhoodId, postcode, method = 'postcode') => {
+  verifyLocation: async (neighborhoodId, postcode, method = "postcode") => {
     set({ isLoading: true });
     try {
-      const res = await authService.verifyLocation({ neighborhoodId, postcode, method });
+      const res = await authService.verifyLocation({
+        neighborhoodId,
+        postcode,
+        method,
+      });
       const { neighborhoods } = get();
       const currentNeighborhood =
-        neighborhoods.find((n) => n.id === neighborhoodId || String(n.id) === String(neighborhoodId)) || get().currentNeighborhood;
+        neighborhoods.find(
+          (n) =>
+            n.id === neighborhoodId || String(n.id) === String(neighborhoodId),
+        ) || get().currentNeighborhood;
       set({ currentUser: res.user, currentNeighborhood, isLoading: false });
     } catch (err: any) {
       set({ error: err.message, isLoading: false });

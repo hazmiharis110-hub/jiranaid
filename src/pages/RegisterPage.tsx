@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, Phone, MapPin, AlertCircle, ShieldCheck } from 'lucide-react';
-import { useAuthStore } from '../store/useAuthStore';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  UserPlus,
+  Mail,
+  Lock,
+  User,
+  Phone,
+  MapPin,
+  AlertCircle,
+  ShieldCheck,
+} from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const { register, neighborhoods, isLoading } = useAuthStore();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [selectedNeighborhoodId, setSelectedNeighborhoodId] = useState(
-    neighborhoods?.[0]?.id || 'taman-melawati'
+    neighborhoods?.[0]?.id || "taman-melawati",
   );
   const [postcode, setPostcode] = useState(
-    neighborhoods?.[0]?.postcode || '53100'
+    neighborhoods?.[0]?.postcode || "53100",
   );
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
   const [agreeTrust, setAgreeTrust] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleNeighborhoodChange = (neighId: string) => {
     setSelectedNeighborhoodId(neighId);
@@ -30,14 +39,14 @@ export const RegisterPage: React.FC = () => {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!name.trim()) {
-      setError('Please enter your full name');
+      setError("Please enter your full name");
       return;
     }
     if (!email.trim()) {
-      setError('Please enter your email');
+      setError("Please enter your email");
       return;
     }
 
@@ -45,14 +54,14 @@ export const RegisterPage: React.FC = () => {
       await register({
         name: name.trim(),
         email: email.trim(),
-        phone: phone.trim() || '+60 12-345 6789',
+        phone: phone.trim() || "+60 12-345 6789",
         neighborhood_id: Number(selectedNeighborhoodId) || 1,
         neighborhoodId: selectedNeighborhoodId,
-        postcode: postcode.trim() || '53100',
+        postcode: postcode.trim() || "53100",
       });
-      navigate('/items');
+      navigate("/items");
     } catch (err: any) {
-      setError(err.message || 'Registration failed. Please try again.');
+      setError(err.message || "Registration failed. Please try again.");
     }
   };
 
@@ -186,7 +195,9 @@ export const RegisterPage: React.FC = () => {
             className="mt-0.5 rounded border-[#ded7c8] text-[#c86d51] focus:ring-[#c86d51]"
           />
           <span>
-            I agree to the JiranAid Neighborhood Trust Covenant: respecting borrowed equipment, returning items on time, and upholding neighborhood goodwill.
+            I agree to the JiranAid Neighborhood Trust Covenant: respecting
+            borrowed equipment, returning items on time, and upholding
+            neighborhood goodwill.
           </span>
         </label>
 
@@ -196,14 +207,21 @@ export const RegisterPage: React.FC = () => {
           className="w-full py-3 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-sm font-bold shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
         >
           <UserPlus className="w-4 h-4" />
-          <span>{isLoading ? 'Creating Resident Profile...' : 'Complete Resident Registration'}</span>
+          <span>
+            {isLoading
+              ? "Creating Resident Profile..."
+              : "Complete Resident Registration"}
+          </span>
         </button>
       </form>
 
       <div className="text-center pt-2">
         <p className="text-xs text-[#67635c]">
-          Already a verified member?{' '}
-          <Link to="/login" className="font-bold text-[#24211d] hover:underline">
+          Already a verified member?{" "}
+          <Link
+            to="/login"
+            className="font-bold text-[#24211d] hover:underline"
+          >
             Sign In here
           </Link>
         </p>

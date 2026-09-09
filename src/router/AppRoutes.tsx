@@ -1,19 +1,19 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { MainLayout } from '../layouts/MainLayout';
-import { AuthLayout } from '../layouts/AuthLayout';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { MainLayout } from "../layouts/MainLayout";
+import { AuthLayout } from "../layouts/AuthLayout";
 
-import { HomePage } from '../pages/HomePage';
-import { ItemListingPage } from '../pages/ItemListingPage';
-import { ItemDetailPage } from '../pages/ItemDetailPage';
-import { CreateItemPage } from '../pages/CreateItemPage';
-import { EditItemPage } from '../pages/EditItemPage';
-import { LoginPage } from '../pages/LoginPage';
-import { RegisterPage } from '../pages/RegisterPage';
-import { DashboardPage } from '../pages/DashboardPage';
-import { BorrowingPage } from '../pages/BorrowingPage';
-import { ProfilePage } from '../pages/ProfilePage';
-import { NotFoundPage } from '../pages/NotFoundPage';
+import { HomePage } from "../pages/HomePage";
+import { ItemListingPage } from "../pages/ItemListingPage";
+import { ItemDetailPage } from "../pages/ItemDetailPage";
+import { CreateItemPage } from "../pages/CreateItemPage";
+import { EditItemPage } from "../pages/EditItemPage";
+import { LoginPage } from "../pages/LoginPage";
+import { RegisterPage } from "../pages/RegisterPage";
+import { DashboardPage } from "../pages/DashboardPage";
+import { BorrowingPage } from "../pages/BorrowingPage";
+import { ProfilePage } from "../pages/ProfilePage";
+import { NotFoundPage } from "../pages/NotFoundPage";
 
 export const AppRoutes: React.FC = () => {
   return (

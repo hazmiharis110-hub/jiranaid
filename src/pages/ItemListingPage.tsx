@@ -1,21 +1,20 @@
-import React, { useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
-import { Package, Sparkles, Plus, AlertCircle, Wrench } from 'lucide-react';
-import { useItemStore } from '../store/useItemStore';
-import { useAuthStore } from '../store/useAuthStore';
-import { ItemCard } from '../components/items/ItemCard';
-import { SearchBar } from '../components/items/SearchBar';
-import { FilterBar } from '../components/items/FilterBar';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
-import { EmptyState } from '../components/common/EmptyState';
-import type { ToolCategory } from '../types';
+import React, { useEffect } from "react";
+import { useSearchParams, Link } from "react-router-dom";
+import { Package, Sparkles, Plus, AlertCircle, Wrench } from "lucide-react";
+import { useItemStore } from "../store/useItemStore";
+import { useAuthStore } from "../store/useAuthStore";
+import { ItemCard } from "../components/items/ItemCard";
+import { SearchBar } from "../components/items/SearchBar";
+import { FilterBar } from "../components/items/FilterBar";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import { EmptyState } from "../components/common/EmptyState";
+import type { ToolCategory } from "../types";
 
 export const ItemListingPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const itemStore = useItemStore();
   const {
     tools,
-    isLoading,
-    filters,
     fetchTools,
     setSearchQuery,
     setSelectedCategory,
@@ -23,16 +22,25 @@ export const ItemListingPage: React.FC = () => {
     setSortBy,
     setMaxFeeFilter,
     resetFilters,
-  } = useItemStore();
+  } = itemStore as any;
+  const filters = (itemStore as any).filters ?? {
+    search: (itemStore as any).searchQuery ?? "",
+    category: (itemStore as any).selectedCategory ?? "All",
+    status: (itemStore as any).statusFilter ?? "all",
+    sort: (itemStore as any).sortBy ?? "distance",
+    maxFee: (itemStore as any).maxFeeFilter ?? "all",
+  };
+  const isLoading =
+    "isLoading" in itemStore ? (itemStore as any).isLoading : false;
 
   const { currentNeighborhood } = useAuthStore();
 
   // Synchronize filters whenever URL search parameters change
   useEffect(() => {
-    const urlCategory = (searchParams.get('category') as ToolCategory) || 'All';
-    const urlSearch = searchParams.get('search') || '';
-    const urlStatus = searchParams.get('status') || 'all';
-    const urlSort = searchParams.get('sort') || 'distance';
+    const urlCategory = (searchParams.get("category") as ToolCategory) || "All";
+    const urlSearch = searchParams.get("search") || "";
+    const urlStatus = searchParams.get("status") || "all";
+    const urlSort = searchParams.get("sort") || "distance";
 
     const mergedFilters = {
       ...filters,
@@ -48,19 +56,19 @@ export const ItemListingPage: React.FC = () => {
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
     if (val) {
-      searchParams.set('search', val);
+      searchParams.set("search", val);
     } else {
-      searchParams.delete('search');
+      searchParams.delete("search");
     }
     setSearchParams(searchParams, { replace: true });
   };
 
   const handleCategorySelect = (cat: ToolCategory) => {
     setSelectedCategory(cat);
-    if (cat !== 'All') {
-      searchParams.set('category', cat);
+    if (cat !== "All") {
+      searchParams.set("category", cat);
     } else {
-      searchParams.delete('category');
+      searchParams.delete("category");
     }
     setSearchParams(searchParams, { replace: true });
   };
@@ -75,11 +83,12 @@ export const ItemListingPage: React.FC = () => {
               Neighborhood Tool Library
             </h1>
             <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full bg-[#f4efe6] border border-[#ded7c8] text-xs font-bold text-[#4e4a43]">
-              {currentNeighborhood?.name || 'Local Circle'}
+              {currentNeighborhood?.name || "Local Circle"}
             </span>
           </div>
           <p className="text-xs sm:text-sm text-[#67635c] mt-1">
-            Browse verified household equipment, garden tools, and power machinery available for borrowing.
+            Browse verified household equipment, garden tools, and power
+            machinery available for borrowing.
           </p>
         </div>
 
@@ -95,7 +104,7 @@ export const ItemListingPage: React.FC = () => {
       {/* Search Input Bar */}
       <div className="max-w-2xl">
         <SearchBar
-          value={filters.search || ''}
+          value={filters.search || ""}
           onChange={handleSearchChange}
           placeholder="Search tools by keyword (e.g. pressure washer, drill, lawnmower)..."
         />
@@ -103,13 +112,13 @@ export const ItemListingPage: React.FC = () => {
 
       {/* Filter Bar (Categories, Status, Sorting, Reset) */}
       <FilterBar
-        selectedCategory={filters.category || 'All'}
+        selectedCategory={filters.category || "All"}
         onSelectCategory={handleCategorySelect}
-        statusFilter={filters.status || 'all'}
+        statusFilter={filters.status || "all"}
         onSelectStatus={setStatusFilter}
-        sortBy={filters.sort || 'distance'}
+        sortBy={filters.sort || "distance"}
         onSelectSort={setSortBy}
-        maxFeeFilter={String(filters.maxFee || 'all')}
+        maxFeeFilter={String(filters.maxFee || "all")}
         onSelectMaxFee={setMaxFeeFilter}
         totalCount={tools.length}
         onResetFilters={() => {
@@ -120,7 +129,10 @@ export const ItemListingPage: React.FC = () => {
 
       {/* Content Area */}
       {isLoading ? (
-        <LoadingSpinner message="Searching neighborhood tool library..." fullPage />
+        <LoadingSpinner
+          message="Searching neighborhood tool library..."
+          fullPage
+        />
       ) : tools.length === 0 ? (
         <EmptyState
           icon={<Package className="w-8 h-8 text-[#c86d51]" />}
@@ -132,11 +144,11 @@ export const ItemListingPage: React.FC = () => {
             setSearchParams({}, { replace: true });
           }}
           secondaryActionText="+ List This Tool"
-          onSecondaryAction={() => (window.location.href = '/items/create')}
+          onSecondaryAction={() => (window.location.href = "/items/create")}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tools.map((tool, idx) => (
+          {tools.map((tool: any, idx: number) => (
             <ItemCard key={tool.id} tool={tool} index={idx} />
           ))}
         </div>
