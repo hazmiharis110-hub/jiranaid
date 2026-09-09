@@ -47,78 +47,78 @@ export const ProfilePage: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/items"
-          className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#67635c] hover:text-[#24211d] transition-colors"
+          className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
           <span>Back to Catalog</span>
         </Link>
       </div>
 
       {/* Profile Card */}
-      <div className="bg-[#fcfbf9] rounded-3xl border border-[#ded7c8] p-6 sm:p-8 space-y-6 shadow-xs">
+      <div className="bg-white rounded-3xl border-3 border-black p-6 sm:p-8 space-y-6 shadow-[6px_6px_0px_#000]">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
           <img
             src={currentUser.avatar}
             alt={currentUser.name}
-            className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md"
+            className="w-24 h-24 rounded-2xl object-cover border-2 border-black shadow-[3px_3px_0px_#000]"
           />
           <div className="space-y-2 text-center sm:text-left flex-1">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#24211d]">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+              <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
                 {currentUser.name}
               </h1>
-              <span className="inline-flex items-center justify-center gap-1 px-2.5 py-0.5 rounded-full bg-[#5f7d66]/15 text-[#496350] text-xs font-bold w-fit mx-auto sm:mx-0">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000] w-fit mx-auto sm:mx-0">
+                <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Verified Resident</span>
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-[#67635c] flex items-center justify-center sm:justify-start gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#5f7d66]" />
+            <p className="text-xs sm:text-sm font-bold text-neutral-700 flex items-center justify-center sm:justify-start gap-1.5">
+              <MapPin className="w-4 h-4 text-black stroke-[2.5]" />
               <span>
                 {currentUser.neighborhoodName} • Postcode {currentUser.postcode}
               </span>
             </p>
 
-            <p className="text-xs text-[#8a857b]">
+            <p className="text-xs font-bold text-neutral-500">
               Member since {currentUser.joinedDate || 'September 2025'}
             </p>
           </div>
 
           <div className="text-center sm:text-right">
-            <div className="inline-flex items-center gap-1 px-3 py-1.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900">
-              <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-              <span className="text-lg font-black">{(currentUser.trustScore ?? 5.0).toFixed(1)}</span>
-              <span className="text-xs font-semibold text-amber-700">Trust Score</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#ffc900] border-2 border-black text-black shadow-[3px_3px_0px_#000]">
+              <Star className="w-5 h-5 text-black fill-amber-400 stroke-[2.5]" />
+              <span className="text-xl font-black font-mono">{(currentUser.trustScore ?? 5.0).toFixed(1)}</span>
+              <span className="text-xs font-mono font-black uppercase">Trust</span>
             </div>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-[#ede7db] text-center">
-          <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
-            <p className="text-xl sm:text-2xl font-black text-[#24211d]">
+        <div className="grid grid-cols-3 gap-4 pt-4 border-t-2 border-black text-center">
+          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+            <p className="text-2xl sm:text-3xl font-black font-mono text-black">
               {currentUser.totalLends ?? 0}
             </p>
-            <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
+            <p className="text-xs font-mono font-black uppercase text-neutral-600 mt-1">
               Tools Shared
             </p>
           </div>
 
-          <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
-            <p className="text-xl sm:text-2xl font-black text-[#24211d]">
+          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+            <p className="text-2xl sm:text-3xl font-black font-mono text-black">
               {currentUser.totalBorrows ?? 0}
             </p>
-            <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
+            <p className="text-xs font-mono font-black uppercase text-neutral-600 mt-1">
               Items Borrowed
             </p>
           </div>
 
-          <div className="p-3 bg-white rounded-2xl border border-[#ded7c8]">
-            <p className="text-xl sm:text-2xl font-black text-[#5f7d66]">
+          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+            <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-700">
               {currentUser.onTimeReturnRate ?? 100}%
             </p>
-            <p className="text-[11px] text-[#67635c] font-medium mt-0.5">
+            <p className="text-xs font-mono font-black uppercase text-neutral-600 mt-1">
               On-Time Rate
             </p>
           </div>
@@ -126,17 +126,17 @@ export const ProfilePage: React.FC = () => {
 
         {/* Community Badges */}
         <div className="space-y-3 pt-2">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[#4e4a43] flex items-center gap-1.5">
-            <Award className="w-4 h-4 text-[#c86d51]" />
+          <h3 className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+            <Award className="w-4 h-4 text-black stroke-[2.5]" />
             <span>Community Badges Earned</span>
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {currentUser.badges?.map((badge) => (
               <span
                 key={badge}
-                className="px-3 py-1.5 rounded-xl bg-white border border-[#ded7c8] text-xs font-bold text-[#24211d] shadow-2xs flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl bg-[#faf9f6] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000] flex items-center gap-2"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#5f7d66]" />
+                <ShieldCheck className="w-4 h-4 text-emerald-700 stroke-[2.5]" />
                 <span>{badge}</span>
               </span>
             ))}

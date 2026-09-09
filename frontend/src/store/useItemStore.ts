@@ -29,7 +29,7 @@ interface ItemState {
   setSortBy: (sort: string) => void;
   setMaxFeeFilter: (maxFee: string) => void;
   resetFilters: () => void;
-  createTool: (payload: CreateItemPayload) => Promise<boolean>;
+  createTool: (payload: CreateItemPayload) => Promise<Item>;
   updateTool: (
     id: number | string,
     payload: Partial<CreateItemPayload>,
@@ -122,15 +122,20 @@ export const useItemStore = create<ItemState>((set) => ({
   createTool: async (payload: CreateItemPayload) => {
     set({ isLoading: true, error: null });
     try {
-      await itemService.createItem(payload);
-      set({ isLoading: false });
-      return true;
+      const res: any = await itemService.createItem(payload);
+      const createdItem: Item = res?.tool || res;
+      set((state) => ({
+        allTools: [createdItem, ...state.allTools],
+        tools: [createdItem, ...state.tools],
+        isLoading: false,
+      }));
+      return createdItem;
     } catch (error: any) {
       set({
         error: error.message || "Failed to create tool",
         isLoading: false,
       });
-      return false;
+      throw error;
     }
   },
 

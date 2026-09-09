@@ -103,10 +103,6 @@ export const itemService = {
     const { data } = await api.get("/stats");
     return data;
   },
-
-  async getStats() {
-    return await api.get("/stats");
-  },
 };
 
 export default itemService;

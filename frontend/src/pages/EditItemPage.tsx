@@ -79,19 +79,19 @@ export const EditItemPage: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#ede7db]">
-        <div className="space-y-1">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b-2 border-black">
+        <div className="space-y-2">
           <Link
             to={`/items/${tool.id}`}
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#67635c] hover:text-[#24211d] transition-colors mb-1"
+            className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all mb-1"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
             <span>Back to Item Details</span>
           </Link>
-          <h1 className="text-2xl sm:text-3xl font-black text-[#24211d]">
+          <h1 className="text-3xl sm:text-4xl font-black text-black tracking-tight">
             Edit Tool Listing
           </h1>
-          <p className="text-xs sm:text-sm text-[#67635c]">
+          <p className="text-xs sm:text-sm font-bold text-neutral-600">
             Update photos, description, condition, or daily maintenance pricing for {tool.title}.
           </p>
         </div>

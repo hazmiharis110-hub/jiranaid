@@ -76,27 +76,26 @@ export const ItemListingPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-[#ede7db]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b-2 border-black">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-black text-[#24211d]">
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
               Neighborhood Tool Library
             </h1>
-            <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full bg-[#f4efe6] border border-[#ded7c8] text-xs font-bold text-[#4e4a43]">
+            <span className="hidden sm:inline-flex px-3 py-1 rounded-xl bg-[#ffc900] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000]">
               {currentNeighborhood?.name || "Local Circle"}
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-[#67635c] mt-1">
-            Browse verified household equipment, garden tools, and power
-            machinery available for borrowing.
+          <p className="text-xs sm:text-sm text-[#444] font-bold mt-1">
+            Borrow verified power machinery, garden gear, and household tools from nearby neighbors.
           </p>
         </div>
 
         <Link
           to="/items/create"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#c86d51] hover:bg-[#b0553b] text-white text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all self-start sm:self-auto shrink-0"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto shrink-0 cursor-pointer"
         >
-          <Plus className="w-4 h-4 stroke-[2.5]" />
+          <Plus className="w-4 h-4 stroke-[3]" />
           <span>List a Tool</span>
         </Link>
       </div>
