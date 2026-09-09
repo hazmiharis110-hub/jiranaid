@@ -9,7 +9,6 @@ import {
   ArrowRight,
   UserCheck,
 } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
 import { authService } from "../services/authService";
 
 export const LoginPage: React.FC = () => {
@@ -17,34 +16,6 @@ export const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const handleDemoUserLogin = async (userType: string, email: string) => {
-    setError("");
-    setLoading(true);
-
-    try {
-      const demoPassword = "demo123";
-      const res = await authService.login({
-        email,
-        password: demoPassword,
-      });
-
-      if (
-        res &&
-        res.success !== false &&
-        (res.success || res.token || res.user)
-      ) {
-        navigate("/dashboard");
-      } else {
-        setError(res?.message || "Demo login failed. Please try again.");
-      }
-    } catch (err: any) {
-      console.error("Demo login error:", err);
-      setError("An unexpected error occurred during demo login.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,41 +69,6 @@ export const LoginPage: React.FC = () => {
           <span>{error}</span>
         </div>
       )}
-
-      {/* Quick Demo Sign In Persona Shortcuts */}
-      <div className="p-4 rounded-2xl bg-[#fffdf0] border-2 border-black space-y-2.5 shadow-[3px_3px_0px_#000]">
-        <div className="flex items-center gap-1.5 text-xs font-mono font-black uppercase text-black">
-          <Sparkles className="w-4 h-4 text-[#ff90e8] stroke-[2.5]" />
-          <span>Quick 1-Click Demo Profiles</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button
-            type="button"
-            onClick={() =>
-              handleDemoUserLogin("user-current", "aiman.zikri@neighborhood.my")
-            }
-            className="jn-btn p-3 rounded-xl bg-white border-2 border-black hover:bg-[#ffc900] text-left transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
-          >
-            <p className="text-xs font-black text-black">Aiman Zikri</p>
-            <p className="text-[10px] font-bold text-emerald-800">
-              Super Lender • 53100
-            </p>
-          </button>
-
-          <button
-            type="button"
-            onClick={() =>
-              handleDemoUserLogin("user-sarah", "sarah.lim@neighborhood.my")
-            }
-            className="jn-btn p-3 rounded-xl bg-white border-2 border-black hover:bg-[#ffc900] text-left transition-all shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
-          >
-            <p className="text-xs font-black text-black">Sarah Lim</p>
-            <p className="text-[10px] font-bold text-emerald-800">
-              Active Borrower • 53100
-            </p>
-          </button>
-        </div>
-      </div>
 
       {/* Login Form */}
       <form onSubmit={handleLogin} className="space-y-4">
