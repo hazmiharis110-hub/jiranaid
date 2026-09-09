@@ -20,6 +20,7 @@ app.use("/api/neighborhoods", neighborhoodRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/items", itemRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/borrow-requests", bookingRoutes);
 app.use("/api/reviews", reviewRoutes);
 
 // Custom stats endpoint for the frontend dashboard
