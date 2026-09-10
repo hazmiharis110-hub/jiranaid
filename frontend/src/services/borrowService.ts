@@ -1,24 +1,16 @@
-// src/services/borrowService.ts
 import api from "./api";
 
 export const borrowService = {
-  async getBorrowRequests() {
-    return await api.get("/borrow-requests");
+  async getBookings() {
+    return await api.get("/bookings");
   },
 
-  async createBorrowRequest(payload: {
-    itemId: string;
-    startDate: string;
-    endDate: string;
-  }) {
-    return await api.post("/borrow-requests", payload);
+  async getBookingById(id: number | string) {
+    return await api.get(`/bookings/${id}`);
   },
 
-  async updateRequestStatus(
-    requestId: string,
-    status: "approved" | "rejected" | "returned",
-  ) {
-    return await api.patch(`/borrow-requests/${requestId}/status`, { status });
+  async cancelBooking(id: number | string) {
+    return await api.patch(`/bookings/${id}/cancel`);
   },
 };
 

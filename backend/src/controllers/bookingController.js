@@ -97,8 +97,31 @@ const createBooking = async (req, res) => {
 const getBookings = async (req, res) => {
     try {
         const result = await pool.query(
-            `SELECT * FROM bookings
-             ORDER BY created_at DESC`
+            `SELECT
+                b.*,
+
+                i.title AS tool_title,
+                i.image_url AS tool_image,
+                i.category AS tool_category,
+                i.price AS maintenance_fee,
+                i.deposit AS deposit_fee,
+                i.user_id AS owner_id,
+
+                owner.name AS owner_name,
+                borrower.name AS borrower_name
+
+             FROM bookings b
+
+             JOIN items i
+                ON b.item_id = i.id
+
+             JOIN users owner
+                ON i.user_id = owner.id
+
+             JOIN users borrower
+                ON b.user_id = borrower.id
+
+             ORDER BY b.created_at DESC`
         );
 
         res.status(200).json(result.rows);
