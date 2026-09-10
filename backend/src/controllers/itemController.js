@@ -9,14 +9,26 @@ const normalizeItem = (item) => ({
   category: item.category,
   image_url: item.image_url,
   user_id: item.user_id,
+  owner_name: item.owner_name || "Neighbor",
+  avg_rating: item.avg_rating || 0.0,
 });
 
-// GET all items
+// GET all items (using a safe subquery or clean left join to prevent dropping un-reviewed items)
 exports.getAllItems = async (req, res, next) => {
   try {
     const result = await pool.query(
-      "SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, owner.name AS owner_name, COALESCE(ROUND(AVG(r.rating), 1), 0.0) AS avg_rating FROM items i JOIN users owner ON i.user_id = owner.id LEFT JOIN bookings b ON b.item_id = i.id LEFT JOIN reviews r ON r.booking_id = b.id WHERE owner.neighborhood_id = (SELECT neighborhood_id FROM users WHERE id = $1) GROUP BY i.id, owner.name",
-      [req.user.id],
+      `SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.user_id, 
+              owner.name AS owner_name, 
+              COALESCE(sub.avg_rating, 0.0) AS avg_rating 
+       FROM items i 
+       JOIN users owner ON i.user_id = owner.id 
+       LEFT JOIN (
+           SELECT b.item_id, ROUND(AVG(r.rating), 1) AS avg_rating 
+           FROM bookings b 
+           JOIN reviews r ON r.booking_id = b.id 
+           GROUP BY b.item_id
+       ) sub ON sub.item_id = i.id 
+       ORDER BY i.id DESC`,
     );
     res.status(200).json(result.rows.map(normalizeItem));
   } catch (error) {
@@ -28,7 +40,13 @@ exports.getAllItems = async (req, res, next) => {
 exports.getItemById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await pool.query("SELECT * FROM items WHERE id = $1", [id]);
+    const result = await pool.query(
+      `SELECT i.*, owner.name AS owner_name 
+       FROM items i 
+       JOIN users owner ON i.user_id = owner.id 
+       WHERE i.id = $1`,
+      [id],
+    );
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Item not found" });
@@ -64,7 +82,17 @@ exports.insertItem = async (req, res, next) => {
       [title, description, price, deposit, category, image_url, req.user.id],
     );
 
-    res.status(201).json(normalizeItem(result.rows[0]));
+    // Fetch owner name for the newly inserted item response mapping
+    const userResult = await pool.query(
+      "SELECT name FROM users WHERE id = $1",
+      [req.user.id],
+    );
+    const newItem = {
+      ...result.rows[0],
+      owner_name: userResult.rows[0]?.name || "Neighbor",
+    };
+
+    res.status(201).json(normalizeItem(newItem));
   } catch (error) {
     next(error);
   }
@@ -88,7 +116,16 @@ exports.updateItem = async (req, res, next) => {
         .json({ message: "Item not found or not authorized" });
     }
 
-    res.status(200).json(normalizeItem(result.rows[0]));
+    const userResult = await pool.query(
+      "SELECT name FROM users WHERE id = $1",
+      [result.rows[0].user_id],
+    );
+    const updatedItem = {
+      ...result.rows[0],
+      owner_name: userResult.rows[0]?.name || "Neighbor",
+    };
+
+    res.status(200).json(normalizeItem(updatedItem));
   } catch (error) {
     next(error);
   }
@@ -113,3 +150,5 @@ exports.deleteItem = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports = exports;

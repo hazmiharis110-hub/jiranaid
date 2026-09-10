@@ -56,7 +56,10 @@ export const useItemStore = create<ItemState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await itemService.getItems();
-      set({ allTools: response.tools || [], isLoading: false });
+      const itemsArray = Array.isArray(response)
+        ? response
+        : response?.tools || [];
+      set({ allTools: itemsArray, isLoading: false });
     } catch (error: any) {
       set({
         error: error.message || "Failed to fetch tools",
@@ -69,7 +72,10 @@ export const useItemStore = create<ItemState>((set) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await itemService.getItems(filters);
-      set({ tools: response.tools || [], isLoading: false });
+      const itemsArray = Array.isArray(response)
+        ? response
+        : response?.tools || [];
+      set({ tools: itemsArray, isLoading: false });
     } catch (error: any) {
       set({
         error: error.message || "Failed to fetch tools",
@@ -83,8 +89,8 @@ export const useItemStore = create<ItemState>((set) => ({
     try {
       const response = await itemService.getItemById(id);
       set({
-        selectedTool: response.tool,
-        reviews: response.reviews || [],
+        selectedTool: response?.tool || response,
+        reviews: response?.reviews || [],
         isLoading: false,
       });
     } catch (error: any) {
@@ -142,17 +148,18 @@ export const useItemStore = create<ItemState>((set) => ({
   updateTool: async (id, payload) => {
     set({ isLoading: true, error: null });
     try {
-      const res = await itemService.updateItem(String(id), payload);
+      const res: any = await itemService.updateItem(String(id), payload);
+      const updatedItem: Item = res?.tool || res;
       set((state) => ({
         allTools: state.allTools.map((tool) =>
-          String(tool.id) === String(id) ? res.tool : tool,
+          String(tool.id) === String(id) ? updatedItem : tool,
         ),
         tools: state.tools.map((tool) =>
-          String(tool.id) === String(id) ? res.tool : tool,
+          String(tool.id) === String(id) ? updatedItem : tool,
         ),
         isLoading: false,
       }));
-      return res.tool;
+      return updatedItem;
     } catch (error: any) {
       set({
         error: error.message || "Failed to update tool",
