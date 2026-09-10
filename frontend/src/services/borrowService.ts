@@ -1,17 +1,27 @@
-import api from "./api";
+// frontend/src/services/borrowService.ts
+import { api } from "./api";
 
 export const borrowService = {
   async getBookings() {
-    return await api.get("/bookings");
+    const res = await api.get("/bookings");
+    console.log("Raw API method output:", res);
+
+    // If your interceptor unwraps response.data, 'res' is already the array!
+    return res?.data !== undefined ? res.data : res;
   },
 
-  async getBookingById(id: number | string) {
-    return await api.get(`/bookings/${id}`);
+  async approveBooking(id: string | number) {
+    const res = await api.put(`/bookings/${id}/approve`);
+    return res?.data !== undefined ? res.data : res;
   },
 
-  async cancelBooking(id: number | string) {
-    return await api.patch(`/bookings/${id}/cancel`);
+  async declineBooking(id: string | number) {
+    const res = await api.put(`/bookings/${id}/decline`);
+    return res?.data !== undefined ? res.data : res;
+  },
+
+  async cancelBooking(id: string | number) {
+    const res = await api.put(`/bookings/${id}/cancel`);
+    return res?.data !== undefined ? res.data : res;
   },
 };
-
-export default borrowService;

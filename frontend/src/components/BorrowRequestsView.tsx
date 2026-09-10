@@ -20,7 +20,11 @@ import type { BorrowRequest, User } from "../types.ts";
 interface BorrowRequestsViewProps {
   requests: BorrowRequest[];
   currentUser: User | null;
-  onUpdateStatus: (requestId: string | number, status: string, action: string) => void;
+  onUpdateStatus: (
+    requestId: string | number,
+    status: string,
+    action: string,
+  ) => void;
   onOpenReviewModal: (request: BorrowRequest) => void;
   onSwitchToCatalog: () => void;
   onSwitchToLenderDashboard?: () => void;
@@ -50,8 +54,8 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
             Sign in to View Requests
           </h2>
           <p className="text-xs sm:text-sm font-medium text-neutral-600">
-            Track your borrowed equipment, active reservations, security deposits,
-            and approvals from neighbors.
+            Track your borrowed equipment, active reservations, security
+            deposits, and approvals from neighbors.
           </p>
           <button
             onClick={onOpenAuthModal}
@@ -252,7 +256,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                         </button>
                       </>
                     )}
-      
+
                     {req.status === "approved" && (
                       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -313,7 +317,10 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                   {req.depositRefunded && (
                     <div className="text-xs font-black text-black bg-[#bbf7d0] p-2 rounded-xl border border-black flex items-center gap-1.5 mt-2">
                       <CheckCircle2 className="w-4 h-4 stroke-[2.5] text-emerald-700" />
-                      <span>RM {req.depositFee} Security Deposit released back to borrower!</span>
+                      <span>
+                        RM {req.depositFee} Security Deposit released back to
+                        borrower!
+                      </span>
                     </div>
                   )}
                 </div>
@@ -352,7 +359,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                         </>
                       )}
 
-                      {req.status === "approved" && (
+                      {/* {req.status === "approved" && (
                         <button
                           onClick={() =>
                             onUpdateStatus(req.id, "active", "pickup")
@@ -362,7 +369,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                           <PackageCheck className="w-4 h-4 stroke-[2.5]" />
                           Confirm Handover / Pickup
                         </button>
-                      )}
+                      )} */}
 
                       {req.status === "active" && (
                         <button
