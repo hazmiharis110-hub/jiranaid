@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { Package, Sparkles, Plus, AlertCircle, Wrench } from "lucide-react";
+import { Package, Plus } from "lucide-react";
 import { useItemStore } from "../store/useItemStore";
-import { useAuthStore } from "../store/useAuthStore";
+// ❌ Removed import { useAuthStore } from "../store/useAuthStore";
 import { ItemCard } from "../components/items/ItemCard";
 import { SearchBar } from "../components/items/SearchBar";
 import { FilterBar } from "../components/items/FilterBar";
@@ -13,6 +13,10 @@ import type { ToolCategory } from "../types";
 export const ItemListingPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const itemStore = useItemStore();
+
+  // Read current user directly from localStorage
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
   const rawTools = (itemStore as any).tools;
   const toolList = Array.isArray(rawTools)
@@ -35,6 +39,7 @@ export const ItemListingPage: React.FC = () => {
     setMaxFeeFilter,
     resetFilters,
   } = itemStore as any;
+
   const filters = (itemStore as any).filters ?? {
     search: (itemStore as any).searchQuery ?? "",
     category: (itemStore as any).selectedCategory ?? "All",
@@ -42,10 +47,9 @@ export const ItemListingPage: React.FC = () => {
     sort: (itemStore as any).sortBy ?? "distance",
     maxFee: (itemStore as any).maxFeeFilter ?? "all",
   };
+
   const isLoading =
     "isLoading" in itemStore ? (itemStore as any).isLoading : false;
-
-  const { currentNeighborhood } = useAuthStore();
 
   // Synchronize filters whenever URL search parameters change
   useEffect(() => {
@@ -95,7 +99,9 @@ export const ItemListingPage: React.FC = () => {
               Neighborhood Tool Library
             </h1>
             <span className="hidden sm:inline-flex px-3 py-1 rounded-xl bg-[#ffc900] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000]">
-              {currentNeighborhood?.name || "Local Circle"}
+              {currentUser?.neighborhoodName ||
+                currentUser?.neighborhood ||
+                "Local Circle"}
             </span>
           </div>
           <p className="text-xs sm:text-sm text-[#444] font-bold mt-1">
@@ -122,7 +128,7 @@ export const ItemListingPage: React.FC = () => {
         />
       </div>
 
-      {/* Filter Bar (Categories, Status, Sorting, Reset) */}
+      {/* Filter Bar */}
       <FilterBar
         selectedCategory={filters.category || "All"}
         onSelectCategory={handleCategorySelect}
