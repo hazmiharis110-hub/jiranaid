@@ -83,14 +83,14 @@ export const authService = {
     return data;
   },
 
-  // async logout(): Promise<void> {
-  //   try {
-  //     await api.post("/users/logout");
-  //   } finally {
-  //     localStorage.removeItem("jiranaid_token");
-  //     localStorage.removeItem("jiranaid_userId");
-  //   }
-  // },
+  async logout(): Promise<void> {
+    try {
+      await api.post("/users/logout");
+    } finally {
+      localStorage.removeItem("jiranaid_token");
+      localStorage.removeItem("jiranaid_userId");
+    }
+  },
 
   async getNeighborhoods(): Promise<{
     success: boolean;
