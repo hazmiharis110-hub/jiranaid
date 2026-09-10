@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { data, Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   LogIn,
   Mail,
@@ -29,6 +29,13 @@ export const LoginPage: React.FC = () => {
         password: formData.password,
       });
 
+      if (res && res.token) {
+        localStorage.setItem("token", res.token);
+      }
+      if (res && res.user) {
+        localStorage.setItem("user", JSON.stringify(res.user));
+      }
+
       console.log("LOGIN RESPONSE OBJECT:", res);
 
       // 2. Check for success flag or user payload
@@ -38,7 +45,7 @@ export const LoginPage: React.FC = () => {
         (res.success || res.token || res.user)
       ) {
         // 3. Redirect to your main app screen
-        navigate("/dashboard"); // Adjust path to match your route (e.g., "/", "/dashboard")
+        navigate("/items"); // Adjust path to match your route (e.g., "/", "/dashboard")
       } else {
         setError(
           res?.message || "Login failed. Please check your credentials.",
