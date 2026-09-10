@@ -13,8 +13,20 @@ import type { ToolCategory } from "../types";
 export const ItemListingPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const itemStore = useItemStore();
+
+  const rawTools = (itemStore as any).tools;
+  const toolList = Array.isArray(rawTools)
+    ? rawTools
+    : rawTools?.items || rawTools?.data || [];
+
+  // Filter out null/undefined or items missing an id to prevent crashes
+  const tools = Array.isArray(toolList)
+    ? toolList.filter(
+        (t: any) => t && (t.id !== undefined || t._id !== undefined),
+      )
+    : [];
+
   const {
-    tools,
     fetchTools,
     setSearchQuery,
     setSelectedCategory,
@@ -149,7 +161,11 @@ export const ItemListingPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {tools.map((tool: any, idx: number) => (
-            <ItemCard key={tool.id} tool={tool} index={idx} />
+            <ItemCard
+              key={tool.id || tool._id || idx}
+              tool={tool}
+              index={idx}
+            />
           ))}
         </div>
       )}
