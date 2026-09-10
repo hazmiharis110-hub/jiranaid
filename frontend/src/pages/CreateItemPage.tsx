@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigate, Link, useOutletContext } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Plus, AlertCircle, Wrench, ShieldCheck } from 'lucide-react';
-import { ItemForm, type ItemFormData } from '../components/items/ItemForm';
-import { useItemStore } from '../store/useItemStore';
-import { useAuthStore } from '../store/useAuthStore';
+import React, { useState } from "react";
+import { useNavigate, Link, useOutletContext } from "react-router-dom";
+import { ArrowLeft, AlertCircle } from "lucide-react";
+import { ItemForm, type ItemFormData } from "../components/items/ItemForm";
+import { useItemStore } from "../store/useItemStore";
+// ❌ Removed useAuthStore import
 
 export const CreateItemPage: React.FC = () => {
   const navigate = useNavigate();
   const outletContext = useOutletContext<any>();
   const { createTool } = useItemStore();
-  const { currentUser, currentNeighborhood } = useAuthStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Read user directly from localStorage
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
   const handleSubmit = async (formData: ItemFormData) => {
     if (!currentUser) {
       if (outletContext?.onOpenAuth) {
-        outletContext.onOpenAuth('login');
+        outletContext.onOpenAuth("login");
       } else {
-        navigate('/login');
+        navigate("/login");
       }
       return;
     }
@@ -30,7 +33,7 @@ export const CreateItemPage: React.FC = () => {
       if (newTool && newTool.id) {
         navigate(`/items/${newTool.id}`);
       } else {
-        navigate('/items');
+        navigate("/items");
       }
     } catch (err: any) {
       setIsSubmitting(false);
@@ -55,11 +58,12 @@ export const CreateItemPage: React.FC = () => {
               List Equipment for Neighbors
             </h1>
             <span className="hidden sm:inline-flex px-3 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000]">
-              {currentNeighborhood?.name || 'Local Circle'}
+              {currentUser?.neighborhoodName || "Local Circle"}
             </span>
           </div>
           <p className="text-xs sm:text-sm font-bold text-neutral-600">
-            Share household gear that sits idle in your storeroom. Earn community trust and small maintenance fees.
+            Share household gear that sits idle in your storeroom. Earn
+            community trust and small maintenance fees.
           </p>
         </div>
       </div>
@@ -68,12 +72,15 @@ export const CreateItemPage: React.FC = () => {
         <div className="p-4 sm:p-5 rounded-2xl bg-[#fffdf0] border-2 border-black text-black flex items-center justify-between gap-4 shadow-[3.5px_3.5px_0px_#000]">
           <div className="flex items-center gap-3 text-xs sm:text-sm font-bold">
             <AlertCircle className="w-5 h-5 text-black stroke-[2.5] shrink-0" />
-            <span>You need to be signed in as a verified resident to publish tool listings.</span>
+            <span>
+              You need to be signed in as a verified resident to publish tool
+              listings.
+            </span>
           </div>
           <button
             onClick={() => {
-              if (outletContext?.onOpenAuth) outletContext.onOpenAuth('login');
-              else navigate('/login');
+              if (outletContext?.onOpenAuth) outletContext.onOpenAuth("login");
+              else navigate("/login");
             }}
             className="jn-btn px-4 py-2 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] shrink-0 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
           >
@@ -87,7 +94,7 @@ export const CreateItemPage: React.FC = () => {
         onSubmit={handleSubmit}
         submitButtonText="Publish to Neighborhood Library"
         isSubmitting={isSubmitting}
-        onCancel={() => navigate('/items')}
+        onCancel={() => navigate("/items")}
       />
     </div>
   );
