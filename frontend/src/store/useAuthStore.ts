@@ -15,6 +15,7 @@ interface AuthState {
   login: (credentials: {
     email?: string;
     userId?: number | string;
+    password?: string;
   }) => Promise<User>;
   register: (payload: RegisterPayload) => Promise<User>;
   logout: () => Promise<void>;
@@ -37,13 +38,27 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   fetchInitialData: async () => {
     set({ isLoading: true, error: null });
     try {
+      // 1. Immediately hydrate from localStorage if available (prevents UI flicker)
+      const savedUserStr = localStorage.getItem("user");
+      let cachedUser: User | null = null;
+      if (savedUserStr) {
+        try {
+          cachedUser = JSON.parse(savedUserStr);
+        } catch {}
+      }
+
+      if (cachedUser && !get().currentUser) {
+        set({ currentUser: cachedUser });
+      }
+
+      // 2. Fetch fresh user & neighborhoods from backend API
       const [neighRes, meRes] = await Promise.all([
         authService.getNeighborhoods(),
         authService.getCurrentUser(),
       ]);
 
       const neighborhoods = neighRes.neighborhoods || neighRes || [];
-      const currentUser = meRes.user || null;
+      const currentUser = meRes.user || cachedUser || null;
 
       let currentNeighborhood: Neighborhood | null = null;
       if (currentUser) {
@@ -62,6 +77,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         currentNeighborhood = neighborhoods[0];
       }
 
+      // Keep localStorage in sync with latest user data
+      if (currentUser) {
+        localStorage.setItem("user", JSON.stringify(currentUser));
+        localStorage.setItem("jiranaid_userId", String(currentUser.id));
+      }
+
       set({
         neighborhoods,
         currentUser,
@@ -77,10 +98,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const res = await authService.login(credentials);
+      if (!res || res.success === false || (!res.user && !res.token)) {
+        throw new Error(res?.message || "Invalid email or password");
+      }
       const user = res.user;
       const { neighborhoods } = get();
       const targetNeighId =
-        user.neighborhood_id ?? (user as any).neighborhoodId;
+        user?.neighborhood_id ?? (user as any)?.neighborhoodId;
       const currentNeighborhood =
         neighborhoods.find(
           (n) =>

@@ -59,18 +59,18 @@ export const ItemDetailPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const toolData = await itemService.getItemById(id);
+      const toolData: any = await itemService.getItemById(id);
 
-      setTool(toolData);
+      setTool(toolData?.tool || toolData);
 
       // Get all bookings and reviews
-      const [bookings, allReviews] = await Promise.all([
+      const [bookings, allReviews]: any = await Promise.all([
         borrowService.getBookings(),
         reviewService.getReviews(),
       ]);
 
       // Find bookings belonging to this equipment
-      const itemBookings = (bookings || []).filter(
+      const itemBookings = ((bookings as any) || []).filter(
         (booking: any) => Number(booking.item_id) === Number(id)
       );
 
@@ -80,7 +80,7 @@ export const ItemDetailPage: React.FC = () => {
       );
 
       // Only show reviews belonging to this equipment
-      const itemReviews = (allReviews || []).filter(
+      const itemReviews = ((allReviews as any) || []).filter(
         (review: any) => bookingIds.includes(Number(review.booking_id))
       );
 

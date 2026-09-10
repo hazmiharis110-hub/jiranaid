@@ -13,7 +13,11 @@ export interface RegisterPayload {
 }
 
 export const authService = {
-  async login(credentials: { email: string; password?: string }) {
+  async login(credentials: {
+    email?: string;
+    password?: string;
+    userId?: number | string;
+  }) {
     try {
       const response = await api.post("/users/login", credentials);
 
@@ -88,6 +92,8 @@ export const authService = {
       await api.post("/users/logout");
     } finally {
       localStorage.removeItem("jiranaid_token");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       localStorage.removeItem("jiranaid_userId");
     }
   },
