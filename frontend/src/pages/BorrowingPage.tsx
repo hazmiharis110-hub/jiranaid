@@ -23,7 +23,7 @@ export const BorrowingPage: React.FC = () => {
 
     console.log("Bookings from backend:", response);
 
-    const formattedRequests = (response || []).map((booking: any) => ({
+    const formattedRequests = ((response as any) || []).map((booking: any) => ({
       ...booking,
 
       toolId: booking.item_id,

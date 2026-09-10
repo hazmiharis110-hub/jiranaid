@@ -33,6 +33,7 @@ export interface CreateItemPayload {
 
 export interface CreateBookingPayload {
   item_id: number;
+  user_id?: number;
   start_date: string;
   end_date: string;
   total_price: number;
@@ -65,9 +66,9 @@ export const itemService = {
     return await api.get(url);
   },
 
-  async getItemById(id: number | string): Promise<ItemDetailResponse> {
-    const { data } = await api.get<ItemDetailResponse>(`/items/${id}`);
-    return data;
+  async getItemById(id: number | string): Promise<any> {
+    const res: any = await api.get(`/items/${id}`);
+    return res?.data || res;
   },
 
   async createItem(

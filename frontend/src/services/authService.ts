@@ -13,7 +13,11 @@ export interface RegisterPayload {
 }
 
 export const authService = {
-  async login(credentials: { email: string; password?: string }) {
+  async login(credentials: {
+    email?: string;
+    password?: string;
+    userId?: number | string;
+  }) {
     try {
       const response = await api.post("/users/login", credentials);
 
@@ -83,14 +87,16 @@ export const authService = {
     return data;
   },
 
-  // async logout(): Promise<void> {
-  //   try {
-  //     await api.post("/users/logout");
-  //   } finally {
-  //     localStorage.removeItem("jiranaid_token");
-  //     localStorage.removeItem("jiranaid_userId");
-  //   }
-  // },
+  async logout(): Promise<void> {
+    try {
+      await api.post("/users/logout");
+    } finally {
+      localStorage.removeItem("jiranaid_token");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("jiranaid_userId");
+    }
+  },
 
   async getNeighborhoods(): Promise<{
     success: boolean;
