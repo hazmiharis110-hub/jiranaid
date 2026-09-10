@@ -9,10 +9,11 @@ import {
   ArrowRight,
   UserCheck,
 } from "lucide-react";
-import { authService } from "../services/authService";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuthStore();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,30 +24,21 @@ export const LoginPage: React.FC = () => {
     setLoading(true);
 
     try {
-      // 1. Send login credentials
-      const res = await authService.login({
+      // 1. Authenticate and update the global Zustand auth store directly
+      await login({
         email: formData.email,
         password: formData.password,
       });
 
-      console.log("LOGIN RESPONSE OBJECT:", res);
-
-      // 2. Check for success flag or user payload
-      if (
-        res &&
-        res.success !== false &&
-        (res.success || res.token || res.user)
-      ) {
-        // 3. Redirect to your main app screen
-        navigate("/dashboard"); // Adjust path to match your route (e.g., "/", "/dashboard")
-      } else {
-        setError(
-          res?.message || "Login failed. Please check your credentials.",
-        );
-      }
+      // 2. Redirect to dashboard with active session established!
+      navigate("/dashboard");
     } catch (err: any) {
       console.error("Component error during login:", err);
-      setError("An unexpected error occurred. Please try again.");
+      setError(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Login failed. Please check your credentials.",
+      );
     } finally {
       setLoading(false);
     }

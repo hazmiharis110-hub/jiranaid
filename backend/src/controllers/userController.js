@@ -56,7 +56,10 @@ exports.registerUser = async (req, res, next) => {
       ],
     );
 
-    const newUser = result.rows[0];
+    const newUser = {
+      ...result.rows[0],
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(result.rows[0].name)}`,
+    };
     const token = signAccessToken({
       sub: String(newUser.id),
       email: newUser.email,
@@ -84,10 +87,14 @@ exports.login = async (req, res, next) => {
       return res.status(400).json({ message: "email is required" });
     }
 
-    // FIX: Changed neighbor_id to neighborhood_id
+    // Join neighborhoods to get neighborhoodName and postcode
     const result = await pool.query(
-      `SELECT id, name, email, password_hash, phone, role, neighborhood_id AS "neighborhoodId", created_at, updated_at
-       FROM users WHERE email = $1`,
+      `SELECT u.id, u.name, u.email, u.password_hash, u.phone, u.role, 
+              u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+              n.name AS "neighborhoodName", n.postcode
+       FROM users u
+       LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+       WHERE u.email = $1`,
       [email.trim().toLowerCase()],
     );
 
@@ -112,6 +119,11 @@ exports.login = async (req, res, next) => {
       phone: user.phone,
       role: user.role,
       neighborhoodId: user.neighborhoodId,
+      neighborhoodName: user.neighborhoodName || "Local Circle",
+      postcode: user.postcode || "53100",
+      avatar:
+        user.avatar ||
+        `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`,
       created_at: user.created_at,
       updated_at: user.updated_at,
     };
@@ -134,23 +146,48 @@ exports.login = async (req, res, next) => {
 
 exports.getCurrentUser = async (req, res, next) => {
   try {
-    if (!req.user && !req.headers.authorization) {
+    const { verifyAccessToken } = require("../config/auth");
+    const authHeader = req.headers.authorization || "";
+    const parts = authHeader.split(/\s+/);
+    const scheme = parts[0];
+    const token = parts[1];
+
+    if (!scheme || scheme.toLowerCase() !== "bearer" || !token) {
       return res.json({ success: true, user: null });
     }
 
-    const userId = req.user?.sub || req.user?.id;
+    let payload;
+    try {
+      payload = verifyAccessToken(token);
+    } catch {
+      return res.json({ success: true, user: null });
+    }
+
+    const userId = payload.sub || payload.id;
     if (!userId) {
       return res.json({ success: true, user: null });
     }
 
-    // FIX: Changed neighbor_id to neighborhood_id
     const result = await pool.query(
-      `SELECT id, name, email, phone, role, neighborhood_id AS "neighborhoodId", created_at, updated_at
-       FROM users WHERE id = $1`,
+      `SELECT u.id, u.name, u.email, u.phone, u.role, 
+              u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+              n.name AS "neighborhoodName", n.postcode
+       FROM users u
+       LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+       WHERE u.id = $1`,
       [userId],
     );
 
-    res.json({ success: true, user: result.rows[0] || null });
+    const user = result.rows[0] || null;
+    if (user) {
+      user.avatar =
+        user.avatar ||
+        `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`;
+      user.neighborhoodName = user.neighborhoodName || "Local Circle";
+      user.postcode = user.postcode || "53100";
+    }
+
+    res.json({ success: true, user });
   } catch (error) {
     res.json({ success: true, user: null });
   }
