@@ -64,7 +64,7 @@ export const Header: React.FC = () => {
                 to="/items/create"
                 className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
               >
-                <Plus className="w-4 h-4 stroke-[3]" />
+                <Plus className="w-4 h-4 stroke-3" />
                 <span className="hidden sm:inline">List Equipment</span>
               </Link>
 
