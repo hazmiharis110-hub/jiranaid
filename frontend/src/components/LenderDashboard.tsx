@@ -109,8 +109,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   }
 
   // Filter tools owned strictly by current lender
-  const myTools = tools.filter((t) => t.ownerId === currentUser.id);
-
+  const myTools = tools.filter(
+    (t: any) =>
+      String(t.ownerId ?? t.user_id ?? t.userId) === String(currentUser.id),
+  );
   // Filter borrow requests for tools owned by current lender
   const myLenderRequests = borrowRequests.filter(
     (r) => r.ownerId === currentUser.id,
@@ -277,9 +279,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   ★ {(currentUser.trustScore ?? 5.0).toFixed(1)} Rating
                 </span>
                 <span className="hidden sm:inline">•</span>
-                <span>
-                  {currentUser.onTimeReturnRate || 100}% Accuracy
-                </span>
+                <span>{currentUser.onTimeReturnRate || 100}% Accuracy</span>
               </p>
             </div>
           </div>
@@ -291,7 +291,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               onClick={onOpenAddModal}
               className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
+              <Plus className="w-4 h-4 stroke-3" />
               <span>List New Equipment</span>
             </button>
           </div>
@@ -319,9 +319,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
       {/* Lender KPI Metric Cards (4 Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: Total Earnings */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Maintenance Earned
@@ -342,9 +340,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
 
         {/* Metric 2: Escrow Deposits Held */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Guarded Escrow
@@ -365,9 +361,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
 
         {/* Metric 3: Active Loans Out */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               On Loan
@@ -390,9 +384,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
 
         {/* Metric 4: Pending Action Requests */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Action Queue
@@ -534,7 +526,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                               <ShieldCheck className="w-3.5 h-3.5 text-black stroke-[2.5]" />
                             </div>
                             <span className="text-xs font-bold text-neutral-600">
-                              Neighbor • ★ {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
+                              Neighbor • ★{" "}
+                              {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
                             </span>
                           </div>
                         </div>
@@ -583,8 +576,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                           </strong>
                         </span>
                         <span className="font-black text-black flex items-center gap-1 font-mono">
-                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee}{" "}
-                          Escrow
+                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                          {req.depositFee} Escrow
                         </span>
                       </div>
                     </div>
@@ -778,8 +771,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             {req.toolCategory}
                           </span>
                           <span className="text-[11px] font-black text-black flex items-center gap-1 mt-0.5">
-                            <Clock className="w-3 h-3 stroke-[2.5]" /> Due
-                            Date: {req.endDate}
+                            <Clock className="w-3 h-3 stroke-[2.5]" /> Due Date:{" "}
+                            {req.endDate}
                           </span>
                         </div>
                       </div>
@@ -787,8 +780,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                       <div className="flex items-center justify-between text-xs py-1.5 font-bold text-neutral-700">
                         <span>Maintenance: RM {req.maintenanceFee}</span>
                         <span className="font-mono font-black text-black flex items-center gap-1">
-                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee} in
-                          Escrow
+                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                          {req.depositFee} in Escrow
                         </span>
                       </div>
                     </div>
@@ -840,7 +833,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               onClick={onOpenAddModal}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto cursor-pointer"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
+              <Plus className="w-4 h-4 stroke-3" />
               <span>Add Another Tool</span>
             </motion.button>
           </div>
@@ -1086,17 +1079,19 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                           <td className="p-3">
                             {req.status === "returned" ? (
                               <span className="inline-flex items-center gap-1 text-[11px] text-emerald-800 font-black">
-                                <Check className="w-3 h-3 stroke-[3]" /> RM{" "}
+                                <Check className="w-3 h-3 stroke-3" /> RM{" "}
                                 {req.depositFee} Refunded
                               </span>
                             ) : req.status === "active" ||
                               req.status === "approved" ? (
                               <span className="inline-flex items-center gap-1 text-[11px] text-amber-900 font-black">
-                                <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee}{" "}
-                                in Escrow
+                                <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                                {req.depositFee} in Escrow
                               </span>
                             ) : (
-                              <span className="text-neutral-400 font-bold">None</span>
+                              <span className="text-neutral-400 font-bold">
+                                None
+                              </span>
                             )}
                           </td>
                           <td className="p-3">
@@ -1476,7 +1471,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
               <p className="text-xs font-medium text-neutral-700 leading-relaxed">
                 Decline request from{" "}
-                <strong className="text-black font-black">{decliningRequest.borrowerName}</strong> for &ldquo;
+                <strong className="text-black font-black">
+                  {decliningRequest.borrowerName}
+                </strong>{" "}
+                for &ldquo;
                 {decliningRequest.toolTitle}&rdquo;. Their payment deposit will
                 be immediately released.
               </p>
