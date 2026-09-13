@@ -202,7 +202,7 @@ export const RegisterPage: React.FC = () => {
               onChange={handleChange}
               placeholder="e.g., Sarah Lim"
               required
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
         </div>
@@ -220,7 +220,7 @@ export const RegisterPage: React.FC = () => {
               onChange={handleChange}
               placeholder="sarah.lim@neighborhood.my"
               required
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
         </div>
@@ -237,7 +237,7 @@ export const RegisterPage: React.FC = () => {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+60 12-345 6789"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
         </div>
@@ -254,7 +254,7 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleNeighborhoodChange}
                 required
                 disabled={fetchingNeighs}
-                className="w-full px-3 py-2.5 rounded-xl border border-[#ded7c8] bg-white text-xs font-bold text-[#24211d] focus:outline-none focus:ring-2 focus:ring-[#c86d51]/20 focus:border-[#c86d51] disabled:opacity-50 appearance-none"
+                className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8] disabled:opacity-50 appearance-none"
               >
                 {fetchingNeighs ? (
                   <option value="" disabled>
@@ -278,7 +278,7 @@ export const RegisterPage: React.FC = () => {
                 )}
               </select>
               {fetchingNeighs && (
-                <Loader2 className="w-4 h-4 text-[#8a857b] animate-spin absolute right-3 top-3 pointer-events-none" />
+                <Loader2 className="w-4 h-4 text-black animate-spin absolute right-3 top-3 pointer-events-none" />
               )}
             </div>
           </div>
@@ -296,7 +296,7 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleChange}
                 placeholder="53100"
                 required
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
               />
             </div>
           </div>
@@ -316,7 +316,7 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleChange}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
               />
             </div>
           </div>
@@ -334,7 +334,7 @@ export const RegisterPage: React.FC = () => {
                 onChange={handleChange}
                 placeholder="••••••••"
                 required
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
               />
             </div>
           </div>
@@ -358,7 +358,7 @@ export const RegisterPage: React.FC = () => {
         <button
           type="submit"
           disabled={isSubmitting || !agreeTrust}
-          className="jn-btn w-full py-3.5 rounded-xl bg-[#ff90e8] hover:bg-[#ff7ae2] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+          className="jn-btn w-full py-3.5 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
         >
           {isSubmitting ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -378,7 +378,7 @@ export const RegisterPage: React.FC = () => {
           Already a verified member?{" "}
           <Link
             to="/login"
-            className="font-black text-black underline underline-offset-2 hover:text-[#ff90e8]"
+            className="font-black text-black underline underline-offset-2 hover:text-[#131d27]"
           >
             Sign In here
           </Link>

@@ -114,9 +114,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         className="w-full sm:max-w-md bg-white border-3 border-black rounded-t-3xl sm:rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 max-h-[92vh] flex flex-col text-left"
       >
         {/* Modal Header */}
-        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#faf9f6] shrink-0">
+        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#fdfae8] shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#ff90e8] text-black border-2 border-black flex items-center justify-center font-black font-mono shadow-[2px_2px_0px_#000]">
+            <div className="w-10 h-10 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center font-black font-mono shadow-[2px_2px_0px_#000]">
               JA
             </div>
             <div>
@@ -132,7 +132,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             aria-label="Close authentication modal"
           >
             <X className="w-4 h-4 stroke-[2.5]" />
@@ -141,14 +141,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
         {/* Intended Action Prompt if user was triggered by borrow/lend action */}
         {intendedActionText && (
-          <div className="px-5 py-2.5 bg-[#fffdf0] border-b-2 border-black text-xs text-black font-bold flex items-center gap-2">
+          <div className="px-5 py-2.5 bg-[#fdfae8] border-b-2 border-black text-xs text-black font-bold flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-black shrink-0 stroke-[2.5]" />
             <span>{intendedActionText}</span>
           </div>
         )}
 
         {/* Tab Switcher */}
-        <div className="p-1.5 mx-6 mt-5 bg-[#faf9f6] border-2 border-black rounded-2xl flex gap-1.5 shrink-0 shadow-[2px_2px_0px_#000]">
+        <div className="p-1.5 mx-6 mt-5 bg-[#fdfae8] border-2 border-black rounded-2xl flex gap-1.5 shrink-0 shadow-[2px_2px_0px_#000]">
           <button
             type="button"
             onClick={() => {
@@ -157,7 +157,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             }}
             className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
               mode === "login"
-                ? "bg-[#ffc900] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
+                ? "bg-[#fecd0e] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
                 : "text-neutral-700 hover:text-black border-2 border-transparent"
             }`}
           >
@@ -172,7 +172,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             }}
             className={`flex-1 py-2.5 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
               mode === "signup"
-                ? "bg-[#ffc900] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
+                ? "bg-[#fecd0e] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
                 : "text-neutral-700 hover:text-black border-2 border-transparent"
             }`}
           >
@@ -205,7 +205,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. farhan@resident.my"
-                      className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                      className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter your password"
-                      className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                      className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <button
                   type="submit"
                   disabled={loading || !email.trim()}
-                  className="jn-btn w-full py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                  className="jn-btn w-full py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <LogIn className="w-4 h-4 stroke-[2.5]" />
                   <span>{loading ? "Signing in..." : "Sign In as Neighbor"}</span>
@@ -251,7 +251,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Farhan Ramli"
-                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
 
@@ -265,7 +265,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="farhan@gmail.com"
-                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
 
@@ -278,7 +278,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+60 12-345 6789"
-                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
                 <span className="text-[11px] text-neutral-600 font-medium mt-1 block">
                   Encrypted & kept private. In-app chat is used for all handover coordination.
@@ -293,7 +293,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 <select
                   value={selectedNeighborhoodId}
                   onChange={(e) => handleNeighborhoodChange(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 >
                   {(neighborhoods || []).map((n) => (
                     <option key={n.id} value={n.id}>
@@ -313,11 +313,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   value={postcode}
                   onChange={(e) => setPostcode(e.target.value)}
                   placeholder="e.g. 53100"
-                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#bbf7d0] border-2 border-black flex items-start gap-2.5 text-xs text-black font-medium shadow-[2.5px_2.5px_0px_#000]">
+              <div className="p-3.5 rounded-2xl bg-[#fee26d] border-2 border-black flex items-start gap-2.5 text-xs text-black font-medium shadow-[2.5px_2.5px_0px_#000]">
                 <ShieldCheck className="w-4 h-4 shrink-0 mt-0.5 text-black stroke-[2.5]" />
                 <span>
                   New accounts receive a starting{" "}
@@ -329,7 +329,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <button
                 type="submit"
                 disabled={loading || !name.trim() || !email.trim()}
-                className="jn-btn w-full py-3 rounded-xl bg-[#ff90e8] hover:bg-[#ff7ae2] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+                className="jn-btn w-full py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <UserPlus className="w-4 h-4 stroke-[2.5]" />
                 <span>

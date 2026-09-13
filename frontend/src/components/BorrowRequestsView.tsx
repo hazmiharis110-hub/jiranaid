@@ -47,7 +47,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
     return (
       <div className="max-w-md mx-auto px-4 py-16 text-center">
         <div className="p-8 rounded-3xl border-3 border-black bg-white shadow-[6px_6px_0px_#000] space-y-4">
-          <div className="w-16 h-16 rounded-2xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center mx-auto mb-2 shadow-[2.5px_2.5px_0px_#000]">
+          <div className="w-16 h-16 rounded-2xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center mx-auto mb-2 shadow-[2.5px_2.5px_0px_#000]">
             <Wrench className="w-8 h-8 stroke-[2.5]" />
           </div>
           <h2 className="text-xl font-black text-black">
@@ -59,7 +59,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
           </p>
           <button
             onClick={onOpenAuthModal}
-            className="jn-btn px-6 py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffb700] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn px-6 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             Sign In as Neighbor
           </button>
@@ -94,13 +94,13 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
         </div>
 
         {/* Role Switcher Tabs */}
-        <div className="flex items-center p-1.5 rounded-2xl bg-[#faf9f6] border-2 border-black shadow-[2px_2px_0px_#000]">
+        <div className="flex items-center p-1.5 rounded-2xl bg-[#fdfae8] border-2 border-black shadow-[2px_2px_0px_#000]">
           <button
             id="tab-my-borrowings"
             onClick={() => setRoleTab("borrower")}
             className={`px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
               roleTab === "borrower"
-                ? "bg-[#ffc900] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
+                ? "bg-[#fecd0e] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
                 : "text-neutral-700 hover:text-black border-2 border-transparent"
             }`}
           >
@@ -111,13 +111,13 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
             onClick={() => setRoleTab("lender")}
             className={`relative px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${
               roleTab === "lender"
-                ? "bg-[#ffc900] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
+                ? "bg-[#fecd0e] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
                 : "text-neutral-700 hover:text-black border-2 border-transparent"
             }`}
           >
             Equipment I am Lending ({myLendings.length})
             {pendingLenderCount > 0 && (
-              <span className="ml-1.5 px-1.5 py-0.5 rounded-md bg-[#ff90e8] text-black border border-black text-[10px] font-mono font-black animate-pulse">
+              <span className="ml-1.5 px-1.5 py-0.5 rounded-md bg-[#fee26d] text-black border border-black text-[10px] font-mono font-black animate-pulse">
                 {pendingLenderCount} new
               </span>
             )}
@@ -133,8 +133,8 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
             onClick={() => setFilterStatus(st)}
             className={`jn-btn px-3.5 py-2 rounded-xl text-xs font-black capitalize whitespace-nowrap border-2 border-black transition-all cursor-pointer ${
               filterStatus === st
-                ? "bg-black text-white shadow-[3px_3px_0px_#ff90e8]"
-                : "bg-white text-black hover:bg-[#ffc900] shadow-[2px_2px_0px_#000]"
+                ? "bg-black text-white shadow-[3px_3px_0px_#000]"
+                : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
             }`}
           >
             {st === "all"
@@ -148,9 +148,9 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
 
       {/* Lender Hub Callout Banner when in Lending mode */}
       {roleTab === "lender" && onSwitchToLenderDashboard && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#fffdf0] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-[3.5px_3.5px_0px_#000]">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#fdfae8] border-2 border-black flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-[3.5px_3.5px_0px_#000]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center shrink-0 shadow-[1.5px_1.5px_0px_#000]">
+            <div className="w-10 h-10 rounded-xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center shrink-0 shadow-[1.5px_1.5px_0px_#000]">
               <Layers className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
@@ -165,7 +165,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
           </div>
           <button
             onClick={onSwitchToLenderDashboard}
-            className="jn-btn px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white font-black text-xs shrink-0 self-start sm:self-auto flex items-center gap-2 border-2 border-black shadow-[2.5px_2.5px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn px-4 py-2.5 rounded-xl bg-[#131d27] hover:bg-black text-white font-black text-xs shrink-0 self-start sm:self-auto flex items-center gap-2 border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             <span>Open Lender Dashboard</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -176,7 +176,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
       {/* Empty State */}
       {displayedList.length === 0 && (
         <div className="text-center py-16 px-4 rounded-3xl border-3 border-dashed border-black bg-white shadow-[4px_4px_0px_#000]">
-          <div className="w-14 h-14 rounded-2xl bg-[#ff90e8] border-2 border-black text-black flex items-center justify-center mx-auto mb-3 shadow-[2px_2px_0px_#000]">
+          <div className="w-14 h-14 rounded-2xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center mx-auto mb-3 shadow-[2px_2px_0px_#000]">
             <Wrench className="w-7 h-7 stroke-[2.5]" />
           </div>
           <h3 className="text-lg font-black text-black">
@@ -190,7 +190,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
           {roleTab === "borrower" && (
             <button
               onClick={onSwitchToCatalog}
-              className="jn-btn px-6 py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+              className="jn-btn px-6 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               Explore Tool Catalog
             </button>
@@ -223,7 +223,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                       className="w-16 h-16 rounded-2xl object-cover border-2 border-black bg-neutral-100 shrink-0 shadow-[2px_2px_0px_#000]"
                     />
                     <div>
-                      <span className="inline-block bg-[#ff90e8] text-black border border-black font-mono font-black text-[10px] uppercase px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
+                      <span className="inline-block bg-[#fee26d] text-black border border-black font-mono font-black text-[10px] uppercase px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
                         {req.toolCategory}
                       </span>
                       <h4 className="text-base font-black text-black leading-snug line-clamp-1 mt-1">
@@ -258,19 +258,19 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                     )}
 
                     {req.status === "approved" && (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#fee26d] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
                         Approved
                       </span>
                     )}
                     {req.status === "active" && (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#ff90e8] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#fecd0e] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                         <PackageCheck className="w-3.5 h-3.5 stroke-[2.5]" />
                         In Use
                       </span>
                     )}
                     {req.status === "returned" && (
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#86efac] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
                         Returned
                       </span>
@@ -285,7 +285,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                 </div>
 
                 {/* Reservation Dates & Cost Breakdown */}
-                <div className="mt-4 p-4 rounded-2xl bg-[#faf9f6] border-2 border-black space-y-2 text-xs shadow-[2.5px_2.5px_0px_#000]">
+                <div className="mt-4 p-4 rounded-2xl bg-[#fdfae8] border-2 border-black space-y-2 text-xs shadow-[2.5px_2.5px_0px_#000]">
                   <div className="flex items-center justify-between text-neutral-800 font-bold">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4 stroke-[2.5] text-black" />
@@ -315,8 +315,8 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                   )}
 
                   {req.depositRefunded && (
-                    <div className="text-xs font-black text-black bg-[#bbf7d0] p-2 rounded-xl border border-black flex items-center gap-1.5 mt-2">
-                      <CheckCircle2 className="w-4 h-4 stroke-[2.5] text-emerald-700" />
+                    <div className="text-xs font-black text-black bg-[#fee26d] p-2 rounded-xl border border-black flex items-center gap-1.5 mt-2">
+                      <CheckCircle2 className="w-4 h-4 stroke-[2.5] text-black" />
                       <span>
                         RM {req.depositFee} Security Deposit released back to
                         borrower!
@@ -351,7 +351,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                             onClick={() =>
                               onUpdateStatus(req.id, "approved", "approve")
                             }
-                            className="jn-btn py-2 px-4 rounded-xl bg-[#bbf7d0] hover:bg-[#a7f3c0] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                            className="jn-btn py-2 px-4 rounded-xl bg-[#86efac] hover:bg-[#4ade80] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                           >
                             <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                             Approve
@@ -364,7 +364,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                           onClick={() =>
                             onUpdateStatus(req.id, "active", "pickup")
                           }
-                          className="jn-btn py-2 px-4 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                          className="jn-btn py-2 px-4 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                         >
                           <PackageCheck className="w-4 h-4 stroke-[2.5]" />
                           Confirm Handover / Pickup
@@ -376,7 +376,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                           onClick={() =>
                             onUpdateStatus(req.id, "returned", "return")
                           }
-                          className="jn-btn py-2 px-4 rounded-xl bg-[#bbf7d0] hover:bg-[#a7f3c0] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                          className="jn-btn py-2 px-4 rounded-xl bg-[#86efac] hover:bg-[#4ade80] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                           title="Verify item condition and release deposit back to neighbor"
                         >
                           <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
@@ -389,7 +389,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                       {req.status === "returned" && (
                         <button
                           onClick={() => onOpenReviewModal(req)}
-                          className="jn-btn py-2 px-3.5 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black flex items-center gap-1.5 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                          className="jn-btn py-2 px-3.5 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black flex items-center gap-1.5 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                         >
                           <Star className="w-4 h-4 fill-amber-400 text-amber-500" />
                           Rate & Feedback
@@ -401,7 +401,7 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
                         </span>
                       )}
                       {req.status === "approved" && (
-                        <span className="text-xs font-black text-emerald-800 bg-[#bbf7d0] px-2.5 py-1 rounded-lg border border-black">
+                        <span className="text-xs font-black text-black bg-[#fee26d] px-2.5 py-1 rounded-lg border border-black shadow-[1.5px_1.5px_0px_#000]">
                           Ready for porch pickup!
                         </span>
                       )}

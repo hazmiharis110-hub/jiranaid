@@ -57,7 +57,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       {/* Clickable Card Link */}
       <Link to={`/items/${tool.id}`} className="flex-1 flex flex-col">
         {/* Image Container with Zoom */}
-        <div className="relative aspect-4/3 w-full bg-[#faf9f6] border-b-2 border-black overflow-hidden select-none">
+        <div className="relative aspect-4/3 w-full bg-[#fdfae8] border-b-2 border-black overflow-hidden select-none">
           <img
             src={displayImage}
             alt={tool.title}
@@ -74,8 +74,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
 
           {/* Floating Hover Badge */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-200">
-            <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-200 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#ff90e8]">
-              <Eye className="w-3.5 h-3.5 text-[#ff90e8]" />
+            <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-200 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-black text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000]">
+              <Eye className="w-3.5 h-3.5 text-[#fecd0e]" />
               <span>View Details</span>
             </div>
           </div>
@@ -83,13 +83,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           {/* Save / Favorite Button */}
           <button
             onClick={handleToggleSave}
-            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-xl bg-white border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000] hover:bg-[#ff90e8] hover:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="absolute top-2.5 right-2.5 w-8 h-8 rounded-xl bg-white border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000] hover:bg-[#fee26d] hover:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             title={isSaved ? 'Remove from saved' : 'Save equipment'}
             aria-label="Save equipment"
           >
             <Heart
               className={`w-4 h-4 transition-colors stroke-[2.5] ${
-                isSaved ? 'fill-[#ff90e8] text-black' : 'text-black'
+                isSaved ? 'fill-[#fecd0e] text-black' : 'text-black'
               }`}
             />
           </button>
@@ -99,8 +99,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             <span
               className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000] ${
                 isAvailable
-                  ? 'bg-[#bbf7d0] text-black'
-                  : 'bg-[#ffd33d] text-black'
+                  ? 'bg-[#86efac] text-black'
+                  : 'bg-[#fee26d] text-black'
               }`}
             >
               {isAvailable ? 'Available' : 'On Loan'}
@@ -113,13 +113,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           <div>
             {/* Category Tag */}
             <div className="mb-2">
-              <span className="inline-block font-mono font-black uppercase tracking-wider text-[10px] text-black bg-[#ff90e8] px-2 py-0.5 rounded-md border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+              <span className="inline-block font-mono font-black uppercase tracking-wider text-[10px] text-black bg-[#fee26d] px-2 py-0.5 rounded-md border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                 {tool.category}
               </span>
             </div>
 
             {/* Title */}
-            <h3 className="font-black text-base sm:text-lg text-black group-hover:text-[#ff6b4a] transition-colors line-clamp-1">
+            <h3 className="font-black text-base sm:text-lg text-black group-hover:underline transition-colors line-clamp-1">
               {tool.title}
             </h3>
             {tool.brand ? (
@@ -148,7 +148,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 {tool.ownerName || 'Neighbor'}
               </span>
             </div>
-            <div className="flex items-center gap-1 font-black text-xs text-black bg-[#faf9f6] px-2 py-0.5 rounded-md border border-black shadow-[1px_1px_0px_#000] shrink-0">
+            <div className="flex items-center gap-1 font-black text-xs text-black bg-[#fdfae8] px-2 py-0.5 rounded-md border border-black shadow-[1px_1px_0px_#000] shrink-0">
               <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
             </div>
@@ -157,7 +157,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       </Link>
 
       {/* Pricing & Borrow Action Footer */}
-      <div className="px-4 py-3 bg-[#faf9f6] border-t-2 border-black flex items-center justify-between">
+      <div className="px-4 py-3 bg-[#fdfae8] border-t-2 border-black flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1">
             <span className="text-base sm:text-lg font-black font-mono text-black">
@@ -177,7 +177,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           disabled={!isAvailable}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
             isAvailable
-              ? 'bg-[#ffc900] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer'
+              ? 'bg-[#fecd0e] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer'
               : 'bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed'
           }`}
         >
