@@ -38,7 +38,7 @@ interface ItemState {
   fetchStats: () => Promise<void>;
 }
 
-export const useItemStore = create<ItemState>((set) => ({
+export const useItemStore = create<ItemState>((set, get) => ({
   allTools: [],
   tools: [],
   selectedTool: null,
@@ -135,6 +135,9 @@ export const useItemStore = create<ItemState>((set) => ({
         tools: [createdItem, ...state.tools],
         isLoading: false,
       }));
+      // Automatically trigger a fresh fetch to keep states synchronized
+      await get().fetchAllTools();
+      await get().fetchTools();
       return createdItem;
     } catch (error: any) {
       set({

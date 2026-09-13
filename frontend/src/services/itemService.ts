@@ -1,3 +1,4 @@
+// src/services/itemService.ts
 import api from "./api";
 import type { Item, ToolCategory, Review, Booking } from "../types";
 
@@ -68,41 +69,36 @@ export const itemService = {
 
   async getItemById(id: number | string): Promise<any> {
     const res: any = await api.get(`/items/${id}`);
-    return res?.data || res;
+    return res?.tool || res?.data || res;
   },
 
   async createItem(
     payload: CreateItemPayload,
   ): Promise<{ success: boolean; tool: Item; message?: string }> {
-    const { data } = await api.post("/items", payload);
-    return data;
+    return await api.post("/items", payload);
   },
 
   async updateItem(
     id: number | string,
     payload: Partial<CreateItemPayload>,
   ): Promise<{ success: boolean; tool: Item }> {
-    const { data } = await api.put(`/items/${id}`, payload);
-    return data;
+    return await api.put(`/items/${id}`, payload);
   },
 
   async deleteItem(
     id: number | string,
   ): Promise<{ success: boolean; message?: string }> {
-    const { data } = await api.delete(`/items/${id}`);
-    return data;
+    return await api.delete(`/items/${id}`);
   },
 
   async createBooking(
     payload: CreateBookingPayload,
   ): Promise<{ success: boolean; booking: Booking; message?: string }> {
-    const { data } = await api.post("/bookings", payload);
-    return data;
+    return await api.post("/bookings", payload);
   },
 
   async getStats() {
-    const { data } = await api.get("/stats");
-    return data;
+    return await api.get("/stats");
   },
 };
 

@@ -8,16 +8,17 @@ const normalizeItem = (item) => ({
   deposit: item.deposit,
   category: item.category,
   image_url: item.image_url,
+  pickup_note: item.pickup_note,
   user_id: item.user_id,
+  ownerId: item.user_id, // Added for full frontend compatibility
   owner_name: item.owner_name || "Neighbor",
   avg_rating: item.avg_rating || 0.0,
 });
 
-// GET all items (using a safe subquery or clean left join to prevent dropping un-reviewed items)
 exports.getAllItems = async (req, res, next) => {
   try {
     const result = await pool.query(
-      `SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.user_id, 
+      `SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.pickup_note, i.user_id, 
               owner.name AS owner_name, 
               COALESCE(sub.avg_rating, 0.0) AS avg_rating 
        FROM items i 
@@ -36,7 +37,6 @@ exports.getAllItems = async (req, res, next) => {
   }
 };
 
-// 1. GET a single item by ID
 exports.getItemById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -58,13 +58,18 @@ exports.getItemById = async (req, res, next) => {
   }
 };
 
-// 2. INSERT a new item
 exports.insertItem = async (req, res, next) => {
   try {
-    const { title, description, price, deposit, category, image_url } =
-      req.body;
+    const {
+      title,
+      description,
+      price,
+      deposit,
+      category,
+      image_url,
+      pickup_note,
+    } = req.body;
 
-    // Optional: basic validation
     if (
       !title ||
       price === undefined ||
@@ -78,11 +83,19 @@ exports.insertItem = async (req, res, next) => {
     }
 
     const result = await pool.query(
-      "INSERT INTO items (title, description, price, deposit, category, image_url, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [title, description, price, deposit, category, image_url, req.user.id],
+      "INSERT INTO items (title, description, price, deposit, category, image_url, pickup_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+      [
+        title,
+        description,
+        price,
+        deposit,
+        category,
+        image_url,
+        pickup_note,
+        req.user.id,
+      ],
     );
 
-    // Fetch owner name for the newly inserted item response mapping
     const userResult = await pool.query(
       "SELECT name FROM users WHERE id = $1",
       [req.user.id],
@@ -98,16 +111,45 @@ exports.insertItem = async (req, res, next) => {
   }
 };
 
-// 3. UPDATE an existing item
 exports.updateItem = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, description, price, deposit, category, image_url } =
-      req.body;
+    const {
+      title,
+      description,
+      price,
+      maintenanceFeePerDay,
+      deposit,
+      depositAmount,
+      category,
+      image_url,
+      pickupNote,
+    } = req.body;
+
+    const finalPrice =
+      maintenanceFeePerDay !== undefined ? maintenanceFeePerDay : price;
+    const finalDeposit = depositAmount !== undefined ? depositAmount : deposit;
 
     const result = await pool.query(
-      "UPDATE items SET title = $1, description = $2, price = $3, deposit = $4, category = $5, image_url = $6 WHERE id = $7 RETURNING *",
-      [title, description, price, deposit, category, image_url, id],
+      `UPDATE items 
+       SET title = COALESCE($1, title), 
+           description = COALESCE($2, description), 
+           price = COALESCE($3, price), 
+           deposit = COALESCE($4, deposit), 
+           category = COALESCE($5, category), 
+           image_url = COALESCE($6, image_url),
+           pickup_note = COALESCE($7, pickup_note)
+       WHERE id = $8 RETURNING *`,
+      [
+        title,
+        description,
+        finalPrice,
+        finalDeposit,
+        category,
+        image_url,
+        pickupNote,
+        id,
+      ],
     );
 
     if (result.rows.length === 0) {
@@ -131,7 +173,6 @@ exports.updateItem = async (req, res, next) => {
   }
 };
 
-// 4. DELETE an item
 exports.deleteItem = async (req, res, next) => {
   try {
     const { id } = req.params;

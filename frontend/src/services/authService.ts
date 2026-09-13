@@ -19,15 +19,13 @@ export const authService = {
     userId?: number | string;
   }) {
     try {
-      const response = await api.post("/users/login", credentials);
+      // api.ts already returns response.data
+      const res = await api.post("/users/login", credentials);
+      const data = res?.data !== undefined ? res.data : res;
 
-      // Unwraps response whether raw Axios or interceptor-modified
-      const data = response?.data !== undefined ? response.data : response;
+      const token = data?.token || data?.accessToken;
+      const user = data?.user;
 
-      const token = data?.token || data?.data?.token;
-      const user = data?.user || data?.data?.user;
-
-      // Save tokens and user details using consistent keys
       if (token) {
         localStorage.setItem("jiranaid_token", token);
         localStorage.setItem("token", token);
@@ -37,7 +35,6 @@ export const authService = {
         localStorage.setItem("jiranaid_userId", String(user.id));
       }
 
-      // Always return a valid object containing data and explicit success status
       return {
         success: true,
         user,
@@ -46,25 +43,43 @@ export const authService = {
       };
     } catch (error: any) {
       console.error("Error in authService.login:", error);
-
-      // Catch backend errors (400, 401) and return an object instead of returning undefined
       return {
         success: false,
-        message:
-          error?.response?.data?.message ||
-          error?.message ||
-          "Invalid email or password.",
+        message: error.message || "Invalid email or password.",
       };
     }
   },
 
-  async register(userData: any) {
-    const response = await api.post("/users/register", userData);
+  async register(userData: RegisterPayload) {
+    try {
+      const res = await api.post("/users/register", userData);
+      const data = res?.data !== undefined ? res.data : res;
 
-    const user = response.data?.user || response.data?.data?.user;
-    const token = response.data?.token || response.data?.data?.token;
+      const user = data?.user;
+      const token = data?.token || data?.accessToken;
 
-    return { user, token };
+      if (token) {
+        localStorage.setItem("jiranaid_token", token);
+        localStorage.setItem("token", token);
+      }
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("jiranaid_userId", String(user.id));
+      }
+
+      return {
+        success: true,
+        user,
+        token,
+        ...data,
+      };
+    } catch (error: any) {
+      console.error("Error in authService.register:", error);
+      return {
+        success: false,
+        message: error.message || "Registration failed.",
+      };
+    }
   },
 
   async getCurrentUser(): Promise<{ success: boolean; user: User | null }> {
@@ -74,8 +89,7 @@ export const authService = {
   async switchUser(
     userId: number | string,
   ): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post("/auth/switch-user", { userId });
-    return data;
+    return await api.post("/auth/switch-user", { userId });
   },
 
   async verifyLocation(payload: {
@@ -83,8 +97,7 @@ export const authService = {
     postcode: string;
     method?: string;
   }): Promise<{ success: boolean; user: User }> {
-    const { data } = await api.post("/auth/verify-location", payload);
-    return data;
+    return await api.post("/auth/verify-location", payload);
   },
 
   async logout(): Promise<void> {
