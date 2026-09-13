@@ -49,7 +49,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <button
           type="button"
           onClick={handleClear}
-          className="absolute right-3.5 p-1 rounded-lg bg-[#faf9f6] border border-black text-black hover:bg-[#ff90e8] transition-colors cursor-pointer"
+          className="absolute right-3.5 p-1 rounded-lg bg-[#fdfae8] border border-black text-black hover:bg-[#fee26d] transition-colors cursor-pointer"
           aria-label="Clear search input"
         >
           <X className="w-4 h-4 stroke-[2.5]" />

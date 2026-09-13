@@ -43,13 +43,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div
         id="user-profile-modal-content"
-        className="w-full sm:max-w-lg bg-[#faf9f6] border-t-3 sm:border-3 border-black rounded-t-3xl sm:rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 max-h-[92vh] flex flex-col text-left"
+        className="w-full sm:max-w-lg bg-[#fdfae8] border-t-3 sm:border-3 border-black rounded-t-3xl sm:rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in slide-in-from-bottom-6 sm:zoom-in-95 duration-200 max-h-[92vh] flex flex-col text-left"
       >
         {/* Header */}
-        <div className="px-5 sm:px-6 py-4 border-b-2 border-black flex items-center justify-between bg-[#ffc900] shrink-0">
+        <div className="px-5 sm:px-6 py-4 border-b-2 border-black flex items-center justify-between bg-[#fecd0e] shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center border border-black shadow-[1px_1px_0px_#000]">
-              <ShieldCheck className="w-5 h-5 text-[#bbf7d0] stroke-[2.5]" />
+              <ShieldCheck className="w-5 h-5 text-[#fecd0e] stroke-[2.5]" />
             </div>
             <h3 className="font-black text-black text-base sm:text-lg leading-tight">
               Neighborhood Trust & Profile
@@ -57,7 +57,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-9 h-9 flex items-center justify-center rounded-xl border-2 border-black bg-white hover:bg-[#ff90e8] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="w-9 h-9 flex items-center justify-center rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             aria-label="Close profile modal"
           >
             <X className="w-4 h-4 stroke-[2.5]" />
@@ -85,7 +85,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   {currentUser.email}
                 </p>
                 <div className="flex items-center gap-2 pt-0.5">
-                  <span className="text-[11px] font-black px-2.5 py-0.5 rounded-lg bg-[#ffc900] text-black border border-black inline-flex items-center gap-1 shadow-[1px_1px_0px_#000]">
+                  <span className="text-[11px] font-black px-2.5 py-0.5 rounded-lg bg-[#fee26d] text-black border border-black inline-flex items-center gap-1 shadow-[1px_1px_0px_#000]">
                     <MapPin className="w-3 h-3 stroke-[2.5]" />
                     {currentUser.neighborhoodName} ({currentUser.postcode})
                   </span>
@@ -98,7 +98,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               id="profile-logout-btn"
               type="button"
               onClick={handleLogoutClick}
-              className="px-4 py-2 rounded-xl border-2 border-black bg-[#ff90e8] hover:bg-black hover:text-white text-black text-xs font-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+              className="px-4 py-2 rounded-xl border-2 border-black bg-[#131d27] hover:bg-black text-white text-xs font-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
             >
               <LogOut className="w-4 h-4 stroke-[2.5]" />
               <span>Log Out</span>
@@ -142,7 +142,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               {(currentUser.badges || []).map((badge, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1 rounded-xl bg-[#bbf7d0] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
+                  className="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1 rounded-xl bg-[#fee26d] text-black border-2 border-black shadow-[2px_2px_0px_#000]"
                 >
                   <Award className="w-3.5 h-3.5 stroke-[2.5]" />
                   {badge}
@@ -171,7 +171,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <CheckCircle2 className="w-4 h-4 text-black stroke-[2.5]" />
                   Community Status
                 </span>
-                <span className="font-black text-black bg-[#bbf7d0] px-2 py-0.5 rounded-md border border-black text-[11px]">
+                <span className="font-black text-black bg-[#fee26d] px-2 py-0.5 rounded-md border border-black text-[11px]">
                   Verified Neighbor
                 </span>
               </div>
@@ -189,7 +189,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t-2 border-black bg-[#faf9f6] flex items-center justify-between shrink-0">
+        <div className="px-6 py-4 border-t-2 border-black bg-[#fdfae8] flex items-center justify-between shrink-0">
           <button
             type="button"
             onClick={onOpenNeighborhoodModal}
@@ -201,7 +201,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             Done
           </button>

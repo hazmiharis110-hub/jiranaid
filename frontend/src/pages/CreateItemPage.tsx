@@ -48,7 +48,7 @@ export const CreateItemPage: React.FC = () => {
         <div className="space-y-2">
           <Link
             to="/items"
-            className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all mb-1"
+            className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all mb-1"
           >
             <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
             <span>Back to Catalog</span>
@@ -57,7 +57,7 @@ export const CreateItemPage: React.FC = () => {
             <h1 className="text-3xl sm:text-4xl font-black text-black tracking-tight">
               List Equipment for Neighbors
             </h1>
-            <span className="hidden sm:inline-flex px-3 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000]">
+            <span className="hidden sm:inline-flex px-3 py-1 rounded-lg bg-[#fee26d] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000]">
               {currentUser?.neighborhoodName || "Local Circle"}
             </span>
           </div>
@@ -69,7 +69,7 @@ export const CreateItemPage: React.FC = () => {
       </div>
 
       {!currentUser && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#fffdf0] border-2 border-black text-black flex items-center justify-between gap-4 shadow-[3.5px_3.5px_0px_#000]">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#fdfae8] border-2 border-black text-black flex items-center justify-between gap-4 shadow-[3.5px_3.5px_0px_#000]">
           <div className="flex items-center gap-3 text-xs sm:text-sm font-bold">
             <AlertCircle className="w-5 h-5 text-black stroke-[2.5] shrink-0" />
             <span>
@@ -82,7 +82,7 @@ export const CreateItemPage: React.FC = () => {
               if (outletContext?.onOpenAuth) outletContext.onOpenAuth("login");
               else navigate("/login");
             }}
-            className="jn-btn px-4 py-2 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] shrink-0 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+            className="jn-btn px-4 py-2 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] shrink-0 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
           >
             Sign In Now
           </button>

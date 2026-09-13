@@ -187,7 +187,7 @@ export const ItemDetailPage: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/items"
-          className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+          className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
         >
           <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
           <span>Back to Catalog</span>
@@ -196,7 +196,7 @@ export const ItemDetailPage: React.FC = () => {
         {isOwner && (
           <Link
             to={`/items/${tool.id}/edit`}
-            className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+            className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
           >
             <Edit3 className="w-4 h-4 stroke-[2.5]" />
             <span>Edit This Listing</span>
@@ -227,10 +227,10 @@ export const ItemDetailPage: React.FC = () => {
           {/* Title & Category */}
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="jn-badge bg-[#ff90e8] text-black border-2 border-black text-xs font-mono font-black uppercase tracking-wider px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
+              <span className="jn-badge bg-[#fee26d] text-black border-2 border-black text-xs font-mono font-black uppercase tracking-wider px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
                 {tool.category}
               </span>
-              <span className="jn-badge bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
+              <span className="jn-badge bg-[#fecd0e] text-black border-2 border-black text-xs font-mono font-black px-3 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
                 Item #{tool.id}
               </span>
             </div>
@@ -250,7 +250,7 @@ export const ItemDetailPage: React.FC = () => {
           {/* Description */}
           <div className="bg-white rounded-2xl border-2 border-black p-6 shadow-[4px_4px_0px_#000] space-y-3">
             <h3 className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-[#ff90e8] border border-black inline-block rounded-xs"></span>
+              <span className="w-2.5 h-2.5 bg-[#fecd0e] border border-black inline-block rounded-xs"></span>
               <span>Equipment Description</span>
             </h3>
             <p className="text-sm sm:text-base text-neutral-800 leading-relaxed font-medium whitespace-pre-line">
@@ -262,7 +262,7 @@ export const ItemDetailPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white rounded-2xl border-2 border-black p-5 shadow-[3.5px_3.5px_0px_#000] space-y-2.5">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#bbf7d0] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
+                <div className="w-8 h-8 rounded-lg bg-[#fee26d] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
                   <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
                 </div>
                 <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Security & Care</span>
@@ -274,7 +274,7 @@ export const ItemDetailPage: React.FC = () => {
 
             <div className="bg-white rounded-2xl border-2 border-black p-5 shadow-[3.5px_3.5px_0px_#000] space-y-2.5">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-[#ffc900] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
+                <div className="w-8 h-8 rounded-lg bg-[#fecd0e] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
                   <Clock className="w-4 h-4 stroke-[2.5]" />
                 </div>
                 <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Pickup Coordination</span>
@@ -304,7 +304,7 @@ export const ItemDetailPage: React.FC = () => {
                   <ShieldCheck className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
                 </div>
                 <div className="flex items-center gap-2 text-xs font-bold mt-1">
-                  <span className="bg-[#ffc900] border border-black rounded-md px-2 py-0.5 text-black font-mono font-black text-[11px]">
+                  <span className="bg-[#fecd0e] border border-black rounded-md px-2 py-0.5 text-black font-mono font-black text-[11px]">
                     ★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'} Rating
                   </span>
                   <span className="text-neutral-400">•</span>
@@ -315,7 +315,7 @@ export const ItemDetailPage: React.FC = () => {
 
             <button
               onClick={handleOpenChat}
-              className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#faf9f6] hover:bg-[#ff90e8] text-xs font-black text-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="jn-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-black bg-[#fdfae8] hover:bg-[#fee26d] text-xs font-black text-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               <MessageCircle className="w-4 h-4 stroke-[2.5]" />
               <span>Ask Question</span>
@@ -329,7 +329,7 @@ export const ItemDetailPage: React.FC = () => {
                 <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
                 <span>Neighbor Ratings & Feedback ({reviews.length})</span>
               </h3>
-              <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border border-black px-2 py-0.5 rounded-md">
+              <span className="text-xs font-mono font-black text-black bg-[#fee26d] border border-black px-2 py-0.5 rounded-md">
                 100% On-Time Returns
               </span>
             </div>
@@ -390,14 +390,14 @@ export const ItemDetailPage: React.FC = () => {
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
+                <span className="text-xs font-mono font-black text-black bg-[#fee26d] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
                   Verified Escrow
                 </span>
               </div>
             </div>
 
             {requestSuccess ? (
-              <div className="bg-[#bbf7d0] rounded-2xl border-2 border-black p-6 text-center space-y-4 shadow-[4px_4px_0px_#000]">
+              <div className="bg-[#fee26d] rounded-2xl border-2 border-black p-6 text-center space-y-4 shadow-[4px_4px_0px_#000]">
                 <div className="w-12 h-12 rounded-full bg-white border-2 border-black text-black flex items-center justify-center mx-auto shadow-[2px_2px_0px_#000]">
                   <CheckCircle2 className="w-6 h-6 text-emerald-600" />
                 </div>
@@ -408,7 +408,7 @@ export const ItemDetailPage: React.FC = () => {
                 <div className="pt-2">
                   <Link
                     to="/borrowings"
-                    className="jn-btn w-full py-3 rounded-xl bg-black text-white text-xs font-black inline-block border-2 border-black shadow-[3px_3px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                    className="jn-btn w-full py-3 rounded-xl bg-black text-white text-xs font-black inline-block border-2 border-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                   >
                     View Active Requests & Loans
                   </Link>
@@ -428,7 +428,7 @@ export const ItemDetailPage: React.FC = () => {
                       min={formatDateInput(today)}
                       onChange={(e) => setStartDate(e.target.value)}
                       required
-                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
                   </div>
 
@@ -442,13 +442,13 @@ export const ItemDetailPage: React.FC = () => {
                       min={startDate}
                       onChange={(e) => setEndDate(e.target.value)}
                       required
-                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                      className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
                   </div>
                 </div>
 
                 {/* Price Breakdown Calculation */}
-                <div className="bg-[#fffdf5] rounded-2xl border-2 border-black p-4 space-y-2.5 text-xs font-bold shadow-[2.5px_2.5px_0px_#000]">
+                <div className="bg-[#fdfae8] rounded-2xl border-2 border-black p-4 space-y-2.5 text-xs font-bold shadow-[2.5px_2.5px_0px_#000]">
                   <div className="flex justify-between text-neutral-800">
                     <span>
                       RM{dailyPrice} × {diffDays} {diffDays === 1 ? 'day' : 'days'}
@@ -459,7 +459,7 @@ export const ItemDetailPage: React.FC = () => {
                   <div className="flex justify-between text-neutral-800">
                     <span className="flex items-center gap-1.5">
                       <span>Refundable Deposit</span>
-                      <span className="text-[10px] font-mono text-emerald-700 bg-[#bbf7d0] px-1.5 py-0.2 rounded border border-black">Refunded</span>
+                      <span className="text-[10px] font-mono text-emerald-800 bg-[#86efac] px-1.5 py-0.2 rounded border border-black">Refunded</span>
                     </span>
                     <span className="font-black font-mono">RM{depositAmount}</span>
                   </div>
@@ -490,7 +490,7 @@ export const ItemDetailPage: React.FC = () => {
                   disabled={!isAvailable || !agreeTerms || isSubmitting}
                   className={`jn-btn w-full py-3.5 rounded-xl font-black text-sm border-2 border-black flex items-center justify-center gap-2 transition-all ${
                     isAvailable && agreeTerms
-                      ? 'bg-[#ffc900] hover:bg-[#ffbe00] text-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer'
+                      ? 'bg-[#fecd0e] hover:bg-[#e5b600] text-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer'
                       : 'bg-neutral-200 text-neutral-500 border-neutral-400 cursor-not-allowed shadow-none'
                   }`}
                 >

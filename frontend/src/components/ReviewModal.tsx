@@ -77,9 +77,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         id="review-modal-content"
         className="w-full max-w-md bg-white border-3 border-black rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in zoom-in-95 duration-150 my-6 flex flex-col text-left"
       >
-        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#faf9f6]">
+        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#fdfae8]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#ff90e8] border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
+            <div className="w-10 h-10 rounded-xl bg-[#fecd0e] border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
               <HeartHandshake className="w-5 h-5 text-black stroke-[2.5]" />
             </div>
             <div>
@@ -93,14 +93,14 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             <X className="w-4 h-4 stroke-[2.5]" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="p-4 rounded-2xl bg-[#faf9f6] border-2 border-black text-xs shadow-[2.5px_2.5px_0px_#000]">
+          <div className="p-4 rounded-2xl bg-[#fdfae8] border-2 border-black text-xs shadow-[2.5px_2.5px_0px_#000]">
             <span className="text-neutral-600 font-bold block">Reviewing borrowing experience for:</span>
             <strong className="text-base font-black text-black block mt-0.5">{request.toolTitle}</strong>
             <span className="text-xs text-emerald-800 font-bold mt-1 block">
@@ -138,7 +138,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="How did the tool perform? Was the handover easy? Help future neighbors borrow with confidence."
-              className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full px-3.5 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
 
@@ -153,7 +153,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="jn-btn px-5 py-2.5 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+              className="jn-btn px-5 py-2.5 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               {isSubmitting ? 'Posting...' : 'Submit Trust Review'}
             </button>

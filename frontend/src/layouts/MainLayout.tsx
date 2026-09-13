@@ -76,7 +76,7 @@ export const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf9f6] text-black">
+    <div className="min-h-screen flex flex-col bg-[#fdfae8] text-black">
       {/* Top Navbar */}
       <Navbar
         onOpenNeighborhoodModal={() => setIsNeighborhoodModalOpen(true)}

@@ -23,9 +23,9 @@ export const ProfilePage: React.FC = () => {
   if (!currentUser) {
     return (
       <div className="max-w-md mx-auto my-16 p-6 text-center space-y-4">
-        <User className="w-12 h-12 text-[#c86d51] mx-auto" />
-        <h2 className="text-xl font-bold text-[#24211d]">Sign in to View Profile</h2>
-        <p className="text-xs text-[#67635c]">
+        <User className="w-12 h-12 text-black mx-auto" />
+        <h2 className="text-xl font-bold text-black">Sign in to View Profile</h2>
+        <p className="text-xs text-neutral-600">
           View your neighbor trust badges, lending track record, and verified community status.
         </p>
         <button
@@ -33,7 +33,7 @@ export const ProfilePage: React.FC = () => {
             if (outletContext?.onOpenAuth) outletContext.onOpenAuth('login');
             else navigate('/login');
           }}
-          className="px-5 py-2.5 rounded-xl bg-[#24211d] text-white text-xs font-bold"
+          className="jn-btn px-5 py-2.5 rounded-xl bg-[#131d27] text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] hover:bg-black cursor-pointer"
         >
           Sign In
         </button>
@@ -47,7 +47,7 @@ export const ProfilePage: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/items"
-          className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+          className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
         >
           <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
           <span>Back to Catalog</span>
@@ -67,7 +67,7 @@ export const ProfilePage: React.FC = () => {
               <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
                 {currentUser.name}
               </h1>
-              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000] w-fit mx-auto sm:mx-0">
+              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#fee26d] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000] w-fit mx-auto sm:mx-0">
                 <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Verified Resident</span>
               </span>
@@ -86,7 +86,7 @@ export const ProfilePage: React.FC = () => {
           </div>
 
           <div className="text-center sm:text-right">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#ffc900] border-2 border-black text-black shadow-[3px_3px_0px_#000]">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#fecd0e] border-2 border-black text-black shadow-[3px_3px_0px_#000]">
               <Star className="w-5 h-5 text-black fill-amber-400 stroke-[2.5]" />
               <span className="text-xl font-black font-mono">{(currentUser.trustScore ?? 5.0).toFixed(1)}</span>
               <span className="text-xs font-mono font-black uppercase">Trust</span>
@@ -96,7 +96,7 @@ export const ProfilePage: React.FC = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-3 gap-4 pt-4 border-t-2 border-black text-center">
-          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+          <div className="p-4 bg-[#fdfae8] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
             <p className="text-2xl sm:text-3xl font-black font-mono text-black">
               {currentUser.totalLends ?? 0}
             </p>
@@ -105,7 +105,7 @@ export const ProfilePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+          <div className="p-4 bg-[#fdfae8] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
             <p className="text-2xl sm:text-3xl font-black font-mono text-black">
               {currentUser.totalBorrows ?? 0}
             </p>
@@ -114,7 +114,7 @@ export const ProfilePage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 bg-[#faf9f6] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
+          <div className="p-4 bg-[#fdfae8] rounded-2xl border-2 border-black shadow-[2px_2px_0px_#000]">
             <p className="text-2xl sm:text-3xl font-black font-mono text-emerald-700">
               {currentUser.onTimeReturnRate ?? 100}%
             </p>
@@ -134,7 +134,7 @@ export const ProfilePage: React.FC = () => {
             {currentUser.badges?.map((badge) => (
               <span
                 key={badge}
-                className="px-3.5 py-2 rounded-xl bg-[#faf9f6] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000] flex items-center gap-2"
+                className="px-3.5 py-2 rounded-xl bg-[#fdfae8] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000] flex items-center gap-2"
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-700 stroke-[2.5]" />
                 <span>{badge}</span>

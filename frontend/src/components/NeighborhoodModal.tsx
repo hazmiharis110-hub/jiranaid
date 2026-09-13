@@ -77,9 +77,9 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
         className="w-full max-w-lg bg-white border-3 border-black rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in zoom-in-95 duration-150"
       >
         {/* Header */}
-        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#faf9f6]">
+        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#fdfae8]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#bbf7d0] border-2 border-black text-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
+            <div className="w-10 h-10 rounded-xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
               <MapPin className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
@@ -93,7 +93,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             <X className="w-4 h-4 stroke-[2.5]" />
           </button>
@@ -101,7 +101,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
 
         <div className="p-6 space-y-6">
           {/* Current Verification Status Banner */}
-          <div className="p-4 rounded-2xl border-2 border-black bg-[#bbf7d0] flex items-start gap-3 shadow-[3px_3px_0px_#000]">
+          <div className="p-4 rounded-2xl border-2 border-black bg-[#fee26d] flex items-start gap-3 shadow-[3px_3px_0px_#000]">
             <ShieldCheck className="w-5 h-5 text-black shrink-0 mt-0.5 stroke-[2.5]" />
             <div className="text-xs space-y-1">
               <div className="font-black text-black text-sm">
@@ -115,14 +115,14 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
           </div>
 
           {/* Quick GPS Geofence Check */}
-          <div className="border-2 border-black rounded-2xl p-4 sm:p-5 bg-[#fffdf0] space-y-3 shadow-[3px_3px_0px_#000]">
+          <div className="border-2 border-black rounded-2xl p-4 sm:p-5 bg-[#fdfae8] space-y-3 shadow-[3px_3px_0px_#000]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Compass className="w-4 h-4 text-black stroke-[2.5]" />
                 <span className="text-sm font-black text-black">Instant GPS Geofence Check</span>
               </div>
               {gpsVerifiedSuccess && (
-                <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-black bg-[#bbf7d0] border border-black px-2 py-0.5 rounded-md">
+                <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-black bg-[#86efac] border border-black px-2 py-0.5 rounded-md">
                   <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> Geofence Locked
                 </span>
               )}
@@ -135,7 +135,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               type="button"
               onClick={handleSimulateGps}
               disabled={isVerifyingGps}
-              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-black bg-[#ff90e8] hover:bg-[#ff7ae2] text-black text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
+              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
             >
               {isVerifyingGps ? (
                 <>
@@ -168,7 +168,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search neighborhood or postcode..."
-                className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                className="w-full pl-10 pr-3 py-2.5 text-xs font-bold rounded-xl border-2 border-black bg-white text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
               />
             </div>
 
@@ -184,8 +184,8 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                     }}
                     className={`p-3 sm:p-3.5 rounded-xl border-2 border-black cursor-pointer transition-all flex items-center justify-between ${
                       isSelected
-                        ? 'bg-[#ffc900] shadow-[3px_3px_0px_#000] translate-x-[-1px] translate-y-[-1px]'
-                        : 'bg-white hover:bg-[#faf9f6] shadow-[2px_2px_0px_#000]'
+                        ? 'bg-[#fecd0e] shadow-[3px_3px_0px_#000] translate-x-[-1px] translate-y-[-1px]'
+                        : 'bg-white hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]'
                     }`}
                   >
                     <div>
@@ -210,7 +210,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
 
           {/* Selected Community Pool Quick Stats */}
           {activePool && (
-            <div className="grid grid-cols-3 gap-2 p-3 sm:p-4 rounded-2xl bg-[#faf9f6] border-2 border-black text-center shadow-[3px_3px_0px_#000]">
+            <div className="grid grid-cols-3 gap-2 p-3 sm:p-4 rounded-2xl bg-[#fdfae8] border-2 border-black text-center shadow-[3px_3px_0px_#000]">
               <div className="p-1">
                 <div className="flex items-center justify-center gap-1 text-black mb-1">
                   <Users className="w-4 h-4 stroke-[2.5]" />
@@ -237,7 +237,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t-2 border-black bg-[#faf9f6] flex items-center justify-end gap-3">
+        <div className="px-6 py-4 border-t-2 border-black bg-[#fdfae8] flex items-center justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
@@ -249,7 +249,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
             id="confirm-neighborhood-btn"
             type="button"
             onClick={handleSave}
-            className="jn-btn px-5 py-2.5 rounded-xl border-2 border-black bg-[#ffc900] hover:bg-[#ffbe00] text-black text-xs font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn px-5 py-2.5 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             Bind & Enter This Community Pool
           </button>

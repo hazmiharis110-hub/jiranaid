@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { data, Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   LogIn,
   Mail,
@@ -32,28 +32,6 @@ export const LoginPage: React.FC = () => {
 
       // 2. Redirect to dashboard with active session established!
       navigate("/dashboard");
-      if (res && res.token) {
-        localStorage.setItem("token", res.token);
-      }
-      if (res && res.user) {
-        localStorage.setItem("user", JSON.stringify(res.user));
-      }
-
-      console.log("LOGIN RESPONSE OBJECT:", res);
-
-      // 2. Check for success flag or user payload
-      if (
-        res &&
-        res.success !== false &&
-        (res.success || res.token || res.user)
-      ) {
-        // 3. Redirect to your main app screen
-        navigate("/items"); // Adjust path to match your route (e.g., "/", "/dashboard")
-      } else {
-        setError(
-          res?.message || "Login failed. Please check your credentials.",
-        );
-      }
     } catch (err: any) {
       console.error("Component error during login:", err);
       setError(
@@ -100,7 +78,7 @@ export const LoginPage: React.FC = () => {
               }
               placeholder="aiman.zikri@neighborhood.my"
               required
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
         </div>
@@ -123,7 +101,7 @@ export const LoginPage: React.FC = () => {
                 setFormData({ ...formData, password: e.target.value })
               }
               placeholder="••••••••"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
         </div>
@@ -131,7 +109,7 @@ export const LoginPage: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="jn-btn w-full py-3.5 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
+          className="jn-btn w-full py-3.5 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center justify-center gap-2 cursor-pointer"
         >
           <LogIn className="w-4 h-4 stroke-[2.5]" />
           <span>{loading ? "Signing In..." : "Sign In"}</span>
@@ -143,7 +121,7 @@ export const LoginPage: React.FC = () => {
           New to JiranAid?{" "}
           <Link
             to="/register"
-            className="font-black text-black underline underline-offset-2 hover:text-[#ff90e8]"
+            className="font-black text-black underline underline-offset-2 hover:text-[#131d27]"
           >
             Join your neighborhood circle
           </Link>
