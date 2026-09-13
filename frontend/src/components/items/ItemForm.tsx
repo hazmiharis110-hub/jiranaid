@@ -137,7 +137,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
         {!isEditMode && (
           <div className="space-y-2.5">
             <label className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#ff90e8] stroke-[2.5]" />
+              <Sparkles className="w-4 h-4 text-[#fecd0e] stroke-[2.5]" />
               <span>Quick Start from Household Presets</span>
             </label>
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -148,8 +148,8 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   onClick={() => handleApplyPreset(p)}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border-2 border-black text-xs font-bold shrink-0 transition-all cursor-pointer ${
                     title === p.title
-                      ? 'bg-[#ffc900] text-black shadow-[3px_3px_0px_#000]'
-                      : 'bg-white text-black hover:bg-[#faf9f6] shadow-[2px_2px_0px_#000]'
+                      ? 'bg-[#fecd0e] text-black shadow-[3px_3px_0px_#000]'
+                      : 'bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]'
                   }`}
                 >
                   <img
@@ -181,7 +181,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., Kärcher K3 High Pressure Water Jet"
               required
-              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
 
@@ -192,7 +192,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as Exclude<ToolCategory, 'All'>)}
-              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
@@ -213,7 +213,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               rows={4}
               placeholder="Describe what is included, its operating condition, and any useful tips for neighbors..."
               required
-              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+              className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             />
           </div>
 
@@ -231,7 +231,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://images.unsplash.com/..."
                 required
-                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
               />
             </div>
             <p className="text-[11px] font-bold text-neutral-600 mt-1">
@@ -263,7 +263,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   step="0.5"
                   value={price}
                   onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
               <p className="text-[10px] font-bold text-neutral-600 mt-1">Daily maintenance fee (Set 0 for free loan)</p>
@@ -284,7 +284,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   step="1"
                   value={deposit}
                   onChange={(e) => setDeposit(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fffdf0]"
+                  className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
               <p className="text-[10px] font-bold text-neutral-600 mt-1">Refunded automatically upon safe return</p>
@@ -298,7 +298,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="jn-btn px-7 py-3 rounded-xl bg-[#ffc900] hover:bg-[#ffbe00] text-black font-black text-sm border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 cursor-pointer"
+              className="jn-btn px-7 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black font-black text-sm border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 cursor-pointer"
             >
               {isSubmitting ? 'Saving...' : submitButtonText}
             </button>
@@ -307,7 +307,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               <button
                 type="button"
                 onClick={onCancel}
-                className="jn-btn px-5 py-3 rounded-xl border-2 border-black bg-white text-sm font-black text-black hover:bg-[#faf9f6] shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                className="jn-btn px-5 py-3 rounded-xl border-2 border-black bg-white text-sm font-black text-black hover:bg-[#fee26d] shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
               >
                 Cancel
               </button>
@@ -330,7 +330,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
       <div className="lg:col-span-5 sticky top-24 space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#ff90e8] stroke-[2.5]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#fecd0e] stroke-[2.5]" />
             <span>Live Card Preview</span>
           </h3>
           <span className="text-[11px] font-bold text-neutral-600">Updates as you type</span>
@@ -348,14 +348,14 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               }}
             />
             <div className="absolute top-3 right-3">
-              <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+              <span className="text-xs font-mono font-black px-2.5 py-1 rounded-lg bg-[#86efac] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                 Available
               </span>
             </div>
           </div>
 
           <div className="p-5 space-y-2">
-            <span className="inline-block bg-[#ff90e8] text-black border border-black font-mono font-black uppercase text-[10px] px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
+            <span className="inline-block bg-[#fee26d] text-black border border-black font-mono font-black uppercase text-[10px] px-2 py-0.5 rounded-md shadow-[1px_1px_0px_#000]">
               {category}
             </span>
             <h3 className="font-black text-lg text-black line-clamp-1">
@@ -366,7 +366,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             </p>
           </div>
 
-          <div className="px-5 py-4 bg-[#faf9f6] border-t-2 border-black flex items-center justify-between">
+          <div className="px-5 py-4 bg-[#fdfae8] border-t-2 border-black flex items-center justify-between">
             <div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black font-mono text-black">
@@ -381,14 +381,14 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               </span>
             </div>
 
-            <span className="text-xs font-mono font-black text-black bg-[#bbf7d0] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
+            <span className="text-xs font-mono font-black text-black bg-[#fee26d] border-2 border-black px-2.5 py-1 rounded-lg shadow-[2px_2px_0px_#000]">
               Verified Escrow
             </span>
           </div>
         </div>
 
         {/* Listing Advice Card */}
-        <div className="p-4 rounded-2xl bg-[#fffdf0] border-2 border-black text-xs font-medium text-black space-y-1.5 shadow-[3px_3px_0px_#000]">
+        <div className="p-4 rounded-2xl bg-[#fdfae8] border-2 border-black text-xs font-medium text-black space-y-1.5 shadow-[3px_3px_0px_#000]">
           <div className="flex items-center gap-1.5 font-black text-black">
             <Info className="w-4 h-4 stroke-[2.5]" />
             <span className="uppercase font-mono">Neighborhood Sharing Safe</span>

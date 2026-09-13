@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
           to="/"
           className="flex items-center gap-2 font-black text-xl text-black"
         >
-          <div className="p-1.5 bg-[#ffc900] border-2 border-black rounded-lg shadow-[2px_2px_0px_#000]">
+          <div className="p-1.5 bg-[#fecd0e] border-2 border-black rounded-lg shadow-[2px_2px_0px_#000]">
             <Wrench className="w-5 h-5 text-black" />
           </div>
           <span>JiranAid</span>
@@ -62,14 +62,14 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-3">
               <Link
                 to="/items/create"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#fecd0e] text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
               >
                 <Plus className="w-4 h-4 stroke-[3]" />
                 <span className="hidden sm:inline">List Equipment</span>
               </Link>
 
               {/* User Profile Pill */}
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-100 border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000]">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#fee26d] border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000]">
                 <User className="w-4 h-4 text-black" />
                 <span>
                   {currentUser.name || currentUser.email?.split("@")[0]}
@@ -90,13 +90,13 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="px-3.5 py-1.5 rounded-xl bg-white text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:bg-neutral-100 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                className="px-3.5 py-1.5 rounded-xl bg-white text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:bg-[#fee26d] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="px-3.5 py-1.5 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:bg-[#ffbe00] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                className="px-3.5 py-1.5 rounded-xl bg-[#131d27] text-white border-2 border-black text-xs font-black shadow-[2px_2px_0px_#000] hover:bg-black active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
               >
                 Join Circle
               </Link>

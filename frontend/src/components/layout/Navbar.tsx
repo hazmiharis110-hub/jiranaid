@@ -53,11 +53,11 @@ export const Navbar: React.FC<NavbarProps> = ({
     `px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
       isActive
         ? 'bg-black text-white border-black shadow-[2px_2px_0px_#000]'
-        : 'text-black border-transparent hover:border-black hover:bg-[#ffc900] hover:shadow-[2px_2px_0px_#000]'
+        : 'text-black border-transparent hover:border-black hover:bg-[#fee26d] hover:shadow-[2px_2px_0px_#000]'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 bg-[#faf9f6] border-b-2 border-black transition-all">
+    <header className="sticky top-0 z-40 bg-[#fdfae8] border-b-2 border-black transition-all">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
           {/* Brand & Neighborhood Selector */}
@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="brand-logo"
               className="group flex items-center gap-2.5 shrink-0"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#ff90e8] border-2 border-black flex items-center justify-center text-black shadow-[2.5px_2.5px_0px_#000] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[4px_4px_0px_#000] transition-all duration-150">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#fecd0e] border-2 border-black flex items-center justify-center text-black shadow-[2.5px_2.5px_0px_#000] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[4px_4px_0px_#000] transition-all duration-150">
                 <Wrench className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="hidden min-[380px]:block">
@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span className="font-black text-lg sm:text-2xl tracking-tight text-black">
                     JiranAid
                   </span>
-                  <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#ffc900] border-2 border-black text-black shadow-[1.5px_1.5px_0px_#000]">
+                  <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#fee26d] border-2 border-black text-black shadow-[1.5px_1.5px_0px_#000]">
                     Local Library
                   </span>
                 </div>
@@ -89,10 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="neighborhood-selector-btn"
               onClick={onOpenNeighborhoodModal}
-              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border-2 border-black bg-white hover:bg-[#bbf7d0] text-left transition-all min-w-0 shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-left transition-all min-w-0 shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
               title="Click to verify or switch residential pool"
             >
-              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-lg bg-[#bbf7d0] border border-black text-black flex items-center justify-center shrink-0 shadow-[1px_1px_0px_#000]">
+              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-lg bg-[#fee26d] border border-black text-black flex items-center justify-center shrink-0 shadow-[1px_1px_0px_#000]">
                 <MapPin className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
               </div>
               <div className="max-w-[100px] xs:max-w-[130px] sm:max-w-[170px] truncate">
@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Layers className="w-4 h-4 stroke-[2.2]" />
               <span>Dashboard</span>
               {pendingRequestsCount > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full bg-[#ff90e8] text-black border border-black text-[10px] font-black animate-bounce">
+                <span className="px-1.5 py-0.2 rounded-full bg-[#fecd0e] text-black border border-black text-[10px] font-black animate-bounce">
                   {pendingRequestsCount}
                 </span>
               )}
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Link
               to="/items/create"
               id="nav-create-item-btn"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fecd0e] hover:bg-[#e5b600] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>List a Tool</span>
@@ -150,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 pl-1.5 pr-2.5 py-1.5 rounded-xl border-2 border-black bg-white hover:bg-[#ff90e8]/20 transition-all shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] cursor-pointer"
+                  className="flex items-center gap-2 pl-1.5 pr-2.5 py-1.5 rounded-xl border-2 border-black bg-white hover:bg-[#fecd0e]/20 transition-all shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] cursor-pointer"
                 >
                   <img
                     src={currentUser.avatar}
@@ -177,7 +177,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       transition={{ duration: 0.12 }}
                       className="absolute right-0 mt-2 w-60 bg-white rounded-2xl border-2 border-black shadow-[6px_6px_0px_#000] py-2 z-50 overflow-hidden"
                     >
-                      <div className="px-4 py-2 border-b-2 border-black bg-[#faf9f6]">
+                      <div className="px-4 py-2 border-b-2 border-black bg-[#fdfae8]">
                         <p className="text-xs font-black text-black truncate">{currentUser.name}</p>
                         <p className="text-[11px] text-[#555] font-bold truncate">{currentUser.email}</p>
                       </div>
@@ -188,7 +188,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           if (onOpenProfileModal) onOpenProfileModal();
                           else navigate('/profile');
                         }}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#ff90e8] flex items-center gap-2 transition-colors cursor-pointer"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#fee26d] flex items-center gap-2 transition-colors cursor-pointer"
                       >
                         <UserIcon className="w-4 h-4 stroke-[2.5]" />
                         <span>Trust Profile & Badges</span>
@@ -197,7 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <Link
                         to="/items/create"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#ffc900] flex items-center gap-2 transition-colors sm:hidden"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#fee26d] flex items-center gap-2 transition-colors sm:hidden"
                       >
                         <Plus className="w-4 h-4 stroke-[2.5]" />
                         <span>List a Tool</span>
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <Link
                         to="/dashboard"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#bbf7d0] flex items-center gap-2 transition-colors"
+                        className="w-full text-left px-4 py-2.5 text-xs font-black text-black hover:bg-[#fee26d] flex items-center gap-2 transition-colors"
                       >
                         <Layers className="w-4 h-4 stroke-[2.5]" />
                         <span>Lender Dashboard</span>
@@ -240,7 +240,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </Link>
                 <Link
                   to="/register"
-                  className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-black text-white hover:bg-[#ff90e8] hover:text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                  className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-[#131d27] text-white hover:bg-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
                 >
                   Join Circle
                 </Link>
@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="md:hidden border-t-2 border-black py-4 space-y-2 bg-[#faf9f6]"
+              className="md:hidden border-t-2 border-black py-4 space-y-2 bg-[#fdfae8]"
             >
               <form onSubmit={handleSearchSubmit} className="relative mb-3">
                 <Search className="w-4 h-4 text-black absolute left-3 top-3 stroke-[2.5]" />
@@ -281,35 +281,35 @@ export const Navbar: React.FC<NavbarProps> = ({
               <NavLink
                 to="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#ffc900] border-2 border-transparent hover:border-black transition-all"
+                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#fee26d] border-2 border-transparent hover:border-black transition-all"
               >
                 Home
               </NavLink>
               <NavLink
                 to="/items"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#ffc900] border-2 border-transparent hover:border-black transition-all"
+                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#fee26d] border-2 border-transparent hover:border-black transition-all"
               >
                 Tool Catalog
               </NavLink>
               <NavLink
                 to="/borrowings"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#ffc900] border-2 border-transparent hover:border-black transition-all"
+                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#fee26d] border-2 border-transparent hover:border-black transition-all"
               >
                 Borrowings & Loans
               </NavLink>
               <NavLink
                 to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#ffc900] border-2 border-transparent hover:border-black transition-all"
+                className="block px-3.5 py-2.5 rounded-xl text-sm font-black text-black hover:bg-[#fee26d] border-2 border-transparent hover:border-black transition-all"
               >
                 Lender Dashboard
               </NavLink>
               <NavLink
                 to="/items/create"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block px-3.5 py-2.5 rounded-xl text-sm font-black bg-[#ffc900] text-black border-2 border-black shadow-[2px_2px_0px_#000] mt-2"
+                className="block px-3.5 py-2.5 rounded-xl text-sm font-black bg-[#fecd0e] text-black border-2 border-black shadow-[2px_2px_0px_#000] mt-2"
               >
                 + List a Tool
               </NavLink>

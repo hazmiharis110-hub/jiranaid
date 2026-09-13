@@ -83,7 +83,7 @@ export const EditItemPage: React.FC = () => {
         <div className="space-y-2">
           <Link
             to={`/items/${tool.id}`}
-            className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#ffc900] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all mb-1"
+            className="jn-btn inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all mb-1"
           >
             <ArrowLeft className="w-4 h-4 stroke-[2.5]" />
             <span>Back to Item Details</span>

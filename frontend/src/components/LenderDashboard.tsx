@@ -79,8 +79,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   if (!currentUser) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <div className="bg-[#faf9f6] border-3 border-black rounded-3xl p-8 sm:p-12 shadow-[8px_8px_0px_#000]">
-          <div className="w-16 h-16 rounded-2xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center mx-auto mb-4 shadow-[3px_3px_0px_#000]">
+        <div className="bg-[#fdfae8] border-3 border-black rounded-3xl p-8 sm:p-12 shadow-[8px_8px_0px_#000]">
+          <div className="w-16 h-16 rounded-2xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center mx-auto mb-4 shadow-[3px_3px_0px_#000]">
             <Wrench className="w-8 h-8 stroke-[2.5]" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-black tracking-tight">
@@ -99,7 +99,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 "Sign in to access your lender dashboard and manage your equipment pool.",
               )
             }
-            className="jn-btn px-6 py-3 rounded-2xl bg-[#ffc900] hover:bg-[#ffb700] text-black text-sm font-black border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn px-6 py-3 rounded-2xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-sm font-black border-2 border-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             Sign In as Neighbor / Lender
           </motion.button>
@@ -241,7 +241,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 text-left">
       {/* Lender Executive Banner */}
-      <div className="bg-[#ffc900] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
+      <div className="bg-[#fecd0e] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           {/* Lender Info */}
           <div className="flex items-start sm:items-center gap-4">
@@ -251,7 +251,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 alt={currentUser.name}
                 className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-black shadow-[2.5px_2.5px_0px_#000]"
               />
-              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#bbf7d0] text-black flex items-center justify-center border-2 border-black shadow-[1px_1px_0px_#000]">
+              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#fee26d] text-black flex items-center justify-center border-2 border-black shadow-[1px_1px_0px_#000]">
                 <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
               </div>
             </div>
@@ -261,7 +261,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 <h1 className="text-2xl sm:text-3xl font-black text-black tracking-tight">
                   {currentUser.name}&apos;s Lender Hub
                 </h1>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#ff90e8] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                <span className="px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#fee26d] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                   Verified Lender
                 </span>
               </div>
@@ -289,7 +289,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <button
               type="button"
               onClick={onOpenAddModal}
-              className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+              className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>List New Equipment</span>
@@ -309,7 +309,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               clear returns.
             </span>
           </div>
-          <div className="flex items-center gap-1.5 text-xs text-black font-mono font-black bg-[#bbf7d0] px-3 py-1 rounded-lg border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+          <div className="flex items-center gap-1.5 text-xs text-black font-mono font-black bg-[#fee26d] px-3 py-1 rounded-lg border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
             <Lock className="w-3.5 h-3.5 stroke-[2.5]" />
             Zero Platform Commission • 100% Retained Maintenance
           </div>
@@ -326,7 +326,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Maintenance Earned
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ff90e8] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+            <div className="w-9 h-9 rounded-xl bg-[#fee26d] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
               <DollarSign className="w-5 h-5 stroke-[2.5]" />
             </div>
           </div>
@@ -349,7 +349,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Guarded Escrow
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#bbf7d0] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+            <div className="w-9 h-9 rounded-xl bg-[#fee26d] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
               <Lock className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
@@ -372,7 +372,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               On Loan
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+            <div className="w-9 h-9 rounded-xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
               <Wrench className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
@@ -397,7 +397,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Action Queue
             </span>
-            <div className="w-9 h-9 rounded-xl bg-[#ff90e8] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+            <div className="w-9 h-9 rounded-xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
               <Clock className="w-4 h-4 stroke-[2.5]" />
             </div>
           </div>
@@ -420,14 +420,14 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           onClick={() => setActiveSubTab("queue")}
           className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
             activeSubTab === "queue"
-              ? "bg-black text-white shadow-[3px_3px_0px_#ff90e8]"
-              : "bg-white text-black hover:bg-[#ffc900] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
+              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
           }`}
         >
           <Clock className="w-4 h-4 stroke-[2.5]" />
           <span>Borrow Requests & Loans</span>
           {pendingRequests.length > 0 && (
-            <span className="px-2 py-0.5 rounded-md bg-[#ff90e8] text-black border border-black text-[10px] font-mono font-black animate-pulse">
+            <span className="px-2 py-0.5 rounded-md bg-[#fee26d] text-black border border-black text-[10px] font-mono font-black animate-pulse">
               {pendingRequests.length}
             </span>
           )}
@@ -437,8 +437,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           onClick={() => setActiveSubTab("inventory")}
           className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
             activeSubTab === "inventory"
-              ? "bg-black text-white shadow-[3px_3px_0px_#ff90e8]"
-              : "bg-white text-black hover:bg-[#ffc900] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
+              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
           }`}
         >
           <Layers className="w-4 h-4 stroke-[2.5]" />
@@ -449,8 +449,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           onClick={() => setActiveSubTab("ledger")}
           className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
             activeSubTab === "ledger"
-              ? "bg-black text-white shadow-[3px_3px_0px_#ff90e8]"
-              : "bg-white text-black hover:bg-[#ffc900] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
+              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
           }`}
         >
           <DollarSign className="w-4 h-4 stroke-[2.5]" />
@@ -461,8 +461,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           onClick={() => setActiveSubTab("safety")}
           className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
             activeSubTab === "safety"
-              ? "bg-black text-white shadow-[3px_3px_0px_#ff90e8]"
-              : "bg-white text-black hover:bg-[#ffc900] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
+              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
           }`}
         >
           <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
@@ -482,7 +482,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 <h2 className="text-lg font-black text-black flex items-center gap-2">
                   <span>Incoming Neighbor Requests</span>
                   {pendingRequests.length > 0 && (
-                    <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#ff90e8] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
+                    <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#fee26d] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
                       Action Needed
                     </span>
                   )}
@@ -496,7 +496,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
             {pendingRequests.length === 0 ? (
               <div className="p-8 rounded-3xl border-2 border-dashed border-black bg-white text-center shadow-[3px_3px_0px_#000]">
-                <div className="w-12 h-12 rounded-2xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center mx-auto mb-2 shadow-[2px_2px_0px_#000]">
+                <div className="w-12 h-12 rounded-2xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center mx-auto mb-2 shadow-[2px_2px_0px_#000]">
                   <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
                 </div>
                 <h3 className="text-sm font-black text-black">
@@ -538,13 +538,13 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             </span>
                           </div>
                         </div>
-                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#ffc900] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#fecd0e] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                           Pending Approval
                         </span>
                       </div>
 
                       {/* Tool & Request Summary */}
-                      <div className="p-3 rounded-xl bg-[#faf9f6] border-2 border-black flex items-center gap-3 mb-3">
+                      <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
                           src={req.toolImage}
                           alt={req.toolTitle}
@@ -567,7 +567,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
                       {/* Borrower Note / Purpose */}
                       {req.purposeNote && (
-                        <div className="p-2.5 rounded-xl bg-[#fff9db] border-2 border-black text-xs font-medium text-black mb-3 shadow-[1px_1px_0px_#000]">
+                        <div className="p-2.5 rounded-xl bg-[#fdfae8] border-2 border-black text-xs font-medium text-black mb-3 shadow-[1px_1px_0px_#000]">
                           &ldquo;{req.purposeNote}&rdquo;
                         </div>
                       )}
@@ -611,7 +611,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                           onClick={() =>
                             onUpdateStatus(req.id, "approved", "approve")
                           }
-                          className="py-2 px-4 rounded-xl bg-[#ffc900] hover:bg-[#ffb700] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                          className="py-2 px-4 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Approve Loan</span>
@@ -630,7 +630,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               <div>
                 <h2 className="text-lg font-black text-black flex items-center gap-2">
                   <span>Approved & Awaiting Handover</span>
-                  <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#ffc900] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
+                  <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#fee26d] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
                     {approvedAwaitingPickup.length}
                   </span>
                 </h2>
@@ -663,12 +663,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             </span>
                           </div>
                         </div>
-                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#bbf7d0] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#fee26d] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                           Approved • Ready
                         </span>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-[#faf9f6] border-2 border-black flex items-center gap-3 mb-3">
+                      <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
                           src={req.toolImage}
                           alt={req.toolTitle}
@@ -697,7 +697,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         onClick={() =>
                           onUpdateStatus(req.id, "active", "pickup")
                         }
-                        className="py-2 px-4 rounded-xl bg-[#ffc900] hover:bg-[#ffb700] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                        className="py-2 px-4 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                         title="Click when you hand over the tool to the neighbor"
                       >
                         <PackageCheck className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -716,7 +716,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               <div>
                 <h2 className="text-lg font-black text-black flex items-center gap-2">
                   <span>Tools Currently Out with Neighbors</span>
-                  <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#bbf7d0] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
+                  <span className="px-2.5 py-0.5 text-[11px] font-mono font-black rounded-lg bg-[#fee26d] text-black border-2 border-black shadow-[1px_1px_0px_#000]">
                     {activeLoans.length} active
                   </span>
                 </h2>
@@ -759,12 +759,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             </span>
                           </div>
                         </div>
-                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#ff90e8] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                        <span className="px-2.5 py-1 rounded-lg text-[10px] font-mono font-black bg-[#fecd0e] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
                           Active Loan
                         </span>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-[#faf9f6] border-2 border-black flex items-center gap-3 mb-3">
+                      <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
                           src={req.toolImage}
                           alt={req.toolTitle}
@@ -804,7 +804,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.96 }}
                         onClick={() => setInspectingRequest(req)}
-                        className="py-2 px-4 rounded-xl bg-[#bbf7d0] hover:bg-[#86efac] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
+                        className="py-2 px-4 rounded-xl bg-[#86efac] hover:bg-[#4ade80] text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 transition-all cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
                         <span>Inspect & Return</span>
@@ -838,7 +838,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenAddModal}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-black hover:bg-neutral-800 text-white text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#ff90e8] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>Add Another Tool</span>
@@ -847,7 +847,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
           {myTools.length === 0 ? (
             <div className="p-12 rounded-3xl border-2 border-dashed border-black bg-white text-center shadow-[4px_4px_0px_#000]">
-              <div className="w-14 h-14 rounded-2xl bg-[#ffc900] border-2 border-black text-black flex items-center justify-center mx-auto mb-3 shadow-[2.5px_2.5px_0px_#000]">
+              <div className="w-14 h-14 rounded-2xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center mx-auto mb-3 shadow-[2.5px_2.5px_0px_#000]">
                 <Wrench className="w-7 h-7 stroke-[2.5]" />
               </div>
               <h3 className="text-base font-black text-black">
@@ -859,7 +859,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               </p>
               <button
                 onClick={onOpenAddModal}
-                className="px-5 py-2.5 rounded-xl bg-[#ffc900] text-black text-xs font-black border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-[#ffb700] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-[#fecd0e] text-black text-xs font-black border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-[#fee26d] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
               >
                 List Your First Tool
               </button>
@@ -879,7 +879,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   >
                     <div>
                       {/* Image & Status Header */}
-                      <div className="relative aspect-video rounded-xl bg-[#faf9f6] border-2 border-black overflow-hidden mb-3">
+                      <div className="relative aspect-video rounded-xl bg-[#fdfae8] border-2 border-black overflow-hidden mb-3">
                         <img
                           src={tool.imageUrl}
                           alt={tool.title}
@@ -887,17 +887,17 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         />
                         <div className="absolute top-2 left-2">
                           {isAvailable && (
-                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#bbf7d0] text-black border border-black shadow-[1px_1px_0px_#000]">
+                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#86efac] text-black border border-black shadow-[1px_1px_0px_#000]">
                               Available
                             </span>
                           )}
                           {isBorrowed && (
-                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#ffc900] text-black border border-black shadow-[1px_1px_0px_#000]">
+                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#fecd0e] text-black border border-black shadow-[1px_1px_0px_#000]">
                               Out on Loan
                             </span>
                           )}
                           {isMaintenance && (
-                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#ff90e8] text-black border border-black shadow-[1px_1px_0px_#000]">
+                            <span className="px-2 py-0.5 rounded-lg text-[10px] font-mono font-black bg-[#fee26d] text-black border border-black shadow-[1px_1px_0px_#000]">
                               In Maintenance
                             </span>
                           )}
@@ -943,7 +943,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
                       {/* Pickup note snippet */}
                       {tool.pickupNote && (
-                        <div className="mt-2 text-[11px] font-medium text-black truncate bg-[#faf9f6] px-2.5 py-1 rounded-lg border border-black">
+                        <div className="mt-2 text-[11px] font-medium text-black truncate bg-[#fdfae8] px-2.5 py-1 rounded-lg border border-black">
                           📍 {tool.pickupNote}
                         </div>
                       )}
@@ -955,8 +955,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         onClick={() => handleToggleMaintenance(tool)}
                         className={`px-3 py-1.5 rounded-xl text-xs font-black border-2 border-black transition-all flex items-center gap-1.5 shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer ${
                           isMaintenance
-                            ? "bg-[#bbf7d0] text-black hover:bg-[#86efac]"
-                            : "bg-white text-black hover:bg-[#ffc900]"
+                            ? "bg-[#86efac] text-black hover:bg-[#4ade80]"
+                            : "bg-white text-black hover:bg-[#fee26d]"
                         }`}
                         title="Mark in/out of maintenance"
                       >
@@ -969,7 +969,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => handleOpenEditTool(tool)}
-                          className="p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ffc900] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                          className="p-2 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                           title="Edit pricing and pickup note"
                         >
                           <Edit3 className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -977,7 +977,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
                         <button
                           onClick={() => handleDeleteTool(tool.id, tool.title)}
-                          className="p-2 rounded-xl border-2 border-black bg-white hover:bg-[#ff90e8] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                          className="p-2 rounded-xl border-2 border-black bg-white hover:bg-red-100 text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                           title="Remove tool from catalog"
                         >
                           <Trash2 className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -1017,7 +1017,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#bbf7d0] border-2 border-black text-xs font-black text-black shadow-[1.5px_1.5px_0px_#000]">
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#fee26d] border-2 border-black text-xs font-black text-black shadow-[1.5px_1.5px_0px_#000]">
                 <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
                 <span>
                   Payout: <strong>DuitNow QR / Instant Bank Verified</strong>
@@ -1029,7 +1029,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <div className="mt-4 border-2 border-black rounded-2xl overflow-hidden bg-white shadow-[2px_2px_0px_#000]">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-[#ffc900] text-black border-b-2 border-black font-black uppercase tracking-wider text-[10px]">
+                  <thead className="bg-[#fecd0e] text-black border-b-2 border-black font-black uppercase tracking-wider text-[10px]">
                     <tr>
                       <th className="p-3">Loan Reference</th>
                       <th className="p-3">Borrower</th>
@@ -1053,7 +1053,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                       myLenderRequests.map((req) => (
                         <tr
                           key={req.id}
-                          className="hover:bg-[#faf9f6] transition-colors"
+                          className="hover:bg-[#fdfae8] transition-colors"
                         >
                           <td className="p-3">
                             <span className="font-black text-black block">
@@ -1103,11 +1103,11 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             <span
                               className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-black capitalize border border-black shadow-[1px_1px_0px_#000] ${
                                 req.status === "returned"
-                                  ? "bg-[#bbf7d0] text-black"
+                                  ? "bg-[#86efac] text-black"
                                   : req.status === "active"
-                                    ? "bg-[#ff90e8] text-black"
+                                    ? "bg-[#fecd0e] text-black"
                                     : req.status === "approved"
-                                      ? "bg-[#ffc900] text-black"
+                                      ? "bg-[#fee26d] text-black"
                                       : "bg-white text-black"
                               }`}
                             >
@@ -1143,9 +1143,9 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Step 1: Pre-Loan Handover Checklist */}
-              <div className="p-5 rounded-2xl bg-[#faf9f6] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
+              <div className="p-5 rounded-2xl bg-[#fdfae8] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
                 <div className="flex items-center gap-2 text-sm font-black text-black">
-                  <div className="w-7 h-7 rounded-lg bg-[#ffc900] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
+                  <div className="w-7 h-7 rounded-lg bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
                     1
                   </div>
                   <span>Pre-Loan Handover Checklist</span>
@@ -1174,9 +1174,9 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               </div>
 
               {/* Step 2: Post-Return Inspection Checklist */}
-              <div className="p-5 rounded-2xl bg-[#faf9f6] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
+              <div className="p-5 rounded-2xl bg-[#fdfae8] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
                 <div className="flex items-center gap-2 text-sm font-black text-black">
-                  <div className="w-7 h-7 rounded-lg bg-[#ff90e8] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
+                  <div className="w-7 h-7 rounded-lg bg-[#fee26d] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
                     2
                   </div>
                   <span>Post-Return Inspection Checklist</span>
@@ -1218,11 +1218,11 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-lg bg-[#faf9f6] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
+              className="w-full max-w-lg bg-[#fdfae8] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
             >
               <div className="flex items-center justify-between border-b-2 border-black pb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-9 h-9 rounded-xl bg-[#bbf7d0] text-black border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+                  <div className="w-9 h-9 rounded-xl bg-[#fee26d] text-black border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
                     <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
                   </div>
                   <h3 className="text-base font-black text-black">
@@ -1231,7 +1231,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </div>
                 <button
                   onClick={() => setInspectingRequest(null)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#ff90e8] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
                   <X className="w-4 h-4 stroke-[2.5]" />
                 </button>
@@ -1260,7 +1260,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </label>
 
                 <div className="space-y-2">
-                  <label className="flex items-center gap-2.5 p-3.5 rounded-2xl border-2 border-black bg-white cursor-pointer hover:bg-[#faf9f6] shadow-[2px_2px_0px_#000] transition-all">
+                  <label className="flex items-center gap-2.5 p-3.5 rounded-2xl border-2 border-black bg-white cursor-pointer hover:bg-[#fee26d] shadow-[2px_2px_0px_#000] transition-all">
                     <input
                       type="radio"
                       name="inspectionResult"
@@ -1280,7 +1280,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                     </div>
                   </label>
 
-                  <label className="flex items-center gap-2.5 p-3.5 rounded-2xl border-2 border-black bg-white cursor-pointer hover:bg-[#faf9f6] shadow-[2px_2px_0px_#000] transition-all">
+                  <label className="flex items-center gap-2.5 p-3.5 rounded-2xl border-2 border-black bg-white cursor-pointer hover:bg-[#fee26d] shadow-[2px_2px_0px_#000] transition-all">
                     <input
                       type="radio"
                       name="inspectionResult"
@@ -1328,7 +1328,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   whileTap={{ scale: 0.97 }}
                   disabled={isProcessingReturn}
                   onClick={handleConfirmReturnInspection}
-                  className="px-4 py-2 rounded-xl bg-[#bbf7d0] hover:bg-[#86efac] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
+                  className="px-4 py-2 rounded-xl bg-[#86efac] hover:bg-[#4ade80] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none flex items-center gap-1.5 cursor-pointer disabled:opacity-40"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Confirm Return & Release Deposit</span>
@@ -1349,11 +1349,11 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-md bg-[#faf9f6] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
+              className="w-full max-w-md bg-[#fdfae8] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
             >
               <div className="flex items-center justify-between border-b-2 border-black pb-3">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-[#ffc900] text-black border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
+                  <div className="w-8 h-8 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0px_#000]">
                     <Edit3 className="w-4 h-4 stroke-[2.5]" />
                   </div>
                   <h3 className="text-base font-black text-black">
@@ -1362,7 +1362,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </div>
                 <button
                   onClick={() => setIsEditModalOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#ff90e8] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
                   <X className="w-4 h-4 stroke-[2.5]" />
                 </button>
@@ -1440,7 +1440,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   whileTap={{ scale: 0.97 }}
                   disabled={isUpdatingTool}
                   onClick={handleSaveToolEdits}
-                  className="px-5 py-2 rounded-xl bg-[#ffc900] hover:bg-[#ffb700] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
                 >
                   Save Changes
                 </motion.button>
@@ -1460,7 +1460,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-md bg-[#faf9f6] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
+              className="w-full max-w-md bg-[#fdfae8] border-3 border-black rounded-3xl p-6 shadow-[8px_8px_0px_#000] space-y-4 text-left"
             >
               <div className="flex items-center justify-between border-b-2 border-black pb-3">
                 <h3 className="text-base font-black text-black">
@@ -1468,7 +1468,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </h3>
                 <button
                   onClick={() => setDecliningRequest(null)}
-                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#ff90e8] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                  className="w-8 h-8 flex items-center justify-center rounded-lg border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[1.5px_1.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
                   <X className="w-4 h-4 stroke-[2.5]" />
                 </button>
@@ -1507,7 +1507,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleConfirmDecline}
-                  className="px-5 py-2 rounded-xl bg-[#ff90e8] hover:bg-black hover:text-white text-black text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-red-100 hover:bg-red-200 text-red-800 text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
                 >
                   Confirm Decline
                 </motion.button>

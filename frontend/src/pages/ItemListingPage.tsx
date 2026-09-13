@@ -98,7 +98,7 @@ export const ItemListingPage: React.FC = () => {
             <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
               Neighborhood Tool Library
             </h1>
-            <span className="hidden sm:inline-flex px-3 py-1 rounded-xl bg-[#ffc900] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000]">
+            <span className="hidden sm:inline-flex px-3 py-1 rounded-xl bg-[#fee26d] border-2 border-black text-xs font-black text-black shadow-[2px_2px_0px_#000]">
               {currentUser?.neighborhoodName ||
                 currentUser?.neighborhood ||
                 "Local Circle"}
@@ -112,7 +112,7 @@ export const ItemListingPage: React.FC = () => {
 
         <Link
           to="/items/create"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#ffc900] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto shrink-0 cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#fecd0e] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto shrink-0 cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-3" />
           <span>List a Tool</span>
@@ -153,7 +153,7 @@ export const ItemListingPage: React.FC = () => {
         />
       ) : tools.length === 0 ? (
         <EmptyState
-          icon={<Package className="w-8 h-8 text-[#c86d51]" />}
+          icon={<Package className="w-8 h-8 text-black" />}
           title="No equipment found"
           description="We couldn't find any tools matching your search criteria. Try adjusting your search query, clearing filters, or list the tool yourself!"
           actionText="Clear All Filters"
