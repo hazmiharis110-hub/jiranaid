@@ -122,6 +122,21 @@ export const itemService = {
     const res: any = await api.get("/stats");
     return res?.data !== undefined ? res.data : res;
   },
+
+  async getBorrowRequests(): Promise<any> {
+    return await api.get("/borrow-requests");
+  },
+
+  async updateBorrowRequestStatus(
+    requestId: string | number,
+    status: string,
+    action?: string,
+  ): Promise<any> {
+    return await api.patch(`/borrow-requests/${requestId}/status`, {
+      status,
+      action,
+    });
+  },
 };
 
 export default itemService;
