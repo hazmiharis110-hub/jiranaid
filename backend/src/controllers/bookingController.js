@@ -33,11 +33,9 @@ const createBooking = async (req, res) => {
     }
 
     // Check if item exists
-    const itemResult = await pool.query(
-      `SELECT id FROM items
-    WHERE id = $1`,
-      [item_id],
-    );
+    const itemResult = await pool.query(`SELECT id FROM items WHERE id = $1`, [
+      item_id,
+    ]);
 
     if (itemResult.rows.length === 0) {
       return res.status(404).json({
@@ -46,11 +44,9 @@ const createBooking = async (req, res) => {
     }
 
     // Check if user exists
-    const userResult = await pool.query(
-      `SELECT id FROM users
-    WHERE id = $1`,
-      [user_id],
-    );
+    const userResult = await pool.query(`SELECT id FROM users WHERE id = $1`, [
+      user_id,
+    ]);
 
     if (userResult.rows.length === 0) {
       return res.status(404).json({
@@ -58,6 +54,23 @@ const createBooking = async (req, res) => {
       });
     }
 
+    // 🔍 Check availability: Query for overlapping bookings, ignoring cancelled/declined ones
+    const overlapResult = await pool.query(
+      `SELECT id FROM bookings 
+       WHERE item_id = $1 
+         AND status NOT IN ('cancelled', 'declined')
+         AND start_date < $3 
+         AND end_date > $2`,
+      [item_id, start_date, end_date],
+    );
+
+    if (overlapResult.rows.length > 0) {
+      return res.status(409).json({
+        message: "Item is already booked for the selected date range",
+      });
+    }
+
+    // Insert new booking
     const result = await pool.query(
       `INSERT INTO bookings
             (item_id, user_id, start_date, end_date, total_price)
@@ -71,7 +84,7 @@ const createBooking = async (req, res) => {
       booking: result.rows[0],
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error creating booking:", error);
 
     res.status(500).json({
       message: "Failed to create booking",
