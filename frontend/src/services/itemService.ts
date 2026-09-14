@@ -100,6 +100,21 @@ export const itemService = {
   async getStats() {
     return await api.get("/stats");
   },
+
+  async getBorrowRequests(): Promise<any> {
+    return await api.get("/borrow-requests");
+  },
+
+  async updateBorrowRequestStatus(
+    requestId: string | number,
+    status: string,
+    action?: string,
+  ): Promise<any> {
+    return await api.patch(`/borrow-requests/${requestId}/status`, {
+      status,
+      action,
+    });
+  },
 };
 
 export default itemService;
