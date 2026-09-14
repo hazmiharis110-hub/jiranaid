@@ -1,3 +1,4 @@
+// src/services/itemService.ts
 import api from "./api";
 import type { Item, ToolCategory, Review, Booking } from "../types";
 
@@ -40,7 +41,7 @@ export interface CreateBookingPayload {
 }
 
 export const itemService = {
-  async getItems(filters: ItemFilters = {}): Promise<ItemListResponse> {
+  async getItems(filters: ItemFilters = {}): Promise<any> {
     const params = new URLSearchParams();
     if (filters.category && filters.category !== "All") {
       params.append("category", filters.category);
@@ -63,46 +64,70 @@ export const itemService = {
 
     const queryStr = params.toString();
     const url = queryStr ? `/items?${queryStr}` : "/items";
-    return await api.get(url);
+    const res: any = await api.get(url);
+
+    // Unwrap Axios response if interceptor doesn't unwrap automatically
+    return res?.data !== undefined ? res.data : res;
+  },
+
+  // Alias getTools to getItems to prevent undefined function crashes in Zustand store
+  async getTools(filters: ItemFilters = {}): Promise<any> {
+    return this.getItems(filters);
   },
 
   async getItemById(id: number | string): Promise<any> {
     const res: any = await api.get(`/items/${id}`);
-    return res?.data || res;
+    const data = res?.data !== undefined ? res.data : res;
+    return data?.tool || data;
   },
 
   async createItem(
     payload: CreateItemPayload,
   ): Promise<{ success: boolean; tool: Item; message?: string }> {
-    const { data } = await api.post("/items", payload);
-    return data;
+    const res: any = await api.post("/items", payload);
+    return res?.data !== undefined ? res.data : res;
   },
 
   async updateItem(
     id: number | string,
     payload: Partial<CreateItemPayload>,
   ): Promise<{ success: boolean; tool: Item }> {
-    const { data } = await api.put(`/items/${id}`, payload);
-    return data;
+    const res: any = await api.put(`/items/${id}`, payload);
+    return res?.data !== undefined ? res.data : res;
   },
 
   async deleteItem(
     id: number | string,
   ): Promise<{ success: boolean; message?: string }> {
-    const { data } = await api.delete(`/items/${id}`);
-    return data;
+    const res: any = await api.delete(`/items/${id}`);
+    return res?.data !== undefined ? res.data : res;
   },
 
   async createBooking(
     payload: CreateBookingPayload,
   ): Promise<{ success: boolean; booking: Booking; message?: string }> {
-    const { data } = await api.post("/bookings", payload);
-    return data;
+    const res: any = await api.post("/bookings", payload);
+    return res?.data !== undefined ? res.data : res;
   },
 
   async getStats() {
-    const { data } = await api.get("/stats");
-    return data;
+    const res: any = await api.get("/stats");
+    return res?.data !== undefined ? res.data : res;
+  },
+
+  async getBorrowRequests(): Promise<any> {
+    return await api.get("/borrow-requests");
+  },
+
+  async updateBorrowRequestStatus(
+    requestId: string | number,
+    status: string,
+    action?: string,
+  ): Promise<any> {
+    return await api.patch(`/borrow-requests/${requestId}/status`, {
+      status,
+      action,
+    });
   },
 };
 

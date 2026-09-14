@@ -1,3 +1,4 @@
+// src/components/LenderDashboard.tsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -6,26 +7,20 @@ import {
   Plus,
   Clock,
   CheckCircle2,
-  AlertCircle,
   Calendar,
   PackageCheck,
   DollarSign,
   Layers,
-  Sparkles,
-  Sliders,
   Trash2,
   Edit3,
   Check,
   X,
   ExternalLink,
-  ChevronRight,
   TrendingUp,
-  FileText,
-  HelpCircle,
   Lock,
-  ArrowUpRight,
   RefreshCw,
 } from "lucide-react";
+import itemService from "../services/itemService";
 import type { User, ToolItem, BorrowRequest } from "../types.ts";
 
 interface LenderDashboardProps {
@@ -53,7 +48,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   onSelectToolDetail,
   onOpenAuthModal,
 }) => {
-  // Navigation within Lender Hub
   const [activeSubTab, setActiveSubTab] = useState<
     "queue" | "inventory" | "ledger" | "safety"
   >("queue");
@@ -64,14 +58,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   const [editPickupNote, setEditPickupNote] = useState<string>("");
   const [isUpdatingTool, setIsUpdatingTool] = useState(false);
 
-  // Return Inspection Confirmation Modal
   const [inspectingRequest, setInspectingRequest] =
     useState<BorrowRequest | null>(null);
   const [inspectionPassed, setInspectionPassed] = useState(true);
   const [inspectionNotes, setInspectionNotes] = useState("");
   const [isProcessingReturn, setIsProcessingReturn] = useState(false);
 
-  // Decline Request Modal
   const [decliningRequest, setDecliningRequest] =
     useState<BorrowRequest | null>(null);
   const [declineReason, setDeclineReason] = useState("");
@@ -108,15 +100,14 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     );
   }
 
-  // Filter tools owned strictly by current lender
-  const myTools = tools.filter((t) => t.ownerId === currentUser.id);
-
-  // Filter borrow requests for tools owned by current lender
+  const myTools = tools.filter(
+    (t: any) =>
+      String(t.ownerId ?? t.user_id ?? t.userId) === String(currentUser.id),
+  );
   const myLenderRequests = borrowRequests.filter(
     (r) => r.ownerId === currentUser.id,
   );
 
-  // Sub-queues for lender
   const pendingRequests = myLenderRequests.filter(
     (r) => r.status === "pending",
   );
@@ -128,7 +119,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     (r) => r.status === "returned",
   );
 
-  // Financial calculations strictly for this lender
   const totalFeesEarned =
     completedLoans.reduce((sum, r) => sum + (r.maintenanceFee || 0), 0) +
     activeLoans.reduce((sum, r) => sum + (r.maintenanceFee || 0), 0);
@@ -137,25 +127,17 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     activeLoans.reduce((sum, r) => sum + (r.depositFee || 0), 0) +
     approvedAwaitingPickup.reduce((sum, r) => sum + (r.depositFee || 0), 0);
 
-  // Toggle Maintenance Mode on a tool
   const handleToggleMaintenance = async (tool: ToolItem) => {
     try {
       const nextStatus =
         tool.status === "maintenance" ? "available" : "maintenance";
-      const res = await fetch(`/api/tools/${tool.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: nextStatus }),
-      });
-      if (res.ok) {
-        onToolUpdated();
-      }
+      await itemService.updateItem(tool.id, { status: nextStatus } as any);
+      onToolUpdated();
     } catch (err) {
       console.error("Failed to toggle tool maintenance status:", err);
     }
   };
 
-  // Open Edit Tool Modal
   const handleOpenEditTool = (tool: ToolItem) => {
     setEditingTool(tool);
     setEditDailyFee(tool.price ?? tool.maintenanceFeePerDay ?? 0);
@@ -164,24 +146,17 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     setIsEditModalOpen(true);
   };
 
-  // Save Tool Updates
   const handleSaveToolEdits = async () => {
     if (!editingTool) return;
     setIsUpdatingTool(true);
     try {
-      const res = await fetch(`/api/tools/${editingTool.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          maintenanceFeePerDay: editDailyFee,
-          depositAmount: editDeposit,
-          pickupNote: editPickupNote,
-        }),
-      });
-      if (res.ok) {
-        onToolUpdated();
-        setIsEditModalOpen(false);
-      }
+      await itemService.updateItem(editingTool.id, {
+        price: editDailyFee,
+        deposit: editDeposit,
+        pickupNote: editPickupNote,
+      } as any);
+      onToolUpdated();
+      setIsEditModalOpen(false);
     } catch (err) {
       console.error("Failed to update tool listing:", err);
     } finally {
@@ -189,7 +164,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     }
   };
 
-  // Delete Tool
   const handleDeleteTool = async (toolId: string | number, title: string) => {
     if (
       !window.confirm(
@@ -199,18 +173,13 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
       return;
     }
     try {
-      const res = await fetch(`/api/tools/${toolId}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        onToolUpdated();
-      }
+      await itemService.deleteItem(toolId);
+      onToolUpdated();
     } catch (err) {
       console.error("Failed to delete tool:", err);
     }
   };
 
-  // Return Inspection Confirmation
   const handleConfirmReturnInspection = async () => {
     if (!inspectingRequest) return;
     setIsProcessingReturn(true);
@@ -226,7 +195,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
     }
   };
 
-  // Handle decline with note
   const handleConfirmDecline = async () => {
     if (!decliningRequest) return;
     try {
@@ -243,7 +211,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
       {/* Lender Executive Banner */}
       <div className="bg-[#fee26d] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
-          {/* Lender Info */}
           <div className="flex items-start sm:items-center gap-4">
             <div className="relative shrink-0">
               <img
@@ -277,27 +244,23 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   ★ {(currentUser.trustScore ?? 5.0).toFixed(1)} Rating
                 </span>
                 <span className="hidden sm:inline">•</span>
-                <span>
-                  {currentUser.onTimeReturnRate || 100}% Accuracy
-                </span>
+                <span>{currentUser.onTimeReturnRate || 100}% Accuracy</span>
               </p>
             </div>
           </div>
 
-          {/* Quick Action Button for Lender */}
           <div className="flex items-center gap-3 shrink-0">
             <button
               type="button"
               onClick={onOpenAddModal}
               className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
+              <Plus className="w-4 h-4 stroke-3" />
               <span>List New Equipment</span>
             </button>
           </div>
         </div>
 
-        {/* Lender Trust & Escrow Guarantee Banner */}
         <div className="mt-6 pt-4 border-t-2 border-black flex flex-wrap items-center justify-between gap-3 text-xs font-bold text-neutral-800">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-black animate-pulse" />
@@ -316,12 +279,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       </div>
 
-      {/* Lender KPI Metric Cards (4 Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Metric 1: Total Earnings */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Maintenance Earned
@@ -341,10 +300,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           </div>
         </div>
 
-        {/* Metric 2: Escrow Deposits Held */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Guarded Escrow
@@ -364,10 +320,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           </div>
         </div>
 
-        {/* Metric 3: Active Loans Out */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               On Loan
@@ -389,10 +342,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
           </div>
         </div>
 
-        {/* Metric 4: Pending Action Requests */}
-        <div
-          className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between"
-        >
+        <div className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-mono font-black uppercase tracking-wider text-black">
               Action Queue
@@ -414,7 +364,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       </div>
 
-      {/* Lender Navigation Sub-Tabs */}
       <div className="flex items-center gap-2 border-b-2 border-black pb-2 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveSubTab("queue")}
@@ -470,12 +419,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </button>
       </div>
 
-      {/* ========================================================= */}
-      {/* SUB-TAB 1: QUEUE & ACTIVE WORKFLOWS */}
-      {/* ========================================================= */}
       {activeSubTab === "queue" && (
         <div className="space-y-6">
-          {/* Section A: Pending Borrow Requests (Action Required) */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -518,7 +463,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                     className="p-5 rounded-2xl bg-white border-2 border-black shadow-[4px_4px_0px_#000] flex flex-col justify-between space-y-4"
                   >
                     <div>
-                      {/* Borrower Info & Tool Header */}
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex items-center gap-3">
                           <img
@@ -534,7 +478,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                               <ShieldCheck className="w-3.5 h-3.5 text-black stroke-[2.5]" />
                             </div>
                             <span className="text-xs font-bold text-neutral-600">
-                              Neighbor • ★ {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
+                              Neighbor • ★{" "}
+                              {(req.borrowerTrust ?? 5.0).toFixed(1)} Trust
                             </span>
                           </div>
                         </div>
@@ -543,11 +488,17 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         </span>
                       </div>
 
-                      {/* Tool & Request Summary */}
                       <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
-                          src={req.toolImage}
+                          src={
+                            req.toolImage ||
+                            "https://placehold.co/600x400?text=Tool"
+                          }
                           alt={req.toolTitle}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://placehold.co/600x400?text=Tool";
+                          }}
                           className="w-12 h-12 rounded-lg object-cover border-2 border-black shadow-[1px_1px_0px_#000] shrink-0"
                         />
                         <div className="min-w-0 flex-1">
@@ -565,14 +516,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         </div>
                       </div>
 
-                      {/* Borrower Note / Purpose */}
                       {req.purposeNote && (
                         <div className="p-2.5 rounded-xl bg-[#fdfae8] border-2 border-black text-xs font-medium text-black mb-3 shadow-[1px_1px_0px_#000]">
                           &ldquo;{req.purposeNote}&rdquo;
                         </div>
                       )}
 
-                      {/* Financials for Lender */}
                       <div className="flex items-center justify-between text-xs py-2 border-t-2 border-b-2 border-black">
                         <span className="font-bold text-neutral-700">
                           Maintenance:{" "}
@@ -583,13 +532,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                           </strong>
                         </span>
                         <span className="font-black text-black flex items-center gap-1 font-mono">
-                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee}{" "}
-                          Escrow
+                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                          {req.depositFee} Escrow
                         </span>
                       </div>
                     </div>
 
-                    {/* Decision Actions */}
                     <div className="flex items-center justify-between gap-2 pt-2">
                       <div className="text-xs font-bold text-neutral-600 flex items-center gap-1">
                         <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5] text-black" />
@@ -624,7 +572,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             )}
           </div>
 
-          {/* Section B: Ready for Handover / Collection */}
           {approvedAwaitingPickup.length > 0 && (
             <div className="space-y-3 pt-6 border-t-2 border-black">
               <div>
@@ -670,8 +617,15 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
                       <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
-                          src={req.toolImage}
+                          src={
+                            req.toolImage ||
+                            "https://placehold.co/600x400?text=Tool"
+                          }
                           alt={req.toolTitle}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://placehold.co/600x400?text=Tool";
+                          }}
                           className="w-10 h-10 rounded-lg object-cover border border-black shrink-0"
                         />
                         <div className="min-w-0">
@@ -710,7 +664,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             </div>
           )}
 
-          {/* Section C: Tools Currently Out on Loan (Active) */}
           <div className="space-y-3 pt-6 border-t-2 border-black">
             <div className="flex items-center justify-between">
               <div>
@@ -766,8 +719,15 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
                       <div className="p-3 rounded-xl bg-[#fdfae8] border-2 border-black flex items-center gap-3 mb-3">
                         <img
-                          src={req.toolImage}
+                          src={
+                            req.toolImage ||
+                            "https://placehold.co/600x400?text=Tool"
+                          }
                           alt={req.toolTitle}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://placehold.co/600x400?text=Tool";
+                          }}
                           className="w-11 h-11 rounded-lg object-cover border border-black shrink-0"
                         />
                         <div className="min-w-0">
@@ -778,8 +738,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                             {req.toolCategory}
                           </span>
                           <span className="text-[11px] font-black text-black flex items-center gap-1 mt-0.5">
-                            <Clock className="w-3 h-3 stroke-[2.5]" /> Due
-                            Date: {req.endDate}
+                            <Clock className="w-3 h-3 stroke-[2.5]" /> Due Date:{" "}
+                            {req.endDate}
                           </span>
                         </div>
                       </div>
@@ -787,13 +747,12 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                       <div className="flex items-center justify-between text-xs py-1.5 font-bold text-neutral-700">
                         <span>Maintenance: RM {req.maintenanceFee}</span>
                         <span className="font-mono font-black text-black flex items-center gap-1">
-                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee} in
-                          Escrow
+                          <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                          {req.depositFee} in Escrow
                         </span>
                       </div>
                     </div>
 
-                    {/* Actions: Chat & Return Verification */}
                     <div className="flex items-center justify-between gap-2 pt-2 border-t-2 border-black">
                       <div className="text-xs font-bold text-neutral-700 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 stroke-[2.5] text-black" />
@@ -818,9 +777,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* SUB-TAB 2: INVENTORY & LISTINGS MANAGEMENT */}
-      {/* ========================================================= */}
       {activeSubTab === "inventory" && (
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -840,7 +796,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               onClick={onOpenAddModal}
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all self-start sm:self-auto cursor-pointer"
             >
-              <Plus className="w-4 h-4 stroke-[3]" />
+              <Plus className="w-4 h-4 stroke-3" />
               <span>Add Another Tool</span>
             </motion.button>
           </div>
@@ -878,11 +834,18 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                     className="bg-white border-2 border-black rounded-2xl p-4 flex flex-col justify-between space-y-3 transition-all shadow-[4px_4px_0px_#000]"
                   >
                     <div>
-                      {/* Image & Status Header */}
                       <div className="relative aspect-video rounded-xl bg-[#fdfae8] border-2 border-black overflow-hidden mb-3">
                         <img
-                          src={tool.imageUrl}
+                          src={
+                            tool.imageUrl ||
+                            tool.image_url ||
+                            "https://placehold.co/600x400?text=Tool"
+                          }
                           alt={tool.title}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://placehold.co/600x400?text=Tool";
+                          }}
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute top-2 left-2">
@@ -910,7 +873,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         </div>
                       </div>
 
-                      {/* Tool Title & Specs */}
                       <div>
                         <span className="text-[10px] font-mono font-bold text-neutral-600 uppercase tracking-wider">
                           {tool.brand} {tool.model && `• ${tool.model}`}
@@ -923,25 +885,23 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                         </p>
                       </div>
 
-                      {/* Pricing & Deposit */}
                       <div className="mt-3 pt-2.5 border-t-2 border-black flex items-center justify-between text-xs font-bold">
                         <div>
                           <span className="text-neutral-600">Daily Fee: </span>
                           <strong className="text-black font-black font-mono">
-                            {tool.maintenanceFeePerDay === 0
+                            {(tool.maintenanceFeePerDay ?? tool.price) === 0
                               ? "Free"
-                              : `RM ${tool.maintenanceFeePerDay}/day`}
+                              : `RM ${tool.maintenanceFeePerDay ?? tool.price}/day`}
                           </strong>
                         </div>
                         <div>
                           <span className="text-neutral-600">Deposit: </span>
                           <strong className="text-black font-black font-mono">
-                            RM {tool.depositAmount}
+                            RM {tool.depositAmount ?? tool.deposit}
                           </strong>
                         </div>
                       </div>
 
-                      {/* Pickup note snippet */}
                       {tool.pickupNote && (
                         <div className="mt-2 text-[11px] font-medium text-black truncate bg-[#fdfae8] px-2.5 py-1 rounded-lg border border-black">
                           📍 {tool.pickupNote}
@@ -949,7 +909,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                       )}
                     </div>
 
-                    {/* Operational Actions */}
                     <div className="pt-2.5 border-t-2 border-black flex items-center justify-between gap-2">
                       <button
                         onClick={() => handleToggleMaintenance(tool)}
@@ -1000,9 +959,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* SUB-TAB 3: EARNINGS & ESCROW LEDGER */}
-      {/* ========================================================= */}
       {activeSubTab === "ledger" && (
         <div className="space-y-6">
           <div className="bg-white border-2 border-black rounded-3xl p-6 space-y-4 shadow-[4px_4px_0px_#000]">
@@ -1025,7 +981,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
               </div>
             </div>
 
-            {/* Financial Ledger Table */}
             <div className="mt-4 border-2 border-black rounded-2xl overflow-hidden bg-white shadow-[2px_2px_0px_#000]">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
@@ -1086,17 +1041,19 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                           <td className="p-3">
                             {req.status === "returned" ? (
                               <span className="inline-flex items-center gap-1 text-[11px] text-emerald-800 font-black">
-                                <Check className="w-3 h-3 stroke-[3]" /> RM{" "}
+                                <Check className="w-3 h-3 stroke-3" /> RM{" "}
                                 {req.depositFee} Refunded
                               </span>
                             ) : req.status === "active" ||
                               req.status === "approved" ? (
                               <span className="inline-flex items-center gap-1 text-[11px] text-amber-900 font-black">
-                                <Lock className="w-3 h-3 stroke-[2.5]" /> RM {req.depositFee}{" "}
-                                in Escrow
+                                <Lock className="w-3 h-3 stroke-[2.5]" /> RM{" "}
+                                {req.depositFee} in Escrow
                               </span>
                             ) : (
-                              <span className="text-neutral-400 font-bold">None</span>
+                              <span className="text-neutral-400 font-bold">
+                                None
+                              </span>
                             )}
                           </td>
                           <td className="p-3">
@@ -1125,9 +1082,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* SUB-TAB 4: LENDER HANDOVER & SAFETY PROTOCOL */}
-      {/* ========================================================= */}
       {activeSubTab === "safety" && (
         <div className="space-y-4">
           <div className="bg-white border-2 border-black rounded-3xl p-6 space-y-5 shadow-[4px_4px_0px_#000]">
@@ -1142,7 +1096,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Step 1: Pre-Loan Handover Checklist */}
               <div className="p-5 rounded-2xl bg-[#fdfae8] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
                 <div className="flex items-center gap-2 text-sm font-black text-black">
                   <div className="w-7 h-7 rounded-lg bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
@@ -1173,7 +1126,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                 </ul>
               </div>
 
-              {/* Step 2: Post-Return Inspection Checklist */}
               <div className="p-5 rounded-2xl bg-[#fdfae8] border-2 border-black space-y-3 shadow-[2.5px_2.5px_0px_#000]">
                 <div className="flex items-center gap-2 text-sm font-black text-black">
                   <div className="w-7 h-7 rounded-lg bg-[#fee26d] text-black border-2 border-black flex items-center justify-center text-xs font-black shadow-[1px_1px_0px_#000]">
@@ -1208,9 +1160,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         </div>
       )}
 
-      {/* ========================================================= */}
-      {/* MODAL: RETURN & INSPECTION CONFIRMATION */}
-      {/* ========================================================= */}
       <AnimatePresence>
         {inspectingRequest && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -1239,8 +1188,15 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
               <div className="p-3.5 rounded-2xl bg-white border-2 border-black flex items-center gap-3 shadow-[2px_2px_0px_#000]">
                 <img
-                  src={inspectingRequest.toolImage}
+                  src={
+                    inspectingRequest.toolImage ||
+                    "https://placehold.co/600x400?text=Tool"
+                  }
                   alt={inspectingRequest.toolTitle}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src =
+                      "https://placehold.co/600x400?text=Tool";
+                  }}
                   className="w-12 h-12 rounded-lg object-cover border border-black shrink-0"
                 />
                 <div className="min-w-0">
@@ -1339,9 +1295,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         )}
       </AnimatePresence>
 
-      {/* ========================================================= */}
-      {/* MODAL: EDIT TOOL PRICING & PICKUP NOTE */}
-      {/* ========================================================= */}
       <AnimatePresence>
         {isEditModalOpen && editingTool && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -1450,9 +1403,6 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
         )}
       </AnimatePresence>
 
-      {/* ========================================================= */}
-      {/* MODAL: DECLINE REQUEST WITH NOTE */}
-      {/* ========================================================= */}
       <AnimatePresence>
         {decliningRequest && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -1476,7 +1426,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
               <p className="text-xs font-medium text-neutral-700 leading-relaxed">
                 Decline request from{" "}
-                <strong className="text-black font-black">{decliningRequest.borrowerName}</strong> for &ldquo;
+                <strong className="text-black font-black">
+                  {decliningRequest.borrowerName}
+                </strong>{" "}
+                for &ldquo;
                 {decliningRequest.toolTitle}&rdquo;. Their payment deposit will
                 be immediately released.
               </p>
