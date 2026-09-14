@@ -1,0 +1,101 @@
+services:
+  # =================================================================
+  # 1. Supabase PostgreSQL Database
+  # =================================================================
+  db:
+    image: postgres:16-alpine
+    container_name: supabase-postgres
+    restart: unless-stopped
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - supabase_pg_data:/var/lib/postgresql/data
+      - ./backend/supabase/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./backend/supabase/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - jiranaid-network
+
+  # =================================================================
+  # 2. Redis In-Memory Cache & Message Broker
+  # =================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: jiranaid-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - jiranaid-network
+
+  # =================================================================
+  # 3. Express Backend REST API
+  # =================================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jiranaid-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      PGHOST: db
+      PGPORT: 5432
+      PGDATABASE: ${POSTGRES_DB:-postgres}
+      PGUSER: ${POSTGRES_USER:-postgres}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      JWT_SECRET: ${JWT_SECRET:-supersecretjwtkey_change_in_production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - jiranaid-network
+
+  # =================================================================
+  # 4. React Frontend (Vite + Nginx Reverse Proxy)
+  # =================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    container_name: jiranaid-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - jiranaid-network
+
+volumes:
+  supabase_pg_data:
+  redis_data:
+
+networks:
+  jiranaid-network:
+    driver: bridge

@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useOutletContext } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  useParams,
+  Link,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import {
   Wrench,
   ShieldCheck,
@@ -16,15 +21,14 @@ import {
   ArrowLeft,
   Edit3,
   MessageCircle,
-} from 'lucide-react';
-import { itemService } from '../services/itemService';
-import {reviewService} from '../services/reviewService';
-import {borrowService} from '../services/borrowService';
-import { useAuthStore } from '../store/useAuthStore';
-import { LoadingSpinner } from '../components/common/LoadingSpinner';
-import { Badge } from '../components/common/Badge';
-import type { ToolItem, Review } from '../types';
-
+} from "lucide-react";
+import { itemService } from "../services/itemService";
+import { reviewService } from "../services/reviewService";
+import { borrowService } from "../services/borrowService";
+import { useAuthStore } from "../store/useAuthStore";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import { Badge } from "../components/common/Badge";
+import type { ToolItem, Review } from "../types";
 
 export const ItemDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -35,7 +39,7 @@ export const ItemDetailPage: React.FC = () => {
   const [tool, setTool] = useState<ToolItem | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Booking states
   const today = new Date();
@@ -44,57 +48,58 @@ export const ItemDetailPage: React.FC = () => {
   const defaultEnd = new Date(tomorrow);
   defaultEnd.setDate(tomorrow.getDate() + 2);
 
-  const formatDateInput = (d: Date) => d.toISOString().split('T')[0];
+  const formatDateInput = (d: Date) => d.toISOString().split("T")[0];
 
   const [startDate, setStartDate] = useState(formatDateInput(tomorrow));
   const [endDate, setEndDate] = useState(formatDateInput(defaultEnd));
   const [agreeTerms, setAgreeTerms] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestSuccess, setRequestSuccess] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
   useEffect(() => {
-  if (!id) return;
+    if (!id) return;
 
-  const loadItemAndReviews = async () => {
-    setIsLoading(true);
+    const loadItemAndReviews = async () => {
+      setIsLoading(true);
 
-    try {
-      const toolData: any = await itemService.getItemById(id);
+      try {
+        const toolData: any = await itemService.getItemById(id);
 
-      setTool(toolData?.tool || toolData);
+        setTool(toolData?.tool || toolData);
 
-      // Get all bookings and reviews
-      const [bookings, allReviews]: any = await Promise.all([
-        borrowService.getBookings(),
-        reviewService.getReviews(),
-      ]);
+        // Get all bookings and reviews
+        const [bookings, allReviews]: any = await Promise.all([
+          borrowService.getBookings(),
+          reviewService.getReviews(),
+        ]);
 
-      // Find bookings belonging to this equipment
-      const itemBookings = ((bookings as any) || []).filter(
-        (booking: any) => Number(booking.item_id) === Number(id)
-      );
+        // Find bookings belonging to this equipment
+        const itemBookings = ((bookings as any) || []).filter(
+          (booking: any) => Number(booking.item_id) === Number(id),
+        );
 
-      // Get booking IDs for this equipment
-      const bookingIds = itemBookings.map(
-        (booking: any) => Number(booking.id)
-      );
+        // Get booking IDs for this equipment
+        const bookingIds = itemBookings.map((booking: any) =>
+          Number(booking.id),
+        );
 
-      // Only show reviews belonging to this equipment
-      const itemReviews = ((allReviews as any) || []).filter(
-        (review: any) => bookingIds.includes(Number(review.booking_id))
-      );
+        // Only show reviews belonging to this equipment
+        const itemReviews = ((allReviews as any) || []).filter((review: any) =>
+          bookingIds.includes(Number(review.booking_id)),
+        );
 
-      setReviews(itemReviews);
-      setIsLoading(false);
-    } catch (err: any) {
-      console.error("Failed to load item/reviews:", err);
-      setErrorMsg(err.message || 'Tool not found');
-      setIsLoading(false);
-    }
-  };
+        setReviews(itemReviews);
+        setIsLoading(false);
+      } catch (err: any) {
+        console.error("Failed to load item/reviews:", err);
+        setErrorMsg(err.message || "Tool not found");
+        setIsLoading(false);
+      }
+    };
 
-  loadItemAndReviews();
-}, [id]);
+    loadItemAndReviews();
+  }, [id]);
 
   if (isLoading) {
     return <LoadingSpinner message="Loading tool details..." fullPage />;
@@ -104,9 +109,12 @@ export const ItemDetailPage: React.FC = () => {
     return (
       <div className="max-w-md mx-auto my-16 text-center space-y-4">
         <AlertCircle className="w-12 h-12 text-red-500 mx-auto" />
-        <h2 className="text-xl font-bold text-[#24211d]">Equipment Not Found</h2>
+        <h2 className="text-xl font-bold text-[#24211d]">
+          Equipment Not Found
+        </h2>
         <p className="text-sm text-[#67635c]">
-          The item you are looking for might have been removed or is temporarily unavailable.
+          The item you are looking for might have been removed or is temporarily
+          unavailable.
         </p>
         <Link
           to="/items"
@@ -125,7 +133,7 @@ export const ItemDetailPage: React.FC = () => {
   const displayImage =
     tool.image_url ||
     tool.imageUrl ||
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80";
 
   // Calculate rental calculations
   const start = new Date(startDate);
@@ -137,23 +145,23 @@ export const ItemDetailPage: React.FC = () => {
 
   const ownerId = tool.user_id ?? tool.ownerId;
   const isOwner = currentUser && String(currentUser.id) === String(ownerId);
-  const isAvailable = (tool.status ?? 'available') === 'available';
+  const isAvailable = (tool.status ?? "available") === "available";
 
   const handleBorrowSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setBookingError(null);
+
     if (!currentUser) {
       if (outletContext?.onOpenAuth) {
-        outletContext.onOpenAuth('login');
+        outletContext.onOpenAuth("login");
       } else {
-        navigate('/login');
+        navigate("/login");
       }
       return;
     }
 
     setIsSubmitting(true);
     try {
-      // Strictly aligned with PostgreSQL `bookings` schema:
-      // item_id, user_id (handled by auth session), start_date, end_date, total_price
       await itemService.createBooking({
         item_id: Number(tool.id),
         user_id: Number(currentUser.id),
@@ -163,9 +171,13 @@ export const ItemDetailPage: React.FC = () => {
       });
 
       setRequestSuccess(true);
-    } catch {
-      // Fallback optimistic success for offline/mock mode
-      setRequestSuccess(true);
+    } catch (err: any) {
+      // Display the backend error message (e.g. "Item is already booked for the selected date range")
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to submit booking request.";
+      setBookingError(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -176,7 +188,7 @@ export const ItemDetailPage: React.FC = () => {
       outletContext.onOpenChat({
         toolTitle: tool.title,
         otherUserId: ownerId,
-        otherUserName: tool.ownerName || 'Equipment Owner',
+        otherUserName: tool.ownerName || "Equipment Owner",
       });
     }
   };
@@ -216,11 +228,11 @@ export const ItemDetailPage: React.FC = () => {
               className="w-full h-full object-cover"
               onError={(e) => {
                 (e.target as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+                  "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80";
               }}
             />
             <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
-              <Badge status={tool.status ?? 'available'} />
+              <Badge status={tool.status ?? "available"} />
             </div>
           </div>
 
@@ -241,8 +253,11 @@ export const ItemDetailPage: React.FC = () => {
 
             {tool.brand && (
               <p className="text-sm sm:text-base text-neutral-700 font-bold">
-                Manufactured by <strong className="text-black underline underline-offset-2">{tool.brand}</strong>
-                {tool.model ? ` (Model: ${tool.model})` : ''}
+                Manufactured by{" "}
+                <strong className="text-black underline underline-offset-2">
+                  {tool.brand}
+                </strong>
+                {tool.model ? ` (Model: ${tool.model})` : ""}
               </p>
             )}
           </div>
@@ -265,10 +280,13 @@ export const ItemDetailPage: React.FC = () => {
                 <div className="w-8 h-8 rounded-lg bg-[#fee26d] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
                   <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Security & Care</span>
+                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">
+                  Security & Care
+                </span>
               </div>
               <p className="text-xs text-neutral-700 font-medium leading-relaxed">
-                Security deposit is protected in escrow. Please treat equipment with care and return wiped clean.
+                Security deposit is protected in escrow. Please treat equipment
+                with care and return wiped clean.
               </p>
             </div>
 
@@ -277,10 +295,13 @@ export const ItemDetailPage: React.FC = () => {
                 <div className="w-8 h-8 rounded-lg bg-[#fecd0e] border-2 border-black flex items-center justify-center text-black shadow-[1.5px_1.5px_0px_#000]">
                   <Clock className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">Pickup Coordination</span>
+                <span className="font-mono font-black text-xs uppercase tracking-wide text-black">
+                  Pickup Coordination
+                </span>
               </div>
               <p className="text-xs text-neutral-700 font-medium leading-relaxed">
-                Once the owner approves your booking, coordinate a convenient contactless porch pickup in neighborhood chat.
+                Once the owner approves your booking, coordinate a convenient
+                contactless porch pickup in neighborhood chat.
               </p>
             </div>
           </div>
@@ -291,21 +312,25 @@ export const ItemDetailPage: React.FC = () => {
               <img
                 src={
                   tool.ownerAvatar ||
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
                 }
-                alt={tool.ownerName || 'Resident Owner'}
+                alt={tool.ownerName || "Resident Owner"}
                 className="w-14 h-14 rounded-2xl object-cover border-2 border-black shadow-[2.5px_2.5px_0px_#000]"
               />
               <div>
                 <div className="flex items-center gap-2">
                   <h4 className="font-black text-base text-black">
-                    {tool.ownerName || 'Resident Owner'}
+                    {tool.ownerName || "Resident Owner"}
                   </h4>
                   <ShieldCheck className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
                 </div>
                 <div className="flex items-center gap-2 text-xs font-bold mt-1">
                   <span className="bg-[#fecd0e] border border-black rounded-md px-2 py-0.5 text-black font-mono font-black text-[11px]">
-                    ★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'} Rating
+                    ★{" "}
+                    {typeof tool.ownerRating === "number"
+                      ? tool.ownerRating.toFixed(1)
+                      : "5.0"}{" "}
+                    Rating
                   </span>
                   <span className="text-neutral-400">•</span>
                   <span className="text-neutral-700">Verified Resident</span>
@@ -336,32 +361,45 @@ export const ItemDetailPage: React.FC = () => {
 
             {reviews.length === 0 ? (
               <p className="text-xs font-bold text-neutral-500 py-3 text-center">
-                No reviews yet for this equipment. Be the first neighbor to borrow and rate!
+                No reviews yet for this equipment. Be the first neighbor to
+                borrow and rate!
               </p>
             ) : (
               <div className="space-y-4">
                 {reviews.map((rev) => (
-                  <div key={rev.id} className="text-xs space-y-1.5 pb-3 border-b-2 border-neutral-100 last:border-0 last:pb-0">
+                  <div
+                    key={rev.id}
+                    className="text-xs space-y-1.5 pb-3 border-b-2 border-neutral-100 last:border-0 last:pb-0"
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
                         <img
                           src={
                             rev.reviewerAvatar ||
-                            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+                            "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
                           }
-                          alt={rev.reviewerName || 'Neighbor'}
+                          alt={rev.reviewerName || "Neighbor"}
                           className="w-6 h-6 rounded-lg object-cover border border-black"
                         />
-                        <span className="font-black text-black">{rev.reviewerName || 'Neighbor'}</span>
+                        <span className="font-black text-black">
+                          {rev.reviewerName || "Neighbor"}
+                        </span>
                       </div>
                       <div className="flex items-center text-amber-500">
-                        {Array.from({ length: Math.round(rev.rating) }).map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                        ))}
+                        {Array.from({ length: Math.round(rev.rating) }).map(
+                          (_, i) => (
+                            <Star
+                              key={i}
+                              className="w-3.5 h-3.5 fill-amber-400"
+                            />
+                          ),
+                        )}
                       </div>
                     </div>
                     {rev.comment && (
-                      <p className="text-neutral-700 font-medium pl-8 italic">"{rev.comment}"</p>
+                      <p className="text-neutral-700 font-medium pl-8 italic">
+                        "{rev.comment}"
+                      </p>
                     )}
                   </div>
                 ))}
@@ -378,10 +416,12 @@ export const ItemDetailPage: React.FC = () => {
               <div>
                 <div className="flex items-baseline gap-1.5">
                   <span className="text-3xl sm:text-4xl font-black font-mono text-black">
-                    {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
+                    {dailyPrice === 0 ? "Free" : `RM${dailyPrice}`}
                   </span>
                   {dailyPrice > 0 && (
-                    <span className="text-sm font-bold text-neutral-600 font-mono">/day</span>
+                    <span className="text-sm font-bold text-neutral-600 font-mono">
+                      /day
+                    </span>
                   )}
                 </div>
                 <span className="text-xs font-bold text-neutral-600">
@@ -401,9 +441,12 @@ export const ItemDetailPage: React.FC = () => {
                 <div className="w-12 h-12 rounded-full bg-white border-2 border-black text-black flex items-center justify-center mx-auto shadow-[2px_2px_0px_#000]">
                   <CheckCircle2 className="w-6 h-6 text-emerald-600" />
                 </div>
-                <h3 className="text-lg font-black text-black">Borrow Request Submitted!</h3>
+                <h3 className="text-lg font-black text-black">
+                  Borrow Request Submitted!
+                </h3>
                 <p className="text-xs text-neutral-800 font-medium leading-relaxed">
-                  The tool owner has been notified. Once approved, you will be able to message them and arrange safe collection.
+                  The tool owner has been notified. Once approved, you will be
+                  able to message them and arrange safe collection.
                 </p>
                 <div className="pt-2">
                   <Link
@@ -416,6 +459,14 @@ export const ItemDetailPage: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleBorrowSubmit} className="space-y-4">
+                {/* ⚠️ Booking Error Alert */}
+                {bookingError && (
+                  <div className="p-3 bg-red-100 border-2 border-red-500 rounded-xl text-red-700 text-xs font-bold flex items-center gap-2 shadow-[2px_2px_0px_#ef4444]">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                    <span>{bookingError}</span>
+                  </div>
+                )}
+
                 {/* Date Range Selector */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -426,7 +477,10 @@ export const ItemDetailPage: React.FC = () => {
                       type="date"
                       value={startDate}
                       min={formatDateInput(today)}
-                      onChange={(e) => setStartDate(e.target.value)}
+                      onChange={(e) => {
+                        setStartDate(e.target.value);
+                        setBookingError(null);
+                      }}
                       required
                       className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
@@ -440,7 +494,10 @@ export const ItemDetailPage: React.FC = () => {
                       type="date"
                       value={endDate}
                       min={startDate}
-                      onChange={(e) => setEndDate(e.target.value)}
+                      onChange={(e) => {
+                        setEndDate(e.target.value);
+                        setBookingError(null);
+                      }}
                       required
                       className="w-full px-3 py-2.5 rounded-xl border-2 border-black bg-white text-xs font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                     />
@@ -451,17 +508,24 @@ export const ItemDetailPage: React.FC = () => {
                 <div className="bg-[#fdfae8] rounded-2xl border-2 border-black p-4 space-y-2.5 text-xs font-bold shadow-[2.5px_2.5px_0px_#000]">
                   <div className="flex justify-between text-neutral-800">
                     <span>
-                      RM{dailyPrice} × {diffDays} {diffDays === 1 ? 'day' : 'days'}
+                      RM{dailyPrice} × {diffDays}{" "}
+                      {diffDays === 1 ? "day" : "days"}
                     </span>
-                    <span className="font-black font-mono">RM{totalRentalFee}</span>
+                    <span className="font-black font-mono">
+                      RM{totalRentalFee}
+                    </span>
                   </div>
 
                   <div className="flex justify-between text-neutral-800">
                     <span className="flex items-center gap-1.5">
                       <span>Refundable Deposit</span>
-                      <span className="text-[10px] font-mono text-emerald-800 bg-[#86efac] px-1.5 py-0.2 rounded border border-black">Refunded</span>
+                      <span className="text-[10px] font-mono text-emerald-800 bg-[#86efac] px-1.5 py-0.2 rounded border border-black">
+                        Refunded
+                      </span>
                     </span>
-                    <span className="font-black font-mono">RM{depositAmount}</span>
+                    <span className="font-black font-mono">
+                      RM{depositAmount}
+                    </span>
                   </div>
 
                   <div className="border-t-2 border-black pt-2.5 flex justify-between text-base font-black text-black">
@@ -480,7 +544,8 @@ export const ItemDetailPage: React.FC = () => {
                     className="mt-0.5 rounded-md border-2 border-black text-black w-4 h-4 accent-black focus:ring-0 cursor-pointer"
                   />
                   <span>
-                    I agree to return this tool wiped clean by the chosen return date and respect neighbor community guidelines.
+                    I agree to return this tool wiped clean by the chosen return
+                    date and respect neighbor community guidelines.
                   </span>
                 </label>
 
@@ -490,22 +555,23 @@ export const ItemDetailPage: React.FC = () => {
                   disabled={!isAvailable || !agreeTerms || isSubmitting}
                   className={`jn-btn w-full py-3.5 rounded-xl font-black text-sm border-2 border-black flex items-center justify-center gap-2 transition-all ${
                     isAvailable && agreeTerms
-                      ? 'bg-[#fecd0e] hover:bg-[#e5b600] text-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer'
-                      : 'bg-neutral-200 text-neutral-500 border-neutral-400 cursor-not-allowed shadow-none'
+                      ? "bg-[#fecd0e] hover:bg-[#e5b600] text-black shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+                      : "bg-neutral-200 text-neutral-500 border-neutral-400 cursor-not-allowed shadow-none"
                   }`}
                 >
                   <Wrench className="w-4 h-4 stroke-[2.5]" />
                   <span>
                     {isSubmitting
-                      ? 'Sending Request...'
+                      ? "Sending Request..."
                       : isAvailable
-                      ? 'Request to Borrow'
-                      : 'Currently On Loan'}
+                        ? "Request to Borrow"
+                        : "Currently On Loan"}
                   </span>
                 </button>
 
                 <p className="text-[11px] font-bold text-neutral-600 text-center">
-                  🔒 No payment is processed until the owner confirms your request.
+                  🔒 No payment is processed until the owner confirms your
+                  request.
                 </p>
               </form>
             )}
