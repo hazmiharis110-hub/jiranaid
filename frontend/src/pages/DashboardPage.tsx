@@ -72,7 +72,7 @@ export const DashboardPage: React.FC = () => {
   const handleUpdateStatus = async (
     requestId: string | number,
     status: string,
-    action?: string
+    action?: string,
   ) => {
     console.log("UPDATE STATUS:", { requestId, status, action });
   try {
@@ -101,7 +101,7 @@ export const DashboardPage: React.FC = () => {
         currentUser={currentUser}
         tools={tools}
         borrowRequests={borrowRequests}
-        onOpenAddModal={() => navigate('/items/create')}
+        onOpenAddModal={() => navigate("/items/create")}
         onUpdateStatus={handleUpdateStatus}
         onToolUpdated={() => fetchTools()}
         onSelectToolDetail={(tool: ToolItem) =>
