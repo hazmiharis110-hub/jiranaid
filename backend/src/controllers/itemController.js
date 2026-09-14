@@ -17,8 +17,10 @@ const normalizeItem = (item) => ({
 
 exports.getAllItems = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      `SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.pickup_note, i.user_id, 
+    const { category, search } = req.query;
+
+    let query = `
+      SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.pickup_note, i.user_id, 
               owner.name AS owner_name, 
               COALESCE(sub.avg_rating, 0.0) AS avg_rating 
        FROM items i 
@@ -29,8 +31,29 @@ exports.getAllItems = async (req, res, next) => {
            JOIN reviews r ON r.booking_id = b.id 
            GROUP BY b.item_id
        ) sub ON sub.item_id = i.id 
-       ORDER BY i.id DESC`,
-    );
+       WHERE 1=1
+    `;
+
+    const params = [];
+    let paramIndex = 1;
+
+    // Handle category filter flexibly, ignoring spaces and case (e.g., "Power Tools" matches "PowerTools" or "power-tools")
+    if (category && category !== "All" && category !== "all") {
+      query += ` AND REPLACE(LOWER(i.category), ' ', '') = REPLACE(LOWER($${paramIndex}), ' ', '')`;
+      params.push(category);
+      paramIndex++;
+    }
+
+    // Handle keyword search filter
+    if (search) {
+      query += ` AND (i.title ILIKE $${paramIndex} OR i.description ILIKE $${paramIndex})`;
+      params.push(`%${search}%`);
+      paramIndex++;
+    }
+
+    query += ` ORDER BY i.id DESC`;
+
+    const result = await pool.query(query, params);
     res.status(200).json(result.rows.map(normalizeItem));
   } catch (error) {
     next(error);
