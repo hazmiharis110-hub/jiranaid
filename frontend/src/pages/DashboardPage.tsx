@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
-import { LenderDashboard } from '../components/LenderDashboard';
-import { useAuthStore } from '../store/useAuthStore';
-import { useItemStore } from '../store/useItemStore';
-import type { BorrowRequest, ToolItem } from '../types';
+// src/pages/DashboardPage.tsx
+import React, { useState, useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { LenderDashboard } from "../components/LenderDashboard";
+import { useAuthStore } from "../store/useAuthStore";
+import { useItemStore } from "../store/useItemStore";
+import itemService from "../services/itemService";
+import type { BorrowRequest, ToolItem } from "../types";
 
 export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,15 +15,15 @@ export const DashboardPage: React.FC = () => {
 
   const [borrowRequests, setBorrowRequests] = useState<BorrowRequest[]>([]);
 
-  const loadRequests = () => {
-    fetch('/api/borrow-requests')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.requests) {
-          setBorrowRequests(data.requests);
-        }
-      })
-      .catch(() => {});
+  const loadRequests = async () => {
+    try {
+      const data = await itemService.getBorrowRequests();
+      if (data && data.requests) {
+        setBorrowRequests(data.requests);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -31,16 +33,12 @@ export const DashboardPage: React.FC = () => {
   const handleUpdateStatus = async (
     requestId: string | number,
     status: string,
-    action?: string
+    action?: string,
   ) => {
     try {
-      await fetch(`/api/borrow-requests/${requestId}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status, action }),
-      });
-      loadRequests();
-      fetchTools();
+      await itemService.updateBorrowRequestStatus(requestId, status, action);
+      await loadRequests();
+      await fetchTools();
     } catch (err) {
       console.error(err);
     }
@@ -52,13 +50,13 @@ export const DashboardPage: React.FC = () => {
         currentUser={currentUser}
         tools={tools}
         borrowRequests={borrowRequests}
-        onOpenAddModal={() => navigate('/items/create')}
+        onOpenAddModal={() => navigate("/items/create")}
         onUpdateStatus={handleUpdateStatus}
         onToolUpdated={() => fetchTools()}
         onSelectToolDetail={(tool: ToolItem) => navigate(`/items/${tool.id}`)}
         onOpenAuthModal={() => {
-          if (outletContext?.onOpenAuth) outletContext.onOpenAuth('login');
-          else navigate('/login');
+          if (outletContext?.onOpenAuth) outletContext.onOpenAuth("login");
+          else navigate("/login");
         }}
       />
     </div>
