@@ -17,20 +17,46 @@ const normalizeItem = (item) => ({
 
 exports.getAllItems = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      `SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.pickup_note, i.user_id, 
-              owner.name AS owner_name, 
-              COALESCE(sub.avg_rating, 0.0) AS avg_rating 
-       FROM items i 
-       JOIN users owner ON i.user_id = owner.id 
-       LEFT JOIN (
-           SELECT b.item_id, ROUND(AVG(r.rating), 1) AS avg_rating 
-           FROM bookings b 
-           JOIN reviews r ON r.booking_id = b.id 
-           GROUP BY b.item_id
-       ) sub ON sub.item_id = i.id 
-       ORDER BY i.id DESC`,
-    );
+    const { category, search, status } = req.query;
+
+    let queryText = `
+      SELECT i.id, i.title, i.description, i.price, i.deposit, i.category, i.image_url, i.pickup_note, i.user_id, 
+             owner.name AS owner_name, 
+             COALESCE(sub.avg_rating, 0.0) AS avg_rating 
+      FROM items i 
+      JOIN users owner ON i.user_id = owner.id 
+      LEFT JOIN (
+          SELECT b.item_id, ROUND(AVG(r.rating), 1) AS avg_rating 
+          FROM bookings b 
+          JOIN reviews r ON r.booking_id = b.id 
+          GROUP BY b.item_id
+      ) sub ON sub.item_id = i.id 
+      WHERE 1=1
+    `;
+
+    const queryParams = [];
+
+    // Filter by category
+    if (category && category !== "All") {
+      queryParams.push(category);
+      queryText += ` AND i.category = $${queryParams.length}`;
+    }
+
+    // Filter by search query (title or description)
+    if (search) {
+      queryParams.push(`%${search}%`);
+      queryText += ` AND (i.title ILIKE $${queryParams.length} OR i.description ILIKE $${queryParams.length})`;
+    }
+
+    // Filter by status if items table contains status column
+    if (status && status !== "all") {
+      queryParams.push(status);
+      queryText += ` AND i.status = $${queryParams.length}`;
+    }
+
+    queryText += ` ORDER BY i.id DESC`;
+
+    const result = await pool.query(queryText, queryParams);
     res.status(200).json(result.rows.map(normalizeItem));
   } catch (error) {
     next(error);

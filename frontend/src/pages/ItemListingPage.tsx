@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { Package, Plus } from "lucide-react";
 import { useItemStore } from "../store/useItemStore";
-// ❌ Removed import { useAuthStore } from "../store/useAuthStore";
 import { ItemCard } from "../components/items/ItemCard";
 import { SearchBar } from "../components/items/SearchBar";
 import { FilterBar } from "../components/items/FilterBar";
@@ -12,25 +11,10 @@ import type { ToolCategory } from "../types";
 
 export const ItemListingPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const itemStore = useItemStore();
-
-  // Read current user directly from localStorage
-  const storedUser = localStorage.getItem("user");
-  const currentUser = storedUser ? JSON.parse(storedUser) : null;
-
-  const rawTools = (itemStore as any).tools;
-  const toolList = Array.isArray(rawTools)
-    ? rawTools
-    : rawTools?.items || rawTools?.data || [];
-
-  // Filter out null/undefined or items missing an id to prevent crashes
-  const tools = Array.isArray(toolList)
-    ? toolList.filter(
-        (t: any) => t && (t.id !== undefined || t._id !== undefined),
-      )
-    : [];
 
   const {
+    tools,
+    isLoading,
     fetchTools,
     setSearchQuery,
     setSelectedCategory,
@@ -38,55 +22,99 @@ export const ItemListingPage: React.FC = () => {
     setSortBy,
     setMaxFeeFilter,
     resetFilters,
-  } = itemStore as any;
+  } = useItemStore();
 
-  const filters = (itemStore as any).filters ?? {
-    search: (itemStore as any).searchQuery ?? "",
-    category: (itemStore as any).selectedCategory ?? "All",
-    status: (itemStore as any).statusFilter ?? "all",
-    sort: (itemStore as any).sortBy ?? "distance",
-    maxFee: (itemStore as any).maxFeeFilter ?? "all",
-  };
+  const storedUser = localStorage.getItem("user");
+  const currentUser = storedUser ? JSON.parse(storedUser) : null;
 
-  const isLoading =
-    "isLoading" in itemStore ? (itemStore as any).isLoading : false;
+  // Ensure tools is always an array
+  const safeTools = Array.isArray(tools)
+    ? tools.filter((t: any) => t && (t.id !== undefined || t._id !== undefined))
+    : [];
 
-  // Synchronize filters whenever URL search parameters change
+  // Synchronize URL parameters with Store and fetch items when URL parameters change
   useEffect(() => {
     const urlCategory = (searchParams.get("category") as ToolCategory) || "All";
     const urlSearch = searchParams.get("search") || "";
     const urlStatus = searchParams.get("status") || "all";
-    const urlSort = searchParams.get("sort") || "distance";
+    const urlSort = searchParams.get("sort") || "newest";
+    const urlMaxFee = searchParams.get("maxFee") || "";
 
-    const mergedFilters = {
-      ...filters,
+    // Sync Store state with URL values
+    setSelectedCategory(urlCategory);
+    setSearchQuery(urlSearch);
+    setStatusFilter(urlStatus);
+    setSortBy(urlSort);
+    setMaxFeeFilter(urlMaxFee);
+
+    // Fetch items with current URL parameters
+    fetchTools({
       category: urlCategory,
       search: urlSearch,
       status: urlStatus,
       sort: urlSort,
-    };
-
-    fetchTools(mergedFilters);
+      maxFee: urlMaxFee,
+    });
   }, [searchParams]);
 
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
+    const newParams = new URLSearchParams(searchParams);
     if (val) {
-      searchParams.set("search", val);
+      newParams.set("search", val);
     } else {
-      searchParams.delete("search");
+      newParams.delete("search");
     }
-    setSearchParams(searchParams, { replace: true });
+    setSearchParams(newParams, { replace: true });
   };
 
-  const handleCategorySelect = (cat: ToolCategory) => {
+  const handleCategorySelect = (cat: ToolCategory | "All") => {
     setSelectedCategory(cat);
-    if (cat !== "All") {
-      searchParams.set("category", cat);
+    const newParams = new URLSearchParams(searchParams);
+    if (cat && cat !== "All") {
+      newParams.set("category", cat);
     } else {
-      searchParams.delete("category");
+      newParams.delete("category");
     }
-    setSearchParams(searchParams, { replace: true });
+    setSearchParams(newParams, { replace: true });
+  };
+
+  const handleStatusSelect = (status: string) => {
+    setStatusFilter(status);
+    const newParams = new URLSearchParams(searchParams);
+    if (status && status !== "all") {
+      newParams.set("status", status);
+    } else {
+      newParams.delete("status");
+    }
+    setSearchParams(newParams, { replace: true });
+  };
+
+  const handleSortSelect = (sort: string) => {
+    setSortBy(sort);
+    const newParams = new URLSearchParams(searchParams);
+    if (sort && sort !== "newest") {
+      newParams.set("sort", sort);
+    } else {
+      newParams.delete("sort");
+    }
+    setSearchParams(newParams, { replace: true });
+  };
+
+  const handleMaxFeeSelect = (fee: string) => {
+    setMaxFeeFilter(fee);
+    const newParams = new URLSearchParams(searchParams);
+    if (fee && fee !== "all") {
+      newParams.set("maxFee", fee);
+    } else {
+      newParams.delete("maxFee");
+    }
+    setSearchParams(newParams, { replace: true });
+  };
+
+  const handleReset = () => {
+    resetFilters();
+    setSearchParams({}, { replace: true });
   };
 
   return (
@@ -122,7 +150,7 @@ export const ItemListingPage: React.FC = () => {
       {/* Search Input Bar */}
       <div className="max-w-2xl">
         <SearchBar
-          value={filters.search || ""}
+          value={searchParams.get("search") || ""}
           onChange={handleSearchChange}
           placeholder="Search tools by keyword (e.g. pressure washer, drill, lawnmower)..."
         />
@@ -130,19 +158,18 @@ export const ItemListingPage: React.FC = () => {
 
       {/* Filter Bar */}
       <FilterBar
-        selectedCategory={filters.category || "All"}
+        selectedCategory={
+          (searchParams.get("category") as ToolCategory) || "All"
+        }
         onSelectCategory={handleCategorySelect}
-        statusFilter={filters.status || "all"}
-        onSelectStatus={setStatusFilter}
-        sortBy={filters.sort || "distance"}
-        onSelectSort={setSortBy}
-        maxFeeFilter={String(filters.maxFee || "all")}
-        onSelectMaxFee={setMaxFeeFilter}
-        totalCount={tools.length}
-        onResetFilters={() => {
-          resetFilters();
-          setSearchParams({}, { replace: true });
-        }}
+        statusFilter={searchParams.get("status") || "all"}
+        onSelectStatus={handleStatusSelect}
+        sortBy={searchParams.get("sort") || "newest"}
+        onSelectSort={handleSortSelect}
+        maxFeeFilter={searchParams.get("maxFee") || "all"}
+        onSelectMaxFee={handleMaxFeeSelect}
+        totalCount={safeTools.length}
+        onResetFilters={handleReset}
       />
 
       {/* Content Area */}
@@ -151,22 +178,19 @@ export const ItemListingPage: React.FC = () => {
           message="Searching neighborhood tool library..."
           fullPage
         />
-      ) : tools.length === 0 ? (
+      ) : safeTools.length === 0 ? (
         <EmptyState
           icon={<Package className="w-8 h-8 text-black" />}
           title="No equipment found"
           description="We couldn't find any tools matching your search criteria. Try adjusting your search query, clearing filters, or list the tool yourself!"
           actionText="Clear All Filters"
-          onAction={() => {
-            resetFilters();
-            setSearchParams({}, { replace: true });
-          }}
+          onAction={handleReset}
           secondaryActionText="+ List This Tool"
           onSecondaryAction={() => (window.location.href = "/items/create")}
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {tools.map((tool: any, idx: number) => (
+          {safeTools.map((tool: any, idx: number) => (
             <ItemCard
               key={tool.id || tool._id || idx}
               tool={tool}
