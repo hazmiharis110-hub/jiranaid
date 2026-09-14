@@ -208,7 +208,8 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 text-left">
-      <div className="bg-[#fecd0e] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
+      {/* Lender Executive Banner */}
+      <div className="bg-[#fee26d] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-start sm:items-center gap-4">
             <div className="relative shrink-0">
