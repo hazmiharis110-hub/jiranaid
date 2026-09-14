@@ -12,7 +12,7 @@ interface ItemState {
   reviews: unknown[];
   stats: unknown | null;
   searchQuery: string;
-  selectedCategory: ToolCategory | "all";
+  selectedCategory: ToolCategory | "All" | "all";
   statusFilter: string;
   sortBy: string;
   maxFeeFilter: string;
@@ -24,7 +24,7 @@ interface ItemState {
   fetchTools: (overrideFilters?: ItemFilters) => Promise<void>;
   fetchToolById: (id: string) => Promise<void>;
   setSearchQuery: (search: string) => void;
-  setSelectedCategory: (category: ToolCategory | "all") => void;
+  setSelectedCategory: (category: ToolCategory | "All" | "all") => void;
   setStatusFilter: (status: string) => void;
   setSortBy: (sort: string) => void;
   setMaxFeeFilter: (maxFee: string) => void;
@@ -45,7 +45,7 @@ export const useItemStore = create<ItemState>((set, get) => ({
   reviews: [],
   stats: null,
   searchQuery: "",
-  selectedCategory: "all",
+  selectedCategory: "All",
   statusFilter: "all",
   sortBy: "newest",
   maxFeeFilter: "",
@@ -68,10 +68,22 @@ export const useItemStore = create<ItemState>((set, get) => ({
     }
   },
 
-  fetchTools: async (filters?: ItemFilters) => {
+  fetchTools: async (overrideFilters?: ItemFilters) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await itemService.getItems(filters);
+      const state = get();
+
+      // Merge active store filters with any explicitly passed overrides
+      const activeFilters: ItemFilters = {
+        category: (overrideFilters?.category ??
+          state.selectedCategory) as ToolCategory,
+        search: overrideFilters?.search ?? state.searchQuery,
+        status: overrideFilters?.status ?? state.statusFilter,
+        sort: overrideFilters?.sort ?? state.sortBy,
+        maxFee: overrideFilters?.maxFee ?? state.maxFeeFilter,
+      };
+
+      const response = await itemService.getItems(activeFilters);
       const itemsArray = Array.isArray(response)
         ? response
         : response?.tools || [];
@@ -101,20 +113,36 @@ export const useItemStore = create<ItemState>((set, get) => ({
     }
   },
 
-  setSearchQuery: (search: string) => set({ searchQuery: search }),
-  setSelectedCategory: (category: ToolCategory | "all") =>
-    set({ selectedCategory: category }),
-  setStatusFilter: (status: string) => set({ statusFilter: status }),
-  setSortBy: (sort: string) => set({ sortBy: sort }),
-  setMaxFeeFilter: (maxFee: string) => set({ maxFeeFilter: maxFee }),
-  resetFilters: () =>
+  setSearchQuery: (search: string) => {
+    set({ searchQuery: search });
+  },
+
+  setSelectedCategory: (category: ToolCategory | "All" | "all") => {
+    set({ selectedCategory: category });
+  },
+
+  setStatusFilter: (status: string) => {
+    set({ statusFilter: status });
+  },
+
+  setSortBy: (sort: string) => {
+    set({ sortBy: sort });
+  },
+
+  setMaxFeeFilter: (maxFee: string) => {
+    set({ maxFeeFilter: maxFee });
+  },
+
+  resetFilters: () => {
     set({
       searchQuery: "",
-      selectedCategory: "all",
+      selectedCategory: "All",
       statusFilter: "all",
       sortBy: "newest",
       maxFeeFilter: "",
-    }),
+    });
+    get().fetchTools();
+  },
 
   fetchStats: async () => {
     try {
@@ -135,7 +163,6 @@ export const useItemStore = create<ItemState>((set, get) => ({
         tools: [createdItem, ...state.tools],
         isLoading: false,
       }));
-      // Automatically trigger a fresh fetch to keep states synchronized
       await get().fetchAllTools();
       await get().fetchTools();
       return createdItem;
