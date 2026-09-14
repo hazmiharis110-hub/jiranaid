@@ -844,11 +844,48 @@ async function startServer() {
   // Neighborhood API Routes
   // ----------------------------------------
   app.get('/api/neighborhoods', (req, res) => {
-    res.json({
-      success: true,
-      neighborhoods,
-    });
+  res.json({
+    success: true,
+    neighborhoods: [
+      {
+        id: "taman-melawati",
+        name: "Taman Melawati & Riverview",
+        postcode: "53100",
+        city: "Ampang / Kuala Lumpur",
+        activeMembers: 142,
+        activeTools: 68,
+        estimatedMoneySaved: 14850
+      },
+      {
+        id: "section-7-shah-alam",
+        name: "Section 7 Community Green",
+        postcode: "40000",
+        city: "Shah Alam",
+        activeMembers: 98,
+        activeTools: 43,
+        estimatedMoneySaved: 9400
+      },
+      {
+        id: "damansara-heights",
+        name: "Bukit Damansara West",
+        postcode: "50490",
+        city: "Kuala Lumpur",
+        activeMembers: 116,
+        activeTools: 52,
+        estimatedMoneySaved: 12200
+      },
+      {
+        id: "greenwood-terrace",
+        name: "Greenwood Maple Terrace",
+        postcode: "94025",
+        city: "Silicon Valley / Menlo Park",
+        activeMembers: 84,
+        activeTools: 39,
+        estimatedMoneySaved: 11100
+      }
+    ]
   });
+});
 
   // ----------------------------------------
   // User Authentication & Profile Endpoints
@@ -1193,7 +1230,7 @@ async function startServer() {
     });
   });
 
-  app.post(['/api/borrow-requests', '/api/bookings'], (req, res) => {
+  app.post('/api/borrow-requests', (req, res) => {
     const { item_id, toolId, start_date, startDate, end_date, endDate, total_price, purposeNote } = req.body;
     const targetId = item_id ?? toolId;
     const tool = tools.find((t) => String(t.id) === String(targetId));

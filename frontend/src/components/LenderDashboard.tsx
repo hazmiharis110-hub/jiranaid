@@ -115,7 +115,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   );
   // Filter borrow requests for tools owned by current lender
   const myLenderRequests = borrowRequests.filter(
-    (r) => r.ownerId === currentUser.id,
+    (r) => String(r.ownerId) === String(currentUser.id),
   );
 
   // Sub-queues for lender
