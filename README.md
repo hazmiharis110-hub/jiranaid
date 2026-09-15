@@ -92,3 +92,30 @@ The application is containerized using **Docker Compose**, running a multi-conta
 ├── docker-compose.yml
 ├── package-lock.json
 └── README.md
+
+🚀 Getting Started & Setup Guide
+Prerequisites
+Docker Desktop installed and running.
+
+Node.js (v18+) if running scripts locally.
+
+Git.
+
+1. Clone & Initialize Environment
+Clone the repository and make sure your Docker daemon is active.
+
+2. Run with Docker Compose
+To spin up the entire multi-container stack (frontend, backend, redis, and PostgreSQL supabase-postgres) in the background, **docker-compose up -d**
+
+3. Initialize Database & Seed Data
+If your database containers are fresh and need to be set up with the schema and test users, run the following commands in your PowerShell terminal:
+
+**# 1. Create database tables and schema structure
+Get-Content backend/supabase/init.sql | docker exec -i supabase-postgres psql -U postgres -d postgres
+
+# 2. Populate neighborhood and user seed data
+Get-Content backend/supabase/seed.sql | docker exec -i supabase-postgres psql -U postgres -d postgres
+**
+
+👥 Seeded Test AccountsThe following test users are pre-configured in the database seed data. All accounts use the standard password: password123.NameEmailNeighborhood / LocationPhone NumberHarisharis@jiranaid.test  Seksyen 14, Shah Alam  +60123456781  Khairilkhairil@jiranaid.test  Setia Alam / Seksyen U13  +60123456782  Shathishathi@jiranaid.test  Seksyen 7 (UiTM / Unisel Area)  +60123456783  Sufiyasufiya@jiranaid.test  Taman Puchong Prima  +60123456784  Coocoo@jiranaid.test  Subang Bestari / Seksyen U5  +60123456785[cite: 3]
+
