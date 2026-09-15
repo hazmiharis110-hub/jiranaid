@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", login);
-router.get("/me", authMiddleware, getCurrentUser);
+router.get("/me", getCurrentUser);
 router.get("/", getCurrentUser);
 router.post("/switch-user", switchUser);
 router.post("/verify-location", verifyLocation);
