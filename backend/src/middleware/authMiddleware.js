@@ -2,7 +2,7 @@ const { verifyAccessToken } = require("../config/auth");
 
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization || "";
-  const parts = authHeader.split(/\s+/); // Handles spaces or unexpected line breaks safely
+  const parts = authHeader.split(/\s+/);
   const scheme = parts[0];
   const token = parts[1];
 

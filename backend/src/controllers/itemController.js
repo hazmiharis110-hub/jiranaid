@@ -131,7 +131,11 @@ exports.insertItem = async (req, res, next) => {
       owner_name: userResult.rows[0]?.name || "Neighbor",
     };
 
-    res.status(201).json(normalizeItem(newItem));
+    // Return wrapped format matching itemService expectations
+    res.status(201).json({
+      success: true,
+      tool: normalizeItem(newItem),
+    });
   } catch (error) {
     next(error);
   }

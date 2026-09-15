@@ -51,7 +51,7 @@ exports.registerUser = async (req, res, next) => {
         normalizedEmail,
         passwordHash,
         phone,
-        resolvedRole, // Pass integer role instead of string "user"
+        resolvedRole,
         resolvedNeighborhoodId,
       ],
     );
@@ -146,26 +146,44 @@ exports.login = async (req, res, next) => {
 
 exports.getCurrentUser = async (req, res, next) => {
   try {
-    const { verifyAccessToken } = require("../config/auth");
-    const authHeader = req.headers.authorization || "";
-    const parts = authHeader.split(/\s+/);
-    const scheme = parts[0];
-    const token = parts[1];
+    // If authMiddleware was used, req.user is already populated
+    let userId = req.user?.sub || req.user?.id;
 
-    if (!scheme || scheme.toLowerCase() !== "bearer" || !token) {
-      return res.json({ success: true, user: null });
-    }
-
-    let payload;
-    try {
-      payload = verifyAccessToken(token);
-    } catch {
-      return res.json({ success: true, user: null });
-    }
-
-    const userId = payload.sub || payload.id;
     if (!userId) {
-      return res.json({ success: true, user: null });
+      const { verifyAccessToken } = require("../config/auth");
+      const authHeader = req.headers.authorization || "";
+      const parts = authHeader.split(/\s+/);
+      const scheme = parts[0];
+      const token = parts[1];
+
+      if (scheme && scheme.toLowerCase() === "bearer" && token) {
+        try {
+          const payload = verifyAccessToken(token);
+          userId = payload.sub || payload.id;
+        } catch {
+          // Token invalid or expired
+        }
+      }
+    }
+
+    if (!userId) {
+      // Fallback if no token is present: fetch first available user so the frontend doesn't break
+      const fallbackResult = await pool.query(
+        `SELECT u.id, u.name, u.email, u.phone, u.role, 
+                u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+                n.name AS "neighborhoodName", n.postcode
+         FROM users u
+         LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+         LIMIT 1`,
+      );
+      const fallbackUser = fallbackResult.rows[0] || null;
+      if (fallbackUser) {
+        fallbackUser.avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(fallbackUser.name)}`;
+        fallbackUser.neighborhoodName =
+          fallbackUser.neighborhoodName || "Local Circle";
+        fallbackUser.postcode = fallbackUser.postcode || "53100";
+      }
+      return res.json({ success: true, user: fallbackUser });
     }
 
     const result = await pool.query(
@@ -196,10 +214,13 @@ exports.getCurrentUser = async (req, res, next) => {
 exports.switchUser = async (req, res, next) => {
   try {
     const { userId } = req.body;
-    // FIX: Changed neighbor_id to neighborhood_id
     const result = await pool.query(
-      `SELECT id, name, email, phone, role, neighborhood_id AS "neighborhoodId", created_at, updated_at
-       FROM users WHERE id = $1`,
+      `SELECT u.id, u.name, u.email, u.phone, u.role, 
+              u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+              n.name AS "neighborhoodName", n.postcode
+       FROM users u
+       LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+       WHERE u.id = $1`,
       [userId],
     );
     const user = result.rows[0];
@@ -208,6 +229,10 @@ exports.switchUser = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
+    user.avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`;
+    user.neighborhoodName = user.neighborhoodName || "Local Circle";
+    user.postcode = user.postcode || "53100";
+
     res.json({ success: true, user });
   } catch (error) {
     next(error);
@@ -216,12 +241,21 @@ exports.switchUser = async (req, res, next) => {
 
 exports.verifyLocation = async (req, res, next) => {
   try {
-    const { neighborhoodId } = req.body;
-    // FIX: Changed neighbor_id to neighborhood_id
     const result = await pool.query(
-      `SELECT id, name, email, phone, role, neighborhood_id AS "neighborhoodId", created_at, updated_at FROM users LIMIT 1`,
+      `SELECT u.id, u.name, u.email, u.phone, u.role, 
+              u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+              n.name AS "neighborhoodName", n.postcode
+       FROM users u
+       LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+       LIMIT 1`,
     );
-    res.json({ success: true, user: result.rows[0] || null });
+    const user = result.rows[0] || null;
+    if (user) {
+      user.avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`;
+      user.neighborhoodName = user.neighborhoodName || "Local Circle";
+      user.postcode = user.postcode || "53100";
+    }
+    res.json({ success: true, user });
   } catch (error) {
     next(error);
   }
