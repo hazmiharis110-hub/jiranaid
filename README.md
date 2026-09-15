@@ -119,3 +119,29 @@ Get-Content backend/supabase/seed.sql | docker exec -i supabase-postgres psql -U
 
 👥 Seeded Test AccountsThe following test users are pre-configured in the database seed data. All accounts use the standard password: password123.NameEmailNeighborhood / LocationPhone NumberHarisharis@jiranaid.test  Seksyen 14, Shah Alam  +60123456781  Khairilkhairil@jiranaid.test  Setia Alam / Seksyen U13  +60123456782  Shathishathi@jiranaid.test  Seksyen 7 (UiTM / Unisel Area)  +60123456783  Sufiyasufiya@jiranaid.test  Taman Puchong Prima  +60123456784  Coocoo@jiranaid.test  Subang Bestari / Seksyen U5  +60123456785[cite: 3]
 
+🖥️ Accessing the Application
+Once running, you can access the application through your browser:
+
+Frontend Web App: http://localhost:5173
+
+Backend API / Health: http://localhost:3000/api
+
+PostgreSQL Database: Port 54320 (User: postgres, Password: postgres, DB: postgres)[cite: 3]
+
+🛠️ Useful Management Commands
+View container status:
+
+PowerShell
+docker-compose ps
+View backend logs:
+
+PowerShell
+docker-compose logs -f backend
+Rebuild and restart containers after code adjustments:
+
+PowerShell
+docker-compose up --build -d
+Stop all containers:
+
+PowerShell
+docker-compose down
