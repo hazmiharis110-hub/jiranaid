@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = process.env.PORT || 3000;
+const pool = require("./src/config/db");
+const PORT = process.env.PORT || 5000;
 
 // Routes
 const neighborhoodRoutes = require("./src/routes/neighborhoodRoute");
@@ -26,11 +27,18 @@ app.use("/api/reviews", reviewRoutes);
 // Custom stats endpoint for the frontend dashboard
 app.get("/api/stats", async (_req, res) => {
   try {
+    const itemCount = await pool.query("SELECT COUNT(*) FROM items");
+    const userCount = await pool.query("SELECT COUNT(*) FROM users");
+    const neighborhoodCount = await pool.query(
+      "SELECT COUNT(*) FROM neighborhoods",
+    );
+
     res.json({
       success: true,
-      totalTools: 0,
-      activeBorrowers: 0,
-      neighborhoods: 0,
+      totalTools: parseInt(itemCount.rows[0].count, 10),
+      totalItems: parseInt(itemCount.rows[0].count, 10),
+      activeBorrowers: parseInt(userCount.rows[0].count, 10),
+      neighborhoods: parseInt(neighborhoodCount.rows[0].count, 10),
     });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });

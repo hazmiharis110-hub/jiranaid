@@ -71,6 +71,10 @@ export const BorrowRequestsView: React.FC<BorrowRequestsViewProps> = ({
   const myBorrowings = requests.filter((r) => r.borrowerId === currentUser?.id);
   const myLendings = requests.filter((r) => r.ownerId === currentUser?.id);
 
+  console.log("CURRENT USER:", currentUser);
+  console.log("REQUESTS:", requests);
+  console.log("MY LENDINGS:", myLendings);
+
   const displayedList = (
     roleTab === "borrower" ? myBorrowings : myLendings
   ).filter((r) => filterStatus === "all" || r.status === filterStatus);

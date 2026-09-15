@@ -54,11 +54,15 @@ export const RegisterPage: React.FC = () => {
         setFetchingNeighs(true);
         const res = await neighborService.getNeighbors();
 
-        // Safely extract array whether response is [ ... ] or { data: [ ... ] } or { neighborhoods: [ ... ] }
-        const payload = Array.isArray(res) ? res : res?.data;
-        const list = Array.isArray(payload)
-          ? payload
-          : payload?.neighborhoods || payload?.data || [];
+        // Support backend array responses and frontend/mock object responses.
+        console.log("NEIGHBORHOODS RAW RESPONSE:", res);
+        const list = Array.isArray(res)
+          ? res
+          : Array.isArray(res?.data)
+            ? res.data
+            : Array.isArray(res?.neighborhoods)
+              ? res.neighborhoods
+              : [];
 
         setNeighborhoodsList(list);
       } catch (err) {

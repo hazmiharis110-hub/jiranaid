@@ -105,7 +105,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
       String(t.ownerId ?? t.user_id ?? t.userId) === String(currentUser.id),
   );
   const myLenderRequests = borrowRequests.filter(
-    (r) => r.ownerId === currentUser.id,
+    (r) => String(r.ownerId) === String(currentUser.id),
   );
 
   const pendingRequests = myLenderRequests.filter(

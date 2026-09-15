@@ -24,4 +24,14 @@ export const borrowService = {
     const res = await api.put(`/bookings/${id}/cancel`);
     return res?.data !== undefined ? res.data : res;
   },
+
+  async activateBooking(id: string | number) {
+    const res = await api.put(`/bookings/${id}/activate`);
+    return res?.data !== undefined ? res.data : res;
+  },
+
+    async returnBooking(id: string | number) {
+    const res = await api.put(`/bookings/${id}/return`);
+    return res?.data !== undefined ? res.data : res;
+  },
 };
