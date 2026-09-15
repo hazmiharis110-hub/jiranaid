@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", login);
 router.get("/me", authMiddleware, getCurrentUser);
-router.get("/", getCurrentUser); // Fallback / support route if accessed without strict token
+router.get("/", getCurrentUser);
 router.post("/switch-user", switchUser);
 router.post("/verify-location", verifyLocation);
 router.post("/logout", logout);
