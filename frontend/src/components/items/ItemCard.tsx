@@ -52,12 +52,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.28, delay: Math.min(index * 0.04, 0.3) }}
       whileHover={{ y: -4 }}
-      className="group bg-white rounded-2xl border-2 border-black shadow-[4px_4px_0px_#000] hover:shadow-[7px_7px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden text-left relative"
+      className="group bg-white rounded-2xl border-2 border-[#14181f] shadow-[4px_4px_0px_#14181f,0_10px_24px_-4px_rgba(254,205,14,0.25)] hover:shadow-[6px_6px_0px_#14181f,0_16px_32px_-4px_rgba(254,205,14,0.45)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden text-left relative"
     >
       {/* Clickable Card Link */}
       <Link to={`/items/${tool.id}`} className="flex-1 flex flex-col">
         {/* Image Container with Zoom */}
-        <div className="relative aspect-4/3 w-full bg-[#fdfae8] border-b-2 border-black overflow-hidden select-none">
+        <div className="relative aspect-4/3 w-full bg-[#fdfae8] border-b-2 border-[#14181f] overflow-hidden select-none">
           <img
             src={displayImage}
             alt={tool.title}
@@ -95,12 +95,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           </button>
 
           {/* Bottom Status Tag */}
-          <div className="absolute bottom-2.5 right-2.5 pointer-events-none">
+          <div className="absolute top-2.5 left-2.5">
             <span
-              className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-black shadow-[2px_2px_0px_#000] ${
+              className={`jn-sticker-alt text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-[#132219] shadow-[2px_2px_0px_#132219] ${
                 isAvailable
-                  ? 'bg-[#86efac] text-black'
-                  : 'bg-[#fee26d] text-black'
+                  ? 'bg-[#dcfce7] text-[#166534]'
+                  : 'bg-[#fef3c7] text-[#92400e]'
               }`}
             >
               {isAvailable ? 'Available' : 'On Loan'}
@@ -113,13 +113,13 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           <div>
             {/* Category Tag */}
             <div className="mb-2">
-              <span className="inline-block font-mono font-black uppercase tracking-wider text-[10px] text-black bg-[#fee26d] px-2 py-0.5 rounded-md border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+              <span className="inline-block jn-sticker font-mono font-black uppercase tracking-wider text-[10px] text-[#92400e] bg-[#fef3c7] px-2 py-0.5 rounded-md border-2 border-[#132219] shadow-[1.5px_1.5px_0px_#132219]">
                 {tool.category}
               </span>
             </div>
 
             {/* Title */}
-            <h3 className="font-black text-base sm:text-lg text-black group-hover:underline transition-colors line-clamp-1">
+            <h3 className="font-black text-base sm:text-lg text-[#132219] group-hover:underline transition-colors line-clamp-1">
               {tool.title}
             </h3>
             {tool.brand ? (
@@ -134,7 +134,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           </div>
 
           {/* Owner Info & Rating */}
-          <div className="pt-3 mt-3 border-t-2 border-black flex items-center justify-between text-xs">
+          <div className="pt-3 mt-3 border-t-2 border-[#132219] flex items-center justify-between text-xs">
             <div className="flex items-center gap-2 min-w-0">
               <img
                 src={
@@ -142,14 +142,14 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
                 }
                 alt={tool.ownerName || 'Neighbor'}
-                className="w-6 h-6 rounded-lg object-cover border-2 border-black"
+                className="w-6 h-6 rounded-lg object-cover border-2 border-[#132219]"
               />
-              <span className="truncate max-w-[100px] font-bold text-black">
+              <span className="truncate max-w-[100px] font-bold text-[#132219]">
                 {tool.ownerName || 'Neighbor'}
               </span>
             </div>
-            <div className="flex items-center gap-1 font-black text-xs text-black bg-[#fdfae8] px-2 py-0.5 rounded-md border border-black shadow-[1px_1px_0px_#000] shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
+            <div className="flex items-center gap-1 font-black text-xs text-[#132219] bg-[#fef3c7] px-2 py-0.5 rounded-md border border-[#132219] shadow-[1px_1px_0px_#132219] shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5] text-[#166534]" />
               <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
             </div>
           </div>
@@ -157,17 +157,17 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       </Link>
 
       {/* Pricing & Borrow Action Footer */}
-      <div className="px-4 py-3 bg-[#fdfae8] border-t-2 border-black flex items-center justify-between">
+      <div className="px-4 py-3 bg-[#fbf9f5] border-t-2 border-[#132219] flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1">
-            <span className="text-base sm:text-lg font-black font-mono text-black">
+            <span className="text-base sm:text-lg font-black font-mono text-[#166534]">
               {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
             </span>
             {dailyPrice > 0 && (
               <span className="text-[11px] font-bold text-[#555]">/day</span>
             )}
           </div>
-          <span className="text-[10px] font-mono text-[#555] font-bold block">
+          <span className="text-[10px] font-mono text-[#666] font-bold block">
             RM{depositAmount} deposit (refunded)
           </span>
         </div>
@@ -177,7 +177,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           disabled={!isAvailable}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
             isAvailable
-              ? 'bg-[#fecd0e] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer'
+              ? 'bg-[#166534] text-white border-[#132219] shadow-[2.5px_2.5px_0px_#f59e0b] hover:shadow-[4px_4px_0px_#f59e0b] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-[#14532d] cursor-pointer'
               : 'bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed'
           }`}
         >

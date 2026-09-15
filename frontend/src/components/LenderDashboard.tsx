@@ -209,26 +209,26 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 text-left">
       {/* Lender Executive Banner */}
-      <div className="bg-[#fee26d] border-3 border-black rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#000]">
+      <div className="bg-[#fef3c7] border-3 border-[#132219] rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-[6px_6px_0px_#132219,0_16px_36px_-6px_rgba(245,158,11,0.25)]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-start sm:items-center gap-4">
             <div className="relative shrink-0">
               <img
                 src={currentUser.avatar}
                 alt={currentUser.name}
-                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-black shadow-[2.5px_2.5px_0px_#000]"
+                className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl object-cover border-2 border-[#132219] shadow-[2.5px_2.5px_0px_#132219]"
               />
-              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#fee26d] text-black flex items-center justify-center border-2 border-black shadow-[1px_1px_0px_#000]">
+              <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-lg bg-[#dcfce7] text-[#166534] flex items-center justify-center border-2 border-[#132219] shadow-[1px_1px_0px_#132219]">
                 <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
               </div>
             </div>
 
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl sm:text-3xl font-black text-black tracking-tight">
+                <h1 className="text-2xl sm:text-3xl font-black text-[#132219] tracking-tight">
                   {currentUser.name}&apos;s Lender Hub
                 </h1>
-                <span className="px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#fee26d] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000]">
+                <span className="jn-sticker px-3 py-1 rounded-lg text-xs font-mono font-black bg-[#166534] text-white border-2 border-[#132219] shadow-[1.5px_1.5px_0px_#132219]">
                   Verified Lender
                 </span>
               </div>
@@ -240,7 +240,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
                   </strong>
                 </span>
                 <span className="hidden sm:inline">•</span>
-                <span className="bg-white border border-black px-2 py-0.5 rounded text-[11px] font-mono font-black">
+                <span className="bg-white border border-[#132219] px-2 py-0.5 rounded text-[11px] font-mono font-black">
                   ★ {(currentUser.trustScore ?? 5.0).toFixed(1)} Rating
                 </span>
                 <span className="hidden sm:inline">•</span>
@@ -253,7 +253,7 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
             <button
               type="button"
               onClick={onOpenAddModal}
-              className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#131d27] hover:bg-black text-white text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+              className="jn-btn inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#166534] hover:bg-[#14532d] text-white text-xs sm:text-sm font-black border-2 border-[#132219] shadow-[3.5px_3.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-3" />
               <span>List New Equipment</span>
@@ -384,10 +384,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
         <button
           onClick={() => setActiveSubTab("inventory")}
-          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
+          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-[#132219] cursor-pointer ${
             activeSubTab === "inventory"
-              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
-              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#166534] text-white shadow-[3px_3px_0px_#f59e0b]"
+              : "bg-white text-[#132219] hover:bg-[#fef3c7] shadow-[2px_2px_0px_#132219]"
           }`}
         >
           <Layers className="w-4 h-4 stroke-[2.5]" />
@@ -396,10 +396,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
         <button
           onClick={() => setActiveSubTab("ledger")}
-          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
+          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-[#132219] cursor-pointer ${
             activeSubTab === "ledger"
-              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
-              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#166534] text-white shadow-[3px_3px_0px_#f59e0b]"
+              : "bg-white text-[#132219] hover:bg-[#fef3c7] shadow-[2px_2px_0px_#132219]"
           }`}
         >
           <DollarSign className="w-4 h-4 stroke-[2.5]" />
@@ -408,10 +408,10 @@ export const LenderDashboard: React.FC<LenderDashboardProps> = ({
 
         <button
           onClick={() => setActiveSubTab("safety")}
-          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-black cursor-pointer ${
+          className={`jn-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-2 whitespace-nowrap border-2 border-[#132219] cursor-pointer ${
             activeSubTab === "safety"
-              ? "bg-[#131d27] text-white shadow-[3px_3px_0px_#000]"
-              : "bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
+              ? "bg-[#166534] text-white shadow-[3px_3px_0px_#f59e0b]"
+              : "bg-white text-[#132219] hover:bg-[#fef3c7] shadow-[2px_2px_0px_#132219]"
           }`}
         >
           <ShieldCheck className="w-4 h-4 stroke-[2.5]" />

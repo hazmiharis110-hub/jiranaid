@@ -64,10 +64,10 @@ export const ProfilePage: React.FC = () => {
           />
           <div className="space-y-2 text-center sm:text-left flex-1">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
-              <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
+              <h1 className="text-2xl sm:text-4xl font-black text-[#132219] tracking-tight font-heading">
                 {currentUser.name}
               </h1>
-              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#fee26d] text-black border-2 border-black text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#000] w-fit mx-auto sm:mx-0">
+              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#dcfce7] text-[#166534] border-2 border-[#132219] text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#132219] w-fit mx-auto sm:mx-0">
                 <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Verified Resident</span>
               </span>
