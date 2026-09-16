@@ -52,12 +52,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
       isActive
-        ? 'bg-black text-white border-black shadow-[2px_2px_0px_#000]'
-        : 'text-black border-transparent hover:border-black hover:bg-[#fee26d] hover:shadow-[2px_2px_0px_#000]'
+        ? 'bg-[#166534] text-white border-[#132219] shadow-[2.5px_2.5px_0px_#f59e0b]'
+        : 'text-[#132219] border-transparent hover:border-[#132219] hover:bg-[#fef3c7] hover:shadow-[2px_2px_0px_#132219]'
     }`;
 
   return (
-    <header className="sticky top-0 z-40 bg-[#fdfae8] border-b-2 border-black transition-all">
+    <header className="sticky top-0 z-40 bg-[#fbf9f5]/95 backdrop-blur-sm border-b-2 border-[#132219] transition-all">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
           {/* Brand & Neighborhood Selector */}
@@ -67,19 +67,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="brand-logo"
               className="group flex items-center gap-2.5 shrink-0"
             >
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#fecd0e] border-2 border-black flex items-center justify-center text-black shadow-[2.5px_2.5px_0px_#000] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[4px_4px_0px_#000] transition-all duration-150">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#166534] border-2 border-[#132219] flex items-center justify-center text-white shadow-[2.5px_2.5px_0px_#132219,0_4px_12px_rgba(22,101,52,0.35)] group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:shadow-[4px_4px_0px_#132219] transition-all duration-150">
                 <Wrench className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="hidden min-[380px]:block">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-black text-lg sm:text-2xl tracking-tight text-black">
+                  <span className="font-black text-lg sm:text-2xl tracking-tight text-[#132219] font-heading">
                     JiranAid
                   </span>
-                  <span className="hidden sm:inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#fee26d] border-2 border-black text-black shadow-[1.5px_1.5px_0px_#000]">
+                  <span className="hidden sm:inline-block jn-sticker text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#fef3c7] border-2 border-[#132219] text-[#92400e] shadow-[1.5px_1.5px_0px_#132219]">
                     Local Library
                   </span>
                 </div>
-                <p className="text-[11px] text-[#444] font-bold hidden sm:block">
+                <p className="text-[11px] text-[#555] font-bold hidden sm:block">
                   Borrow tools from verified neighbors
                 </p>
               </div>
@@ -89,10 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="neighborhood-selector-btn"
               onClick={onOpenNeighborhoodModal}
-              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-left transition-all min-w-0 shadow-[2px_2px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
+              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border-2 border-[#132219] bg-white hover:bg-[#fef3c7] text-left transition-all min-w-0 shadow-[2px_2px_0px_#132219] hover:shadow-[4px_4px_0px_#132219] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer"
               title="Click to verify or switch residential pool"
             >
-              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-lg bg-[#fee26d] border border-black text-black flex items-center justify-center shrink-0 shadow-[1px_1px_0px_#000]">
+              <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-lg bg-[#dcfce7] border border-[#132219] text-[#166534] flex items-center justify-center shrink-0 shadow-[1px_1px_0px_#132219]">
                 <MapPin className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
               </div>
               <div className="max-w-[100px] xs:max-w-[130px] sm:max-w-[170px] truncate">
@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Layers className="w-4 h-4 stroke-[2.2]" />
               <span>Dashboard</span>
               {pendingRequestsCount > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full bg-[#fecd0e] text-black border border-black text-[10px] font-black animate-bounce">
+                <span className="px-1.5 py-0.2 rounded-full bg-[#f59e0b] text-[#132219] border border-[#132219] text-[10px] font-black animate-bounce">
                   {pendingRequestsCount}
                 </span>
               )}
@@ -139,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <Link
               to="/items/create"
               id="nav-create-item-btn"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fecd0e] hover:bg-[#e5b600] text-black border-2 border-black text-xs sm:text-sm font-black shadow-[3px_3px_0px_#000] hover:shadow-[5px_5px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#166534] hover:bg-[#14532d] text-white border-2 border-[#132219] text-xs sm:text-sm font-black shadow-[3px_3px_0px_#f59e0b] hover:shadow-[4.5px_4.5px_0px_#f59e0b] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
             >
               <Plus className="w-4 h-4 stroke-[3]" />
               <span>List a Tool</span>

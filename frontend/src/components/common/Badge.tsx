@@ -78,7 +78,7 @@ export const Badge: React.FC<BadgeProps> = ({
   if (variant === 'verified') {
     return (
       <span
-        className={`inline-flex items-center gap-1 font-black rounded-full bg-[#fee26d] text-black border-2 border-black shadow-[1.5px_1.5px_0px_#000] ${sizeClasses} ${className}`}
+        className={`inline-flex items-center gap-1 font-black rounded-full bg-[#dcfce7] text-[#166534] border-2 border-[#132219] shadow-[1.5px_1.5px_0px_#132219] ${sizeClasses} ${className}`}
       >
         <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
         <span>{children || 'Verified Neighbor'}</span>
