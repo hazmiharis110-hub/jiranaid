@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   X,
   MapPin,
@@ -9,8 +9,8 @@ import {
   Wrench,
   DollarSign,
   Search,
-} from 'lucide-react';
-import type { Neighborhood, User } from '../types.ts';
+} from "lucide-react";
+import type { Neighborhood, User } from "../types.ts";
 
 interface NeighborhoodModalProps {
   isOpen: boolean;
@@ -18,7 +18,11 @@ interface NeighborhoodModalProps {
   neighborhoods?: Neighborhood[];
   currentNeighborhood: Neighborhood | null;
   currentUser: User | null;
-  onVerifyAndSwitch: (neighborhoodId: string, postcode: string, method: 'gps' | 'postcode') => void;
+  onVerifyAndSwitch: (
+    neighborhoodId: string,
+    postcode: string,
+    method: "gps" | "postcode",
+  ) => void;
 }
 
 export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
@@ -32,14 +36,18 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
   if (!isOpen) return null;
 
   const [selectedId, setSelectedId] = useState<string>(
-    String(currentNeighborhood?.id ?? (neighborhoods?.[0]?.id ?? ''))
+    String(currentNeighborhood?.id ?? neighborhoods?.[0]?.id ?? ""),
   );
-  const [postcodeInput, setPostcodeInput] = useState<string>(currentUser?.postcode || '53100');
+  const [postcodeInput, setPostcodeInput] = useState<string>(
+    currentUser?.postcode || "53100",
+  );
   const [isVerifyingGps, setIsVerifyingGps] = useState<boolean>(false);
   const [gpsVerifiedSuccess, setGpsVerifiedSuccess] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const activePool = (neighborhoods || []).find((n) => String(n.id) === String(selectedId)) || neighborhoods?.[0];
+  const activePool =
+    (neighborhoods || []).find((n) => String(n.id) === String(selectedId)) ||
+    neighborhoods?.[0];
 
   const handleSimulateGps = () => {
     setIsVerifyingGps(true);
@@ -58,7 +66,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
     onVerifyAndSwitch(
       selectedId,
       postcodeInput,
-      gpsVerifiedSuccess ? 'gps' : 'postcode'
+      gpsVerifiedSuccess ? "gps" : "postcode",
     );
     onClose();
   };
@@ -67,7 +75,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
     (n) =>
       n.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       n.postcode.includes(searchQuery) ||
-      n.city.toLowerCase().includes(searchQuery.toLowerCase())
+      n.city.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -107,9 +115,10 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               <div className="font-black text-[#132219] text-sm font-heading">
                 Verified Resident Status Active
               </div>
-              <p className="text-[#132219]/85 font-medium leading-relaxed">
-                You are currently accessing tools within your verified 1.5 km residential zone.
-                Borrowing is restricted to neighbors to maintain accountability and trust.
+              <p className="text-neutral-800 font-medium leading-relaxed">
+                You are currently accessing tools within your verified 1.5 km
+                residential zone. Borrowing is restricted to neighbors to
+                maintain accountability and trust.
               </p>
             </div>
           </div>
@@ -118,17 +127,21 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
           <div className="border-2 border-[#132219] rounded-2xl p-4 sm:p-5 bg-[#fbf9f5] space-y-3 shadow-[3px_3px_0px_#132219]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Compass className="w-4 h-4 text-[#166534] stroke-[2.5]" />
-                <span className="text-sm font-black text-[#132219] font-heading">Instant GPS Geofence Check</span>
+                <Compass className="w-4 h-4 text-black stroke-[2.5]" />
+                <span className="text-sm font-black text-black">
+                  Instant GPS Geofence Check
+                </span>
               </div>
               {gpsVerifiedSuccess && (
-                <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-[#166534] bg-[#dcfce7] border border-[#132219] px-2 py-0.5 rounded-md">
-                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> Geofence Locked
+                <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-black bg-[#86efac] border border-black px-2 py-0.5 rounded-md">
+                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> Geofence
+                  Locked
                 </span>
               )}
             </div>
             <p className="text-xs text-neutral-700 font-medium">
-              Check your coordinates to automatically lock into your residential quadrant.
+              Check your coordinates to automatically lock into your residential
+              quadrant.
             </p>
             <button
               id="verify-gps-btn"
@@ -145,7 +158,11 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               ) : (
                 <>
                   <Compass className="w-4 h-4 stroke-[2.5]" />
-                  <span>{gpsVerifiedSuccess ? 'Re-Verify Current GPS Position' : 'Verify Current Neighborhood via GPS'}</span>
+                  <span>
+                    {gpsVerifiedSuccess
+                      ? "Re-Verify Current GPS Position"
+                      : "Verify Current Neighborhood via GPS"}
+                  </span>
                 </>
               )}
             </button>
@@ -157,7 +174,9 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               <label className="text-xs font-mono font-black text-black uppercase tracking-wider">
                 Select Residential Community Pool
               </label>
-              <span className="text-xs font-bold text-neutral-600">{filteredPools.length} Pools Available</span>
+              <span className="text-xs font-bold text-neutral-600">
+                {filteredPools.length} Pools Available
+              </span>
             </div>
 
             {/* Search filter for pools */}
@@ -184,22 +203,28 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                     }}
                     className={`p-3 sm:p-3.5 rounded-xl border-2 border-black cursor-pointer transition-all flex items-center justify-between ${
                       isSelected
-                        ? 'bg-[#fecd0e] shadow-[3px_3px_0px_#000] translate-x-[-1px] translate-y-[-1px]'
-                        : 'bg-white hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]'
+                        ? "bg-[#fecd0e] shadow-[3px_3px_0px_#000] -translate-x-px -translate-y-px"
+                        : "bg-white hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]"
                     }`}
                   >
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black text-black">{pool.name}</span>
+                        <span className="text-xs font-black text-black">
+                          {pool.name}
+                        </span>
                         <span className="text-[10px] font-mono font-black px-1.5 py-0.5 rounded border border-black bg-white text-black">
                           {pool.postcode}
                         </span>
                       </div>
-                      <span className="text-[11px] text-neutral-700 font-medium">{pool.city}</span>
+                      <span className="text-[11px] text-neutral-700 font-medium">
+                        {pool.city}
+                      </span>
                     </div>
 
                     <div className="text-right text-[11px] font-bold text-neutral-800 shrink-0">
-                      <div className="font-black font-mono text-black">{pool.activeTools} tools</div>
+                      <div className="font-black font-mono text-black">
+                        {pool.activeTools} tools
+                      </div>
                       <div>{pool.activeMembers} neighbors</div>
                     </div>
                   </div>
@@ -215,22 +240,34 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                 <div className="flex items-center justify-center gap-1 text-black mb-1">
                   <Users className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <div className="text-base font-black font-mono text-black">{activePool.activeMembers}</div>
-                <div className="text-[10px] font-bold text-neutral-600">Neighbors</div>
+                <div className="text-base font-black font-mono text-black">
+                  {activePool.activeMembers}
+                </div>
+                <div className="text-[10px] font-bold text-neutral-600">
+                  Neighbors
+                </div>
               </div>
               <div className="p-1 border-x-2 border-black">
                 <div className="flex items-center justify-center gap-1 text-black mb-1">
                   <Wrench className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <div className="text-base font-black font-mono text-black">{activePool.activeTools}</div>
-                <div className="text-[10px] font-bold text-neutral-600">Active Tools</div>
+                <div className="text-base font-black font-mono text-black">
+                  {activePool.activeTools}
+                </div>
+                <div className="text-[10px] font-bold text-neutral-600">
+                  Active Tools
+                </div>
               </div>
               <div className="p-1">
                 <div className="flex items-center justify-center gap-1 text-black mb-1">
                   <DollarSign className="w-4 h-4 stroke-[2.5]" />
                 </div>
-                <div className="text-base font-black font-mono text-black">RM {(activePool.estimatedMoneySaved ?? 0).toLocaleString()}</div>
-                <div className="text-[10px] font-bold text-neutral-600">Saved Locally</div>
+                <div className="text-base font-black font-mono text-black">
+                  RM {(activePool.estimatedMoneySaved ?? 0).toLocaleString()}
+                </div>
+                <div className="text-[10px] font-bold text-neutral-600">
+                  Saved Locally
+                </div>
               </div>
             </div>
           )}
