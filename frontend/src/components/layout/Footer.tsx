@@ -4,34 +4,34 @@ import { Wrench, ShieldCheck, Heart, Leaf, MapPin, Sparkles } from 'lucide-react
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white border-t-3 border-black mt-20 text-black">
+    <footer className="bg-white border-t-3 border-[#132219] mt-20 text-[#132219]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Col 1: Brand & Mission */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#fecd0e] border-2 border-black flex items-center justify-center text-black shadow-[2px_2px_0px_#000]">
+              <div className="w-9 h-9 rounded-xl bg-[#166534] border-2 border-[#132219] flex items-center justify-center text-white shadow-[2px_2px_0px_#132219]">
                 <Wrench className="w-5 h-5 stroke-[2.5]" />
               </div>
-              <span className="font-black text-2xl tracking-tight text-black">
+              <span className="font-black text-2xl tracking-tight text-[#132219] font-heading">
                 JiranAid
               </span>
-              <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#fee26d] border-2 border-black text-black shadow-[1.5px_1.5px_0px_#000]">
+              <span className="jn-sticker text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#fef3c7] border-2 border-[#132219] text-[#92400e] shadow-[1.5px_1.5px_0px_#132219]">
                 Hyper-Local
               </span>
             </div>
 
-            <p className="text-sm text-[#333] font-medium max-w-md leading-relaxed">
+            <p className="text-sm text-[#444] font-medium max-w-md leading-relaxed">
               JiranAid is a hyper-local neighborhood tool and appliance sharing platform. Why buy a power drill you only use once a year when you can borrow it from a verified neighbor next door?
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <div className="inline-flex items-center gap-1.5 text-xs font-black px-2.5 py-1 rounded-lg border-2 border-black bg-[#fee26d] text-black shadow-[2px_2px_0px_#000]">
+              <div className="inline-flex items-center gap-1.5 text-xs font-black px-2.5 py-1 rounded-lg border-2 border-[#132219] bg-[#dcfce7] text-[#166534] shadow-[2px_2px_0px_#132219]">
                 <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
                 <span>Verified Neighbors Only</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-black px-2.5 py-1 rounded-lg border-2 border-black bg-[#fdfae8] text-black shadow-[2px_2px_0px_#000]">
-                <Leaf className="w-4 h-4 text-emerald-600 stroke-[2.5]" />
+              <div className="inline-flex items-center gap-1.5 text-xs font-black px-2.5 py-1 rounded-lg border-2 border-[#132219] bg-[#fef3c7] text-[#92400e] shadow-[2px_2px_0px_#132219]">
+                <Leaf className="w-4 h-4 text-[#166534] stroke-[2.5]" />
                 <span>Zero-Waste Communities</span>
               </div>
             </div>
@@ -39,8 +39,8 @@ export const Footer: React.FC = () => {
 
           {/* Col 2: Navigation Links */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-wider text-black mb-4 flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#fecd0e] border border-black inline-block"></span>
+            <h4 className="text-xs font-black uppercase tracking-wider text-[#132219] mb-4 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#166534] border border-[#132219] inline-block"></span>
               <span>Explore Library</span>
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm font-bold">
