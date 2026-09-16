@@ -70,11 +70,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           aria-label="Share or List a Tool"
         >
           <div className="w-12 h-12 rounded-2xl bg-[#fecd0e] text-black border-2 border-black shadow-[3px_3px_0px_#000] flex items-center justify-center active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all">
-            <Plus className="w-6 h-6 stroke-[3]" />
+            <Plus className="w-6 h-6 stroke-3" />
           </div>
-          <span className="text-[10px] font-black text-black mt-1">
-            Share
-          </span>
+          <span className="text-[10px] font-black text-black mt-1">Share</span>
         </button>
 
         {/* Borrowing */}
