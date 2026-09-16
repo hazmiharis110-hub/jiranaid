@@ -97,13 +97,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             <span
               className={`jn-sticker-alt text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-[#132219] shadow-[2px_2px_0px_#132219] ${
                 isAvailable
-<<<<<<< HEAD
                   ? "bg-[#86efac] text-black"
                   : "bg-[#fee26d] text-black"
-=======
-                  ? 'bg-[#dcfce7] text-[#166534]'
-                  : 'bg-[#fef3c7] text-[#92400e]'
->>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
               }`}
             >
               {isAvailable ? "Available" : "On Loan"}
@@ -144,7 +139,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                   tool.ownerAvatar ||
                   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
                 }
-<<<<<<< HEAD
                 alt={tool.ownerName || "Neighbor"}
                 className="w-6 h-6 rounded-lg object-cover border-2 border-black"
               />
@@ -160,18 +154,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                   ? tool.ownerRating.toFixed(1)
                   : "5.0"}
               </span>
-=======
-                alt={tool.ownerName || 'Neighbor'}
-                className="w-6 h-6 rounded-lg object-cover border-2 border-[#132219]"
-              />
-              <span className="truncate max-w-[100px] font-bold text-[#132219]">
-                {tool.ownerName || 'Neighbor'}
-              </span>
-            </div>
-            <div className="flex items-center gap-1 font-black text-xs text-[#132219] bg-[#fef3c7] px-2 py-0.5 rounded-md border border-[#132219] shadow-[1px_1px_0px_#132219] shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5] text-[#166534]" />
-              <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
->>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
             </div>
           </div>
         </div>
@@ -181,13 +163,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       <div className="px-4 py-3 bg-[#fbf9f5] border-t-2 border-[#132219] flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1">
-<<<<<<< HEAD
             <span className="text-base sm:text-lg font-black font-mono text-black">
               {dailyPrice === 0 ? "Free" : `RM${dailyPrice}`}
-=======
-            <span className="text-base sm:text-lg font-black font-mono text-[#166534]">
-              {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
->>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
             </span>
             {dailyPrice > 0 && (
               <span className="text-[11px] font-bold text-[#555]">/day</span>
@@ -203,13 +180,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           disabled={!isAvailable}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
             isAvailable
-<<<<<<< HEAD
               ? "bg-[#fecd0e] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer"
               : "bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed"
-=======
-              ? 'bg-[#166534] text-white border-[#132219] shadow-[2.5px_2.5px_0px_#f59e0b] hover:shadow-[4px_4px_0px_#f59e0b] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-[#14532d] cursor-pointer'
-              : 'bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed'
->>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
           }`}
         >
           <span>Borrow</span>
