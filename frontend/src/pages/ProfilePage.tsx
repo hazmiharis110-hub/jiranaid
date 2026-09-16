@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import {
   User,
   ShieldCheck,
@@ -12,8 +12,8 @@ import {
   Clock,
   ArrowLeft,
   Users,
-} from 'lucide-react';
-import { useAuthStore } from '../store/useAuthStore';
+} from "lucide-react";
+import { useAuthStore } from "../store/useAuthStore";
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -24,14 +24,17 @@ export const ProfilePage: React.FC = () => {
     return (
       <div className="max-w-md mx-auto my-16 p-6 text-center space-y-4">
         <User className="w-12 h-12 text-black mx-auto" />
-        <h2 className="text-xl font-bold text-black">Sign in to View Profile</h2>
+        <h2 className="text-xl font-bold text-black">
+          Sign in to View Profile
+        </h2>
         <p className="text-xs text-neutral-600">
-          View your neighbor trust badges, lending track record, and verified community status.
+          View your neighbor trust badges, lending track record, and verified
+          community status.
         </p>
         <button
           onClick={() => {
-            if (outletContext?.onOpenAuth) outletContext.onOpenAuth('login');
-            else navigate('/login');
+            if (outletContext?.onOpenAuth) outletContext.onOpenAuth("login");
+            else navigate("/login");
           }}
           className="jn-btn px-5 py-2.5 rounded-xl bg-[#131d27] text-white text-xs font-black border-2 border-black shadow-[2px_2px_0px_#000] hover:bg-black cursor-pointer"
         >
@@ -67,7 +70,7 @@ export const ProfilePage: React.FC = () => {
               <h1 className="text-2xl sm:text-4xl font-black text-[#132219] tracking-tight font-heading">
                 {currentUser.name}
               </h1>
-              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#dcfce7] text-[#166534] border-2 border-[#132219] text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#132219] w-fit mx-auto sm:mx-0">
+              <span className="jn-badge inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-lg bg-[#dcfce7] text-jn-pine border-2 border-[#132219] text-xs font-mono font-black shadow-[1.5px_1.5px_0px_#132219] w-fit mx-auto sm:mx-0">
                 <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Verified Resident</span>
               </span>
@@ -81,15 +84,19 @@ export const ProfilePage: React.FC = () => {
             </p>
 
             <p className="text-xs font-bold text-neutral-500">
-              Member since {currentUser.joinedDate || 'September 2025'}
+              Member since {currentUser.joinedDate || "September 2025"}
             </p>
           </div>
 
           <div className="text-center sm:text-right">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#fecd0e] border-2 border-black text-black shadow-[3px_3px_0px_#000]">
               <Star className="w-5 h-5 text-black fill-amber-400 stroke-[2.5]" />
-              <span className="text-xl font-black font-mono">{(currentUser.trustScore ?? 5.0).toFixed(1)}</span>
-              <span className="text-xs font-mono font-black uppercase">Trust</span>
+              <span className="text-xl font-black font-mono">
+                {(currentUser.trustScore ?? 5.0).toFixed(1)}
+              </span>
+              <span className="text-xs font-mono font-black uppercase">
+                Trust
+              </span>
             </div>
           </div>
         </div>
