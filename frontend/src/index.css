@@ -1,65 +1,124 @@
 @import "tailwindcss";
 
 :root {
-  --jn-yellow: #fecd0e;
-  --jn-yellow-light: #fee26d;
-  --jn-yellow-dark: #e5b600;
-  --jn-dark: #131d27;
-  --jn-bg: #fdfae8;
-  --jn-pink: #fecd0e;
-  --jn-mint: #fee26d;
-  --jn-blue: #fecd0e;
+  /* Brand Theme: Forest Pine & Warm Honey */
+  --jn-pine: #166534;
+  --jn-pine-dark: #14532d;
+  --jn-pine-light: #dcfce7;
+  --jn-honey: #f59e0b;
+  --jn-honey-light: #fef3c7;
+  --jn-honey-dark: #d97706;
+  --jn-bg: #fbf9f5;
+  --jn-ink: #132219;
+
+  /* Backward-compatible mappings */
+  --jn-yellow: #f59e0b;
+  --jn-yellow-light: #fef3c7;
+  --jn-yellow-dark: #d97706;
+  --jn-dark: #132219;
+  --jn-pink: #f59e0b;
+  --jn-mint: #dcfce7;
+  --jn-blue: #166534;
+}
+
+@theme {
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-black: #132219;
+  --color-jn-pine: #166534;
+  --color-jn-honey: #f59e0b;
+  --color-jn-ink: #132219;
 }
 
 @layer base {
+  html, body, #root {
+    min-height: 100%;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: #fdfae8;
-    color: #000000;
+    background-color: #fbf9f5 !important;
+    background-image: radial-gradient(#d5d1c8 1.4px, transparent 1.4px) !important;
+    background-size: 24px 24px !important;
+    background-attachment: fixed !important;
+    color: #132219;
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
-    background-color: #fecd0e;
-    color: #000000;
+    background-color: #bbf7d0;
+    color: #14532d;
   }
 }
 
-/* JiranAid Bold Craft / Soft-Brutalist Utility Classes */
+/* JiranAid Bespoke Workshop Craft Utility Classes */
 .jn-btn {
-  border: 2px solid #000000;
+  border: 2px solid #132219;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
-  box-shadow: 3px 3px 0px #000000;
+  box-shadow: 3px 3px 0px #132219, 0 6px 16px -2px rgba(22, 101, 52, 0.25);
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
 .jn-btn:hover {
-  box-shadow: 5px 5px 0px #000000;
+  box-shadow: 4.5px 4.5px 0px #132219, 0 10px 24px -2px rgba(245, 158, 11, 0.4);
   transform: translate(-1.5px, -1.5px);
 }
 
 .jn-btn:active {
-  box-shadow: 0px 0px 0px #000000;
+  box-shadow: 0px 0px 0px #132219;
   transform: translate(2px, 2px);
 }
 
 .jn-card {
   background-color: #ffffff;
-  border: 2px solid #000000;
-  border-radius: 1rem;
-  box-shadow: 4px 4px 0px #000000;
+  border: 2px solid #132219;
+  border-radius: 1.25rem;
+  box-shadow: 4px 4px 0px #132219, 0 12px 28px -4px rgba(22, 101, 52, 0.18);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .jn-card:hover {
-  box-shadow: 7px 7px 0px #000000;
+  box-shadow: 6px 6px 0px #132219, 0 18px 36px -4px rgba(22, 101, 52, 0.3);
   transform: translate(-2px, -2px);
 }
 
 .jn-badge {
-  border: 2px solid #000000;
-  font-weight: 800;
-  box-shadow: 2px 2px 0px #000000;
+  border: 1.5px solid #132219;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  box-shadow: 2px 2px 0px #132219;
+  letter-spacing: 0.02em;
+}
+
+/* Bespoke Workshop Sticker & Tag Utilities */
+.jn-sticker {
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.jn-sticker:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+.jn-sticker-alt {
+  display: inline-block;
+  transform: rotate(1.5deg);
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.jn-sticker-alt:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+.jn-tag-stitch {
+  border-left: 4px dashed #14181f;
 }
 
 /* Custom flat scrollbars */

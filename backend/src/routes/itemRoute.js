@@ -10,8 +10,8 @@ const {
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getAllItems);
-router.get("/:id", authMiddleware, getItemById);
+router.get("/", getAllItems);
+router.get("/:id", getItemById);
 router.post("/", authMiddleware, insertItem);
 router.put("/:id", authMiddleware, updateItem);
 router.delete("/:id", authMiddleware, deleteItem);
