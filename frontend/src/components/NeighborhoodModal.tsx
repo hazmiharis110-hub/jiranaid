@@ -87,7 +87,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
         {/* Header */}
         <div className="px-6 py-5 border-b-2 border-[#132219] flex items-center justify-between bg-[#fbf9f5]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#166534] border-2 border-[#132219] text-white flex items-center justify-center shadow-[2px_2px_0px_#132219]">
+            <div className="w-10 h-10 rounded-xl bg-jn-pine border-2 border-[#132219] text-white flex items-center justify-center shadow-[2px_2px_0px_#132219]">
               <MapPin className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
@@ -109,8 +109,8 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
 
         <div className="p-6 space-y-6">
           {/* Current Verification Status Banner */}
-          <div className="p-4 rounded-2xl border-2 border-[#132219] bg-[#166534]/15 flex items-start gap-3 shadow-[3px_3px_0px_#132219]">
-            <ShieldCheck className="w-5 h-5 text-[#166534] shrink-0 mt-0.5 stroke-[2.5]" />
+          <div className="p-4 rounded-2xl border-2 border-[#132219] bg-jn-pine/15 flex items-start gap-3 shadow-[3px_3px_0px_#132219]">
+            <ShieldCheck className="w-5 h-5 text-jn-pine shrink-0 mt-0.5 stroke-[2.5]" />
             <div className="text-xs space-y-1">
               <div className="font-black text-[#132219] text-sm font-heading">
                 Verified Resident Status Active
@@ -148,7 +148,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               type="button"
               onClick={handleSimulateGps}
               disabled={isVerifyingGps}
-              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-[#132219] bg-[#166534] hover:bg-[#14532d] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
+              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-[#132219] bg-jn-pine hover:bg-[#14532d] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
             >
               {isVerifyingGps ? (
                 <>
