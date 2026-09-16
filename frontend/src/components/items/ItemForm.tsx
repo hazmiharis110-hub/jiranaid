@@ -1,30 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   DollarSign,
   Tag,
   Sparkles,
   Info,
   AlertCircle,
-  FileText,
   Image as ImageIcon,
-} from 'lucide-react';
-import type { ToolCategory } from '../../types';
-import { TOOL_IMAGE_PRESETS } from '../../data/presets';
+} from "lucide-react";
+import type { ToolCategory } from "../../types";
 
-export const CATEGORIES: Exclude<ToolCategory, 'All'>[] = [
-  'Gardening & Yard',
-  'Power Tools',
-  'Home Improvement',
-  'Cleaning & Steam',
-  'Kitchen Appliances',
-  'Automotive',
-  'Ladders & Access',
-  'Woodworking',
+export const CATEGORIES: Exclude<ToolCategory, "All">[] = [
+  "Gardening & Yard",
+  "Power Tools",
+  "Home Improvement",
+  "Cleaning & Steam",
+  "Kitchen Appliances",
+  "Automotive",
+  "Ladders & Access",
+  "Woodworking",
 ];
 
 export interface ItemFormData {
   title: string;
-  category: Exclude<ToolCategory, 'All'>;
+  category: Exclude<ToolCategory, "All">;
   description: string;
   price: number;
   deposit: number;
@@ -48,60 +46,55 @@ interface ItemFormProps {
 export const ItemForm: React.FC<ItemFormProps> = ({
   initialData,
   onSubmit,
-  submitButtonText = 'Publish Tool Listing',
+  submitButtonText = "Publish Tool Listing",
   isSubmitting = false,
   onCancel,
   onDelete,
   isEditMode = false,
 }) => {
-  const [title, setTitle] = useState(initialData?.title || '');
-  const [category, setCategory] = useState<Exclude<ToolCategory, 'All'>>(
-    initialData?.category || 'Power Tools'
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [category, setCategory] = useState<Exclude<ToolCategory, "All">>(
+    initialData?.category || "Power Tools",
   );
-  const [description, setDescription] = useState(initialData?.description || '');
+  const [description, setDescription] = useState(
+    initialData?.description || "",
+  );
   const [price, setPrice] = useState<number>(
-    typeof initialData?.price === 'number'
+    typeof initialData?.price === "number"
       ? initialData.price
-      : typeof initialData?.maintenanceFeePerDay === 'number'
-      ? initialData.maintenanceFeePerDay
-      : 5
+      : typeof initialData?.maintenanceFeePerDay === "number"
+        ? initialData.maintenanceFeePerDay
+        : 5,
   );
   const [deposit, setDeposit] = useState<number>(
-    typeof initialData?.deposit === 'number'
+    typeof initialData?.deposit === "number"
       ? initialData.deposit
-      : typeof initialData?.depositAmount === 'number'
-      ? initialData.depositAmount
-      : 30
+      : typeof initialData?.depositAmount === "number"
+        ? initialData.depositAmount
+        : 30,
   );
   const [imageUrl, setImageUrl] = useState(
-    initialData?.image_url || initialData?.imageUrl || TOOL_IMAGE_PRESETS[0].url
+    initialData?.image_url ||
+      initialData?.imageUrl ||
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80",
   );
 
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const handleApplyPreset = (preset: (typeof TOOL_IMAGE_PRESETS)[0]) => {
-    setTitle(preset.title);
-    setCategory(preset.category as Exclude<ToolCategory, 'All'>);
-    setImageUrl(preset.url);
-    if (!description) {
-      setDescription(`Well-maintained ${preset.title.toLowerCase()} ready for neighborhood sharing.`);
-    }
-  };
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMsg('');
+    setErrorMsg("");
 
     if (!title.trim()) {
-      setErrorMsg('Please enter a descriptive tool name.');
+      setErrorMsg("Please enter a descriptive tool name.");
       return;
     }
     if (!description.trim()) {
-      setErrorMsg('Please provide a brief description for your neighbors.');
+      setErrorMsg("Please provide a brief description for your neighbors.");
       return;
     }
     if (!imageUrl.trim()) {
-      setErrorMsg('Please provide or select a photo URL.');
+      setErrorMsg("Please provide a photo URL.");
       return;
     }
 
@@ -115,7 +108,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
         image_url: imageUrl.trim(),
       });
     } catch (err: any) {
-      setErrorMsg(err.message || 'Failed to save tool listing. Please try again.');
+      setErrorMsg(
+        err.message || "Failed to save tool listing. Please try again.",
+      );
     }
   };
 
@@ -130,37 +125,6 @@ export const ItemForm: React.FC<ItemFormProps> = ({
           <div className="p-3.5 rounded-2xl bg-red-100 border-2 border-black text-xs font-black text-black flex items-center gap-2 shadow-[2px_2px_0px_#000]">
             <AlertCircle className="w-4 h-4 shrink-0 stroke-[2.5]" />
             <span>{errorMsg}</span>
-          </div>
-        )}
-
-        {/* Preset Selector */}
-        {!isEditMode && (
-          <div className="space-y-2.5">
-            <label className="text-xs font-mono font-black uppercase tracking-wider text-black flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-[#fecd0e] stroke-[2.5]" />
-              <span>Quick Start from Household Presets</span>
-            </label>
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              {TOOL_IMAGE_PRESETS.slice(0, 6).map((p) => (
-                <button
-                  type="button"
-                  key={p.title}
-                  onClick={() => handleApplyPreset(p)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border-2 border-black text-xs font-bold shrink-0 transition-all cursor-pointer ${
-                    title === p.title
-                      ? 'bg-[#fecd0e] text-black shadow-[3px_3px_0px_#000]'
-                      : 'bg-white text-black hover:bg-[#fee26d] shadow-[2px_2px_0px_#000]'
-                  }`}
-                >
-                  <img
-                    src={p.url}
-                    alt={p.title}
-                    className="w-5 h-5 rounded-md object-cover border border-black"
-                  />
-                  <span>{p.title}</span>
-                </button>
-              ))}
-            </div>
           </div>
         )}
 
@@ -191,7 +155,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             </label>
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value as Exclude<ToolCategory, 'All'>)}
+              onChange={(e) =>
+                setCategory(e.target.value as Exclude<ToolCategory, "All">)
+              }
               className="w-full px-3.5 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-bold text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
             >
               {CATEGORIES.map((c) => (
@@ -203,9 +169,11 @@ export const ItemForm: React.FC<ItemFormProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-mono font-black text-black uppercase mb-1 flex items-center justify-between">
+            <label className="flex items-center justify-between text-xs font-mono font-black text-black uppercase mb-1">
               <span>Description *</span>
-              <span className="text-[11px] text-neutral-600 font-bold lowercase">Details, accessories, condition</span>
+              <span className="text-[11px] text-neutral-600 font-bold lowercase">
+                Details, accessories, condition
+              </span>
             </label>
             <textarea
               value={description}
@@ -235,7 +203,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               />
             </div>
             <p className="text-[11px] font-bold text-neutral-600 mt-1">
-              Paste a photo URL or choose from one of the quick presets above.
+              Paste a valid image URL for your equipment listing.
             </p>
           </div>
         </div>
@@ -266,7 +234,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
-              <p className="text-[10px] font-bold text-neutral-600 mt-1">Daily maintenance fee (Set 0 for free loan)</p>
+              <p className="text-[10px] font-bold text-neutral-600 mt-1">
+                Daily maintenance fee (Set 0 for free loan)
+              </p>
             </div>
 
             <div>
@@ -287,7 +257,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
                   className="w-full pl-11 pr-3 py-2.5 rounded-xl border-2 border-black bg-white text-sm font-black font-mono text-black shadow-[2px_2px_0px_#000] focus:ring-0 focus:outline-none focus:bg-[#fdfae8]"
                 />
               </div>
-              <p className="text-[10px] font-bold text-neutral-600 mt-1">Refunded automatically upon safe return</p>
+              <p className="text-[10px] font-bold text-neutral-600 mt-1">
+                Refunded automatically upon safe return
+              </p>
             </div>
           </div>
         </div>
@@ -300,7 +272,7 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               disabled={isSubmitting}
               className="jn-btn px-7 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#fee26d] text-black font-black text-sm border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 cursor-pointer"
             >
-              {isSubmitting ? 'Saving...' : submitButtonText}
+              {isSubmitting ? "Saving..." : submitButtonText}
             </button>
 
             {onCancel && (
@@ -333,7 +305,9 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <Sparkles className="w-3.5 h-3.5 text-[#fecd0e] stroke-[2.5]" />
             <span>Live Card Preview</span>
           </h3>
-          <span className="text-[11px] font-bold text-neutral-600">Updates as you type</span>
+          <span className="text-[11px] font-bold text-neutral-600">
+            Updates as you type
+          </span>
         </div>
 
         {/* Rendered Preview Card */}
@@ -341,10 +315,11 @@ export const ItemForm: React.FC<ItemFormProps> = ({
           <div className="relative aspect-4/3 w-full bg-neutral-100 overflow-hidden border-b-2 border-black">
             <img
               src={imageUrl}
-              alt={title || 'Preview'}
+              alt={title || "Preview"}
               className="w-full h-full object-cover"
               onError={(e) => {
-                (e.target as HTMLImageElement).src = TOOL_IMAGE_PRESETS[0].url;
+                (e.target as HTMLImageElement).src =
+                  "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80";
               }}
             />
             <div className="absolute top-3 right-3">
@@ -359,10 +334,11 @@ export const ItemForm: React.FC<ItemFormProps> = ({
               {category}
             </span>
             <h3 className="font-black text-lg text-black line-clamp-1">
-              {title || 'Your Equipment Title'}
+              {title || "Your Equipment Title"}
             </h3>
             <p className="text-xs text-neutral-700 font-medium line-clamp-3 leading-relaxed">
-              {description || 'Provide a helpful description so neighbors know what is included and how to use it safely.'}
+              {description ||
+                "Provide a helpful description so neighbors know what is included and how to use it safely."}
             </p>
           </div>
 
@@ -370,10 +346,12 @@ export const ItemForm: React.FC<ItemFormProps> = ({
             <div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black font-mono text-black">
-                  {price === 0 ? 'Free' : `RM${price}`}
+                  {price === 0 ? "Free" : `RM${price}`}
                 </span>
                 {price > 0 && (
-                  <span className="text-xs font-bold text-neutral-600 font-mono">/day</span>
+                  <span className="text-xs font-bold text-neutral-600 font-mono">
+                    /day
+                  </span>
                 )}
               </div>
               <span className="text-[11px] font-bold text-neutral-600 block">
@@ -391,10 +369,13 @@ export const ItemForm: React.FC<ItemFormProps> = ({
         <div className="p-4 rounded-2xl bg-[#fdfae8] border-2 border-black text-xs font-medium text-black space-y-1.5 shadow-[3px_3px_0px_#000]">
           <div className="flex items-center gap-1.5 font-black text-black">
             <Info className="w-4 h-4 stroke-[2.5]" />
-            <span className="uppercase font-mono">Neighborhood Sharing Safe</span>
+            <span className="uppercase font-mono">
+              Neighborhood Sharing Safe
+            </span>
           </div>
           <p className="text-neutral-700">
-            This listing is shared securely within your neighborhood geofence with automatic security deposit holds.
+            This listing is shared securely within your neighborhood geofence
+            with automatic security deposit holds.
           </p>
         </div>
       </div>
