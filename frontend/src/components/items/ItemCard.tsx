@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'motion/react';
-import {
-  ShieldCheck,
-  Eye,
-  Heart,
-  ArrowRight,
-} from 'lucide-react';
-import type { ToolItem } from '../../types';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { ShieldCheck, Eye, Heart, ArrowRight } from "lucide-react";
+import type { ToolItem } from "../../types";
 
 interface ItemCardProps {
   tool: ToolItem;
@@ -23,8 +18,11 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
 
-  const isAvailable = (tool.status ?? 'available') === 'available';
-  const displayImage = tool.image_url || tool.imageUrl || 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+  const isAvailable = (tool.status ?? "available") === "available";
+  const displayImage =
+    tool.image_url ||
+    tool.imageUrl ||
+    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80";
   const dailyPrice = tool.price ?? tool.maintenanceFeePerDay ?? 0;
   const depositAmount = tool.deposit ?? tool.depositAmount ?? 0;
 
@@ -65,7 +63,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             loading="lazy"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
-                'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80';
+                "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80";
             }}
           />
 
@@ -84,12 +82,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           <button
             onClick={handleToggleSave}
             className="absolute top-2.5 right-2.5 w-8 h-8 rounded-xl bg-white border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#000] hover:bg-[#fee26d] hover:shadow-[3px_3px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
-            title={isSaved ? 'Remove from saved' : 'Save equipment'}
+            title={isSaved ? "Remove from saved" : "Save equipment"}
             aria-label="Save equipment"
           >
             <Heart
               className={`w-4 h-4 transition-colors stroke-[2.5] ${
-                isSaved ? 'fill-[#fecd0e] text-black' : 'text-black'
+                isSaved ? "fill-[#fecd0e] text-black" : "text-black"
               }`}
             />
           </button>
@@ -99,11 +97,11 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             <span
               className={`jn-sticker-alt text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg border-2 border-[#132219] shadow-[2px_2px_0px_#132219] ${
                 isAvailable
-                  ? 'bg-[#dcfce7] text-[#166534]'
-                  : 'bg-[#fef3c7] text-[#92400e]'
+                  ? "bg-[#86efac] text-black"
+                  : "bg-[#fee26d] text-black"
               }`}
             >
-              {isAvailable ? 'Available' : 'On Loan'}
+              {isAvailable ? "Available" : "On Loan"}
             </span>
           </div>
         </div>
@@ -124,7 +122,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             </h3>
             {tool.brand ? (
               <p className="text-xs text-[#555] font-bold line-clamp-1 mt-1">
-                {tool.brand} {tool.model ? `• ${tool.model}` : ''}
+                {tool.brand} {tool.model ? `• ${tool.model}` : ""}
               </p>
             ) : (
               <p className="text-xs text-[#666] font-medium line-clamp-1 mt-1">
@@ -139,18 +137,23 @@ export const ItemCard: React.FC<ItemCardProps> = ({
               <img
                 src={
                   tool.ownerAvatar ||
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
                 }
-                alt={tool.ownerName || 'Neighbor'}
-                className="w-6 h-6 rounded-lg object-cover border-2 border-[#132219]"
+                alt={tool.ownerName || "Neighbor"}
+                className="w-6 h-6 rounded-lg object-cover border-2 border-black"
               />
-              <span className="truncate max-w-[100px] font-bold text-[#132219]">
-                {tool.ownerName || 'Neighbor'}
+              <span className="truncate max-w-25 font-bold text-black">
+                {tool.ownerName || "Neighbor"}
               </span>
             </div>
-            <div className="flex items-center gap-1 font-black text-xs text-[#132219] bg-[#fef3c7] px-2 py-0.5 rounded-md border border-[#132219] shadow-[1px_1px_0px_#132219] shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5] text-[#166534]" />
-              <span>★ {typeof tool.ownerRating === 'number' ? tool.ownerRating.toFixed(1) : '5.0'}</span>
+            <div className="flex items-center gap-1 font-black text-xs text-black bg-[#fdfae8] px-2 py-0.5 rounded-md border border-black shadow-[1px_1px_0px_#000] shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>
+                ★{" "}
+                {typeof tool.ownerRating === "number"
+                  ? tool.ownerRating.toFixed(1)
+                  : "5.0"}
+              </span>
             </div>
           </div>
         </div>
@@ -160,8 +163,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       <div className="px-4 py-3 bg-[#fbf9f5] border-t-2 border-[#132219] flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-1">
-            <span className="text-base sm:text-lg font-black font-mono text-[#166534]">
-              {dailyPrice === 0 ? 'Free' : `RM${dailyPrice}`}
+            <span className="text-base sm:text-lg font-black font-mono text-black">
+              {dailyPrice === 0 ? "Free" : `RM${dailyPrice}`}
             </span>
             {dailyPrice > 0 && (
               <span className="text-[11px] font-bold text-[#555]">/day</span>
@@ -177,8 +180,8 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           disabled={!isAvailable}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-150 flex items-center gap-1.5 border-2 ${
             isAvailable
-              ? 'bg-[#166534] text-white border-[#132219] shadow-[2.5px_2.5px_0px_#f59e0b] hover:shadow-[4px_4px_0px_#f59e0b] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-[#14532d] cursor-pointer'
-              : 'bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed'
+              ? "bg-[#fecd0e] text-black border-black shadow-[2.5px_2.5px_0px_#000] hover:shadow-[4px_4px_0px_#000] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none hover:bg-black hover:text-white cursor-pointer"
+              : "bg-[#e5e5e5] text-[#888] border-[#aaa] cursor-not-allowed"
           }`}
         >
           <span>Borrow</span>
