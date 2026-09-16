@@ -171,7 +171,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <CheckCircle2 className="w-4 h-4 text-black stroke-[2.5]" />
                   Community Status
                 </span>
-                <span className="font-black text-black bg-[#fee26d] px-2 py-0.5 rounded-md border border-black text-[11px]">
+                <span className="font-black text-[#166534] bg-[#dcfce7] px-2 py-0.5 rounded-md border border-[#132219] text-[11px]">
                   Verified Neighbor
                 </span>
               </div>

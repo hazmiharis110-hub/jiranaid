@@ -241,19 +241,55 @@ exports.switchUser = async (req, res, next) => {
 
 exports.verifyLocation = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      `SELECT u.id, u.name, u.email, u.phone, u.role, 
+    const { neighborhoodId, postcode } = req.body || {};
+    let userId = req.user?.sub || req.user?.id;
+    if (!userId) {
+      const { verifyAccessToken } = require("../config/auth");
+      const authHeader = req.headers.authorization || "";
+      const parts = authHeader.split(/\s+/);
+      if (parts[0]?.toLowerCase() === "bearer" && parts[1]) {
+        try {
+          const payload = verifyAccessToken(parts[1]);
+          userId = payload.sub || payload.id;
+        } catch {}
+      }
+    }
+
+    if (neighborhoodId) {
+      if (userId) {
+        await pool.query(
+          "UPDATE users SET neighborhood_id = $1 WHERE id = $2",
+          [neighborhoodId, userId],
+        );
+      } else {
+        await pool.query(
+          "UPDATE users SET neighborhood_id = $1 WHERE id = (SELECT id FROM users ORDER BY id ASC LIMIT 1)",
+          [neighborhoodId],
+        );
+      }
+    }
+
+    const query = userId
+      ? `SELECT u.id, u.name, u.email, u.phone, u.role, 
               u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
               n.name AS "neighborhoodName", n.postcode
        FROM users u
        LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
-       LIMIT 1`,
-    );
+       WHERE u.id = $1`
+      : `SELECT u.id, u.name, u.email, u.phone, u.role, 
+              u.neighborhood_id AS "neighborhoodId", u.created_at, u.updated_at,
+              n.name AS "neighborhoodName", n.postcode
+       FROM users u
+       LEFT JOIN neighborhoods n ON u.neighborhood_id = n.id
+       ORDER BY u.id ASC
+       LIMIT 1`;
+    const params = userId ? [userId] : [];
+    const result = await pool.query(query, params);
     const user = result.rows[0] || null;
     if (user) {
       user.avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(user.name)}`;
       user.neighborhoodName = user.neighborhoodName || "Local Circle";
-      user.postcode = user.postcode || "53100";
+      user.postcode = postcode || user.postcode || "53100";
     }
     res.json({ success: true, user });
   } catch (error) {

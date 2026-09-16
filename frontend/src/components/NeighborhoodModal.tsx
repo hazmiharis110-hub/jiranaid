@@ -82,26 +82,26 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
       <div
         id="neighborhood-modal-content"
-        className="w-full max-w-lg bg-white border-3 border-black rounded-3xl shadow-[8px_8px_0px_#000] overflow-hidden animate-in fade-in zoom-in-95 duration-150"
+        className="w-full max-w-lg bg-white border-3 border-[#132219] rounded-3xl shadow-[8px_8px_0px_#132219] overflow-hidden animate-in fade-in zoom-in-95 duration-150"
       >
         {/* Header */}
-        <div className="px-6 py-5 border-b-2 border-black flex items-center justify-between bg-[#fdfae8]">
+        <div className="px-6 py-5 border-b-2 border-[#132219] flex items-center justify-between bg-[#fbf9f5]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#fecd0e] border-2 border-black text-black flex items-center justify-center shadow-[2px_2px_0px_#000]">
+            <div className="w-10 h-10 rounded-xl bg-[#166534] border-2 border-[#132219] text-white flex items-center justify-center shadow-[2px_2px_0px_#132219]">
               <MapPin className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
-              <h3 className="font-black text-black text-base sm:text-lg leading-tight tracking-tight">
+              <h3 className="font-black text-[#132219] text-base sm:text-lg leading-tight tracking-tight font-heading">
                 Neighborhood Verification & Pool
               </h3>
-              <p className="text-xs text-neutral-600 font-bold">
+              <p className="text-xs text-[#555] font-bold">
                 Location binding keeps borrowing hyper-local and safe
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="jn-btn p-2 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black shadow-[2px_2px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+            className="jn-btn p-2 rounded-xl border-2 border-[#132219] bg-white hover:bg-[#fef3c7] text-[#132219] shadow-[2px_2px_0px_#132219] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
           >
             <X className="w-4 h-4 stroke-[2.5]" />
           </button>
@@ -109,24 +109,31 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
 
         <div className="p-6 space-y-6">
           {/* Current Verification Status Banner */}
-          <div className="p-4 rounded-2xl border-2 border-black bg-[#fee26d] flex items-start gap-3 shadow-[3px_3px_0px_#000]">
-            <ShieldCheck className="w-5 h-5 text-black shrink-0 mt-0.5 stroke-[2.5]" />
+          <div className="p-4 rounded-2xl border-2 border-[#132219] bg-[#166534]/15 flex items-start gap-3 shadow-[3px_3px_0px_#132219]">
+            <ShieldCheck className="w-5 h-5 text-[#166534] shrink-0 mt-0.5 stroke-[2.5]" />
             <div className="text-xs space-y-1">
-              <div className="font-black text-black text-sm">
+              <div className="font-black text-[#132219] text-sm font-heading">
                 Verified Resident Status Active
               </div>
+<<<<<<< HEAD
               <p className="text-neutral-800 font-medium leading-relaxed">
                 You are currently accessing tools within your verified 1.5 km
                 residential zone. Borrowing is restricted to neighbors to
                 maintain accountability and trust.
+=======
+              <p className="text-[#132219]/85 font-medium leading-relaxed">
+                You are currently accessing tools within your verified 1.5 km residential zone.
+                Borrowing is restricted to neighbors to maintain accountability and trust.
+>>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
               </p>
             </div>
           </div>
 
           {/* Quick GPS Geofence Check */}
-          <div className="border-2 border-black rounded-2xl p-4 sm:p-5 bg-[#fdfae8] space-y-3 shadow-[3px_3px_0px_#000]">
+          <div className="border-2 border-[#132219] rounded-2xl p-4 sm:p-5 bg-[#fbf9f5] space-y-3 shadow-[3px_3px_0px_#132219]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
+<<<<<<< HEAD
                 <Compass className="w-4 h-4 text-black stroke-[2.5]" />
                 <span className="text-sm font-black text-black">
                   Instant GPS Geofence Check
@@ -136,6 +143,14 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
                 <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-black bg-[#86efac] border border-black px-2 py-0.5 rounded-md">
                   <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> Geofence
                   Locked
+=======
+                <Compass className="w-4 h-4 text-[#166534] stroke-[2.5]" />
+                <span className="text-sm font-black text-[#132219] font-heading">Instant GPS Geofence Check</span>
+              </div>
+              {gpsVerifiedSuccess && (
+                <span className="inline-flex items-center gap-1 text-xs font-mono font-black text-[#166534] bg-[#dcfce7] border border-[#132219] px-2 py-0.5 rounded-md">
+                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> Geofence Locked
+>>>>>>> 6fdadb60fc77808061e877b8b975b50daef47bc4
                 </span>
               )}
             </div>
@@ -148,7 +163,7 @@ export const NeighborhoodModal: React.FC<NeighborhoodModalProps> = ({
               type="button"
               onClick={handleSimulateGps}
               disabled={isVerifyingGps}
-              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-black bg-[#fecd0e] hover:bg-[#fee26d] text-black text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
+              className="jn-btn w-full py-2.5 px-4 rounded-xl border-2 border-[#132219] bg-[#166534] hover:bg-[#14532d] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-60 cursor-pointer"
             >
               {isVerifyingGps ? (
                 <>

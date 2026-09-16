@@ -108,6 +108,8 @@ exports.insertItem = async (req, res, next) => {
       });
     }
 
+    const userId = req.user?.id || req.body.user_id || req.body.ownerId || 1;
+
     const result = await pool.query(
       "INSERT INTO items (title, description, price, deposit, category, image_url, pickup_note, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
       [
@@ -118,13 +120,13 @@ exports.insertItem = async (req, res, next) => {
         category,
         image_url,
         pickup_note,
-        req.user.id,
+        userId,
       ],
     );
 
     const userResult = await pool.query(
       "SELECT name FROM users WHERE id = $1",
-      [req.user.id],
+      [userId],
     );
     const newItem = {
       ...result.rows[0],

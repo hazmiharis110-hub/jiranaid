@@ -68,21 +68,21 @@ export const HomePage: React.FC = () => {
   return (
     <div className="space-y-16 sm:space-y-24">
       {/* 1. Hero Section */}
-      <section className="relative overflow-hidden pt-8 pb-16 sm:pt-16 sm:pb-24 border-b-3 border-black bg-[#fdfae8]">
+      <section className="relative overflow-hidden pt-8 pb-16 sm:pt-16 sm:pb-24 border-b-3 border-[#132219] bg-transparent">
         {/* Bottom-left corner fluid wave */}
-        <svg className="absolute -bottom-2 -left-2 w-48 sm:w-72 md:w-88 pointer-events-none select-none z-0 text-[#fecd0e]" viewBox="0 0 260 200" fill="none">
+        <svg className="absolute -bottom-2 -left-2 w-48 sm:w-72 md:w-88 pointer-events-none select-none z-0 text-[#166534]/15" viewBox="0 0 260 200" fill="none">
           <path d="M0 200V80C50 60 70 130 130 130C190 130 180 30 240 50C255 55 260 80 260 90V200H0Z" fill="currentColor" />
         </svg>
 
         {/* Bottom-right corner fluid wave */}
-        <svg className="absolute -bottom-2 -right-2 w-48 sm:w-72 md:w-88 pointer-events-none select-none z-0 text-[#fecd0e]" viewBox="0 0 260 200" fill="none">
+        <svg className="absolute -bottom-2 -right-2 w-48 sm:w-72 md:w-88 pointer-events-none select-none z-0 text-[#f59e0b]/15" viewBox="0 0 260 200" fill="none">
           <path d="M260 200V80C210 60 190 130 130 130C70 130 80 30 20 50C5 55 0 80 0 90V200H260Z" fill="currentColor" />
         </svg>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             {/* Geofence verified badge */}
-            <div className="jn-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#fee26d] border-2 border-black text-black text-xs sm:text-sm font-mono font-black shadow-[2.5px_2.5px_0px_#000]">
+            <div className="jn-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#dcfce7] border-2 border-[#132219] text-[#166534] text-xs sm:text-sm font-mono font-black shadow-[2.5px_2.5px_0px_#132219]">
               <ShieldCheck className="w-4 h-4 stroke-[2.5]" />
               <span>
                 Verified Residential Pool:{" "}
@@ -91,25 +91,25 @@ export const HomePage: React.FC = () => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-black leading-[1.12]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#132219] leading-[1.12]">
               Borrow Tools From<br className="hidden sm:inline" />{" "}
               <span className="relative inline-flex items-center mx-2 my-1">
                 {/* Left spark rays */}
                 <span className="hidden sm:inline-flex flex-col gap-1 absolute -left-8 top-1/2 -translate-y-1/2 select-none pointer-events-none">
-                  <span className="w-4 h-1 bg-[#fecd0e] rounded-full rotate-45 transform origin-right"></span>
-                  <span className="w-5 h-1 bg-[#fecd0e] rounded-full"></span>
-                  <span className="w-4 h-1 bg-[#fecd0e] rounded-full -rotate-45 transform origin-right"></span>
+                  <span className="w-4 h-1 bg-[#f59e0b] rounded-full rotate-45 transform origin-right"></span>
+                  <span className="w-5 h-1 bg-[#f59e0b] rounded-full"></span>
+                  <span className="w-4 h-1 bg-[#f59e0b] rounded-full -rotate-45 transform origin-right"></span>
                 </span>
                 
-                <span className="bg-[#fecd0e] px-4 py-0.5 rounded-2xl border-2 border-black inline-block shadow-[3px_3px_0px_#000]">
+                <span className="jn-sticker bg-[#f59e0b] text-[#132219] px-4 py-0.5 rounded-2xl border-2 border-[#132219] inline-block shadow-[3px_3px_0px_#132219,0_6px_16px_rgba(245,158,11,0.4)]">
                   Your Neighbors
                 </span>
 
                 {/* Right spark rays */}
                 <span className="hidden sm:inline-flex flex-col gap-1 absolute -right-8 top-1/2 -translate-y-1/2 select-none pointer-events-none">
-                  <span className="w-4 h-1 bg-[#fecd0e] rounded-full -rotate-45 transform origin-left"></span>
-                  <span className="w-5 h-1 bg-[#fecd0e] rounded-full"></span>
-                  <span className="w-4 h-1 bg-[#fecd0e] rounded-full rotate-45 transform origin-left"></span>
+                  <span className="w-4 h-1 bg-[#f59e0b] rounded-full -rotate-45 transform origin-left"></span>
+                  <span className="w-5 h-1 bg-[#f59e0b] rounded-full"></span>
+                  <span className="w-4 h-1 bg-[#f59e0b] rounded-full rotate-45 transform origin-left"></span>
                 </span>
               </span>{" "}
               Next<br className="hidden sm:inline" /> Door
@@ -127,18 +127,18 @@ export const HomePage: React.FC = () => {
               onSubmit={handleHeroSearch}
               className="max-w-2xl mx-auto pt-2"
             >
-              <div className="relative flex items-center rounded-2xl bg-white border-3 border-black p-2 shadow-[5px_5px_0px_#000]">
-                <Search className="w-5 h-5 text-black ml-3 stroke-[2.5]" />
+              <div className="relative flex items-center rounded-2xl bg-white border-3 border-[#132219] p-2 shadow-[5px_5px_0px_#132219,0_12px_28px_-4px_rgba(22,101,52,0.2)]">
+                <Search className="w-5 h-5 text-[#132219] ml-3 stroke-[2.5]" />
                 <input
                   type="text"
                   value={quickSearch}
                   onChange={(e) => setQuickSearch(e.target.value)}
                   placeholder="What household project are you tackling today?..."
-                  className="w-full px-3.5 py-2.5 text-sm sm:text-base font-bold text-black placeholder:text-neutral-500 bg-transparent focus:outline-none"
+                  className="w-full px-3.5 py-2.5 text-sm sm:text-base font-bold text-[#132219] placeholder:text-neutral-500 bg-transparent focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="jn-btn px-5 sm:px-7 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#e5b600] text-black text-sm font-black border-2 border-black shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0 cursor-pointer"
+                  className="jn-btn px-5 sm:px-7 py-3 rounded-xl bg-[#166534] hover:bg-[#14532d] text-white text-sm font-black border-2 border-[#132219] shadow-[2.5px_2.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all shrink-0 cursor-pointer"
                 >
                   Search Tools
                 </button>
@@ -149,14 +149,14 @@ export const HomePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
               <Link
                 to="/items"
-                className="jn-btn px-6 py-3 rounded-xl bg-[#fecd0e] hover:bg-[#e5b600] text-black text-xs sm:text-sm font-black border-2 border-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
+                className="jn-btn px-6 py-3 rounded-xl bg-[#166534] hover:bg-[#14532d] text-white text-xs sm:text-sm font-black border-2 border-[#132219] shadow-[3.5px_3.5px_0px_#f59e0b] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
               >
                 <span>Browse All Tools</span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </Link>
               <Link
                 to="/items/create"
-                className="jn-btn px-6 py-3 rounded-xl border-2 border-black bg-white hover:bg-[#fee26d] text-black text-xs sm:text-sm font-black shadow-[3.5px_3.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
+                className="jn-btn px-6 py-3 rounded-xl border-2 border-[#132219] bg-white hover:bg-[#fef3c7] text-[#132219] text-xs sm:text-sm font-black shadow-[3.5px_3.5px_0px_#132219] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-2"
               >
                 <Wrench className="w-4 h-4 stroke-[2.5]" />
                 <span>List Your Equipment</span>
@@ -168,40 +168,40 @@ export const HomePage: React.FC = () => {
 
       {/* 2. Community Impact Live Counter Banner */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#fecd0e] text-black rounded-3xl border-3 border-black p-6 sm:p-10 shadow-[6px_6px_0px_#000] relative overflow-hidden">
-          <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y-2 md:divide-y-0 md:divide-x-2 divide-black">
+        <div className="bg-[#166534] text-white rounded-3xl border-3 border-[#132219] p-6 sm:p-10 shadow-[6px_6px_0px_#132219,0_16px_36px_-6px_rgba(22,101,52,0.35)] relative overflow-hidden">
+          <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y-2 md:divide-y-0 md:divide-x-2 divide-[#14532d]">
             <div className="pt-4 md:pt-0">
-              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-[#fde68a]">
                 RM{communityStats.totalSavingsEstimate.toLocaleString()}+
               </p>
-              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-white/90 mt-1">
                 Saved by Neighbors
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-[#fde68a]">
                 {communityStats.landfillWasteDivertedKg} kg
               </p>
-              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-white/90 mt-1">
                 E-Waste Diverted
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-[#fde68a]">
                 {tools.length || 68}
               </p>
-              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-white/90 mt-1">
                 Tools in Local Library
               </p>
             </div>
 
             <div className="pt-4 md:pt-0">
-              <p className="text-3xl sm:text-5xl font-black font-mono text-black">
+              <p className="text-3xl sm:text-5xl font-black font-mono text-[#fde68a]">
                 100%
               </p>
-              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-black mt-1">
+              <p className="text-xs sm:text-sm font-black uppercase tracking-wider text-white/90 mt-1">
                 Deposit Return Rate
               </p>
             </div>
@@ -223,7 +223,7 @@ export const HomePage: React.FC = () => {
           </div>
           <Link
             to="/items"
-            className="jn-btn self-start sm:self-auto text-xs sm:text-sm font-black text-black bg-white hover:bg-[#fecd0e] border-2 border-black rounded-xl px-4 py-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
+            className="jn-btn self-start sm:self-auto text-xs sm:text-sm font-black text-[#132219] bg-white hover:bg-[#fef3c7] border-2 border-[#132219] rounded-xl px-4 py-2 shadow-[2.5px_2.5px_0px_#132219] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex items-center gap-1.5"
           >
             <span>View All</span>
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -239,17 +239,17 @@ export const HomePage: React.FC = () => {
               <button
                 key={cat.name}
                 onClick={() => handleCategoryClick(cat.name)}
-                className="group p-4 sm:p-5 rounded-2xl border-2 border-black bg-white hover:bg-[#fee26d] shadow-[4px_4px_0px_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all text-left flex flex-col justify-between cursor-pointer"
+                className="group p-4 sm:p-5 rounded-2xl border-2 border-[#132219] bg-white hover:bg-[#dcfce7] shadow-[4px_4px_0px_#132219,0_8px_20px_-4px_rgba(22,101,52,0.15)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all text-left flex flex-col justify-between cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#fdfae8] group-hover:bg-white border-2 border-black text-2xl flex items-center justify-center shadow-[2px_2px_0px_#000] transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-[#fbf9f5] group-hover:bg-white border-2 border-[#132219] text-2xl flex items-center justify-center shadow-[2px_2px_0px_#132219] transition-colors">
                   {cat.icon}
                 </div>
                 <div className="mt-4">
-                  <h3 className="font-black text-sm sm:text-base text-black group-hover:text-black transition-colors">
+                  <h3 className="font-black text-sm sm:text-base text-[#132219] group-hover:text-[#166534] transition-colors">
                     {cat.name}
                   </h3>
                   <div className="mt-1.5">
-                    <span className="jn-badge bg-[#fee26d] text-black border border-black rounded-md px-1.5 py-0.5 font-mono font-black text-[10px] shadow-[1px_1px_0px_#000]">
+                    <span className="jn-badge jn-sticker-alt bg-[#fef3c7] text-[#92400e] border border-[#132219] rounded-md px-1.5 py-0.5 font-mono font-black text-[10px] shadow-[1px_1px_0px_#132219]">
                       {count === 1 ? "1 tool" : `${count} tools`}
                     </span>
                   </div>
@@ -291,13 +291,13 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 5. How JiranAid Works (4-Step Flow) */}
-      <section className="bg-[#fdfae8] border-y-3 border-black py-16 sm:py-20">
+      <section className="bg-transparent border-y-3 border-[#14181f] py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center space-y-3 mb-12">
-            <span className="jn-badge inline-block bg-[#fecd0e] text-black border-2 border-black rounded-lg px-3 py-1 text-xs font-mono font-black uppercase tracking-wider shadow-[2px_2px_0px_#000]">
+            <span className="jn-badge inline-block bg-[#fef3c7] text-[#92400e] border-2 border-[#132219] rounded-lg px-3 py-1 text-xs font-mono font-black uppercase tracking-wider shadow-[2px_2px_0px_#132219]">
               Simple & Transparent
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-black tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-black text-[#132219] tracking-tight font-heading">
               How Neighbor Sharing Works
             </h2>
             <p className="text-sm sm:text-base font-bold text-neutral-700">
@@ -308,56 +308,56 @@ export const HomePage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {/* Step 1 */}
-            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
-              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
+            <div className="bg-[#166534]/15 rounded-2xl border-2 border-[#132219] p-6 text-left relative shadow-[4px_4px_0px_#132219,0_8px_20px_-4px_rgba(22,101,52,0.15)] hover:shadow-[5.5px_5.5px_0px_#132219,0_12px_24px_-4px_rgba(22,101,52,0.25)] hover:-translate-y-1 transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-[#132219] border-2 border-[#132219] flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#132219]">
                 1
               </div>
-              <h3 className="font-black text-base text-black mb-2">
+              <h3 className="font-black text-base sm:text-lg text-[#132219] mb-2 font-heading">
                 Find Your Tool
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#132219]/85 font-medium leading-relaxed">
                 Browse power tools, lawnmowers, and ladders listed by verified
                 residents in your immediate postcode.
               </p>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
-              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
+            <div className="bg-[#166534]/15 rounded-2xl border-2 border-[#132219] p-6 text-left relative shadow-[4px_4px_0px_#132219,0_8px_20px_-4px_rgba(22,101,52,0.15)] hover:shadow-[5.5px_5.5px_0px_#132219,0_12px_24px_-4px_rgba(22,101,52,0.25)] hover:-translate-y-1 transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-[#132219] border-2 border-[#132219] flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#132219]">
                 2
               </div>
-              <h3 className="font-black text-base text-black mb-2">
+              <h3 className="font-black text-base sm:text-lg text-[#132219] mb-2 font-heading">
                 Request & Book Dates
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#132219]/85 font-medium leading-relaxed">
                 Pick your required dates (1 to 5 days). Pay a small daily
                 maintenance fee and a refundable security hold.
               </p>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
-              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
+            <div className="bg-[#166534]/15 rounded-2xl border-2 border-[#132219] p-6 text-left relative shadow-[4px_4px_0px_#132219,0_8px_20px_-4px_rgba(22,101,52,0.15)] hover:shadow-[5.5px_5.5px_0px_#132219,0_12px_24px_-4px_rgba(22,101,52,0.25)] hover:-translate-y-1 transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-[#132219] border-2 border-[#132219] flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#132219]">
                 3
               </div>
-              <h3 className="font-black text-base text-black mb-2">
+              <h3 className="font-black text-base sm:text-lg text-[#132219] mb-2 font-heading">
                 Local Porch Pickup
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#132219]/85 font-medium leading-relaxed">
                 Coordinate safe, phone-number-free chat with the owner and
                 collect the item just a few streets away.
               </p>
             </div>
 
             {/* Step 4 */}
-            <div className="bg-white rounded-2xl border-2 border-black p-6 text-left relative shadow-[4px_4px_0px_#000]">
-              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-black border-2 border-black flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#000]">
+            <div className="bg-[#166534]/15 rounded-2xl border-2 border-[#132219] p-6 text-left relative shadow-[4px_4px_0px_#132219,0_8px_20px_-4px_rgba(22,101,52,0.15)] hover:shadow-[5.5px_5.5px_0px_#132219,0_12px_24px_-4px_rgba(22,101,52,0.25)] hover:-translate-y-1 transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#fecd0e] text-[#132219] border-2 border-[#132219] flex items-center justify-center font-black font-mono text-lg mb-4 shadow-[2px_2px_0px_#132219]">
                 4
               </div>
-              <h3 className="font-black text-base text-black mb-2">
+              <h3 className="font-black text-base sm:text-lg text-[#132219] mb-2 font-heading">
                 Return & Deposit Released
               </h3>
-              <p className="text-xs sm:text-sm text-neutral-700 font-medium leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#132219]/85 font-medium leading-relaxed">
                 Return the item clean. The owner confirms inspection, and your
                 deposit hold is instantly released back to you.
               </p>
